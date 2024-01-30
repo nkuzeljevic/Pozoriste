@@ -1,0 +1,31 @@
+/* body {
+  background-color: black;
+}
+main.container {
+  background-color: black;
+  color: white;
+} */
+.ime {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.opis {
+  /* background-color: black;
+  color: white; */
+  text-align: justify;
+  min-height: 140px;
+  overflow-y: auto; /* Enable vertical scrollbar when content overflows */
+}
+.lista {
+  /* background-color: black;
+  color: white; */
+  text-align: justify;
+}
+
+.podlista {
+  /* background-color: black;
+  color: white; */
+  list-style: none; /* Remove default list styles, such as bullets */
+}

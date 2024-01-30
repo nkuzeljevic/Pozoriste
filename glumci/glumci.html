@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ansambl</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/main.css" />
+    <link rel="stylesheet" href="glumci.css" />
+    <!-- <script defer src="script.js"></script> -->
+  </head>
+  <body>
+    <main class="container">
+      <div class="row">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/index.html"
+                  >Dashboard <span class="sr-only"></span
+                ></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/pozorista/pozorista.html"
+                  >Pozorišta</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/predstave/predstave.html"
+                  >Predstave</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link active" href="/glumci/glumci.html"
+                  >Ansambl</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/posetioci/posetioci.html"
+                  >Posetioci</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/rezervacije/rezervacije.html"
+                  >Rezervacije</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <br />
+      <br />
+      <!-- <h1>Ansambl</h1> -->
+      <div class="row">
+        <div class="col-md-12">
+          <br />
+          <button
+            id="btnNoviGlumac"
+            type="button"
+            class="btn btn-outline-primary float-end"
+          >
+            Dodaj novog člana
+          </button>
+          <br />
+          <br />
+        </div>
+        <br />
+        <div class="col-md-4 col-sm-12">
+          <div class="mb-3 mt-3">
+            <h3 class="ime">Jovana Belović</h3>
+            <p class="form-control opis">
+              Jovana Belović srpska je pozorišna, televizijska, filmska i
+              glasovna glumica. Diplomirala je 2014. godine na Akademiji
+              umetnosti Univerziteta u Novom Sadu, a master rad odbranila dve
+              godine kasnije.
+            </p>
+            <h5>Pozorišne predstave:</h5>
+            <ul class="list-group lista">
+              <li class="list-group-item podlista">Čudo u Šarganu</li>
+              <li class="list-group-item podlista">Gubitnik</li>
+              <li class="list-group-item podlista">Pučina</li>
+            </ul>
+            <br />
+            <a href="izmeni-glumca.html" class="btn btn-primary btn-sm"
+              >Izmeni</a
+            >
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+          <div class="mb-3 mt-3">
+            <h3 class="ime">Sanja Marković</h3>
+            <p class="form-control opis">
+              Sanja Marković je rođena 1994. u Beogradu, a odrasla je u
+              Krnješevcima. Glumu je diplomirala na Fakultetu dramskih umetnosti
+              u Beogradu, u klasi profesora Srđana J. Karanovića.
+            </p>
+            <h5>Pozorišne predstave:</h5>
+            <ul class="list-group lista">
+              <li class="list-group-item podlista">Moj muž</li>
+              <li class="list-group-item podlista">Laž</li>
+              <li class="list-group-item podlista">Čudo u Šarganu</li>
+            </ul>
+            <br />
+            <a href="izmeni-glumca.html" class="btn btn-primary btn-sm"
+              >Izmeni</a
+            >
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+          <div class="mb-3 mt-3">
+            <h3 class="ime">Jasmina Avramović</h3>
+            <p class="form-control opis">
+              Jasmina Avramović je rođena 28. oktobra 1960. godine u Valjevu.
+              Glumu je diplomirala 1985. godine na Fakultetu dramskih umetnosti
+              u Beogradu, u klasi profesora Arse Jovanovića.
+            </p>
+            <h5>Pozorišne predstave:</h5>
+            <ul class="list-group lista">
+              <li class="list-group-item podlista">Nije smrt biciklo</li>
+              <li class="list-group-item podlista">Gospođica</li>
+              <li class="list-group-item podlista">Rolerkoster</li>
+            </ul>
+            <br />
+            <a href="izmeni-glumca.html" class="btn btn-primary btn-sm"
+              >Izmeni</a
+            >
+          </div>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div class="row">
+        <div class="col-md-4 col-sm-12">
+          <div class="mb-3 mt-3">
+            <h3 class="ime">Milena Vasić</h3>
+            <p class="form-control opis">
+              Milena Vasić je rođena u Beogradu gde je završila muzičku školu i
+              gimnaziju. Glumu je diplomirala na Fakultetu dramskih umetnosti u
+              Beogradu, a zatim upisala magistarske studije.
+            </p>
+            <h5>Pozorišne predstave:</h5>
+            <ul class="list-group lista">
+              <li class="list-group-item podlista">Klaustrofobična komedija</li>
+              <li class="list-group-item podlista">Široka zemlja</li>
+              <li class="list-group-item podlista">Izgnanik</li>
+            </ul>
+            <br />
+            <a href="izmeni-glumca.html" class="btn btn-primary btn-sm"
+              >Izmeni</a
+            >
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+          <div class="mb-3 mt-3">
+            <h3 class="ime">Miodrag Dragičević</h3>
+            <p class="form-control opis">
+              Rođen je 1994. godine u Beogradu. Završio je sportsku gimnaziju i
+              trenirao košarku sedam godina. Nakon toga se posvetio glumi i
+              završio Fakultet dramskih umetnosti u Beogradu u klasi profesorke
+              Biljane Mašić.
+            </p>
+            <h5>Pozorišne predstave:</h5>
+            <ul class="list-group lista">
+              <li class="list-group-item podlista">Zona Zamfirova</li>
+              <li class="list-group-item podlista">Kasper</li>
+              <li class="list-group-item podlista">Osećaj brade</li>
+            </ul>
+            <br />
+            <a href="izmeni-glumca.html" class="btn btn-primary btn-sm"
+              >Izmeni</a
+            >
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+          <div class="mb-3 mt-3">
+            <h3 class="ime">Bojan Dimitrijević</h3>
+            <p class="form-control opis">
+              Glumu je diplomirao na Fakultetu dramskih umetnosti u Beogradu.
+              Pored uloga u pozorištu ostvario je zapažene uloge u filmovima
+              Sivi kamion crvene boje i Ma nije on takav.
+            </p>
+            <h5>Pozorišne predstave:</h5>
+            <ul class="list-group lista">
+              <li class="list-group-item podlista">Uobraženi bolesnik</li>
+              <li class="list-group-item podlista">Pučina</li>
+              <li class="list-group-item podlista">Hamlet</li>
+            </ul>
+            <br />
+            <a href="izmeni-glumca.html" class="btn btn-primary btn-sm"
+              >Izmeni</a
+            >
+          </div>
+        </div>
+      </div>
+    </main>
+    <script defer src="/script.js"></script>
+  </body>
+</html>
