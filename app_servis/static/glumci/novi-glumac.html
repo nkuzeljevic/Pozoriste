@@ -68,7 +68,7 @@
       <br />
       <br />
       <h1>Novi član</h1>
-      <form class="row" id="forma" method="post" action="/novi-glumac">
+      <form class="row" id="forma" method="post" action="/admin/novi-glumac">
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="ime">Ime i prezime:</label>
@@ -96,7 +96,7 @@
               <div class="input-group mb-3">
                 <input
                   type="text"
-                  oninput="validateInput(this)"
+                  oninput="validateAndToggleButton(this, 'dodajPredstavu')"
                   class="form-control"
                   id="predstave"
                   name="predstave"

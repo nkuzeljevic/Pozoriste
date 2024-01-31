@@ -142,6 +142,14 @@ function addHallOption(optionText) {
 }
 
 function dodajGlumca(id) {
+  // Check if the actor already exists in the list
+  var existingActors = document.querySelectorAll("#unetiGlumci > span.badge");
+  for (var i = 0; i < existingActors.length; i++) {
+    if (existingActors[i].dataset.id === id) {
+      alert("Glumac već postoji u listi.");
+      return;
+    }
+  }
   // Creating span element
   var span = document.createElement("span");
   span.classList.add("badge");
@@ -191,7 +199,28 @@ function updateGlumciInput() {
   console.log(document.getElementById(glumciInput).value);
 }
 
+//samo ako je validan input dodaj novi el
+function validateAndToggleButton(inputElement, buttonId) {
+  var isValid;
+  if (inputElement.value.length >= 3) {
+    isValid = true;
+  } else {
+    isValid = false;
+  }
+  var button = document.getElementById(buttonId);
+  if (button) {
+    button.disabled = !isValid;
+  }
+}
 function dodajZanr(id) {
+  // Check if the genre already exists in the list
+  var existingGenres = document.querySelectorAll("#zanr option");
+  for (var i = 0; i < existingGenres.length; i++) {
+    if (existingGenres[i].value === id) {
+      alert("Žanr već postoji u listi.");
+      return;
+    }
+  }
   // Creating span element
   var option = document.createElement("option");
   // option.dataset.value = id;
@@ -201,6 +230,7 @@ function dodajZanr(id) {
   //Append span to the unetePredstave
   document.getElementById("zanr").appendChild(option);
 }
+
 function removeOptionByValue(selectElement, value) {
   for (var i = 0; i < selectElement.options.length; i++) {
     if (selectElement.options[i].value === value) {
@@ -228,7 +258,6 @@ function validateInput(inputElement) {
     inputElement.classList.add("success");
     inputElement.classList.remove("error");
   }
-  //   return validno;
 }
 
 function validate() {

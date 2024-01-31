@@ -71,7 +71,7 @@
         onsubmit="return validate()"
         class="row"
         method="post"
-        action="/nova-predstava"
+        action="/admin/nova-predstava"
       >
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
@@ -168,7 +168,7 @@
             <div class="input-group mb-3">
               <input
                 type="text"
-                oninput="validateInput(this)"
+                oninput="validateAndToggleButton(this, 'dodajNovZanr')"
                 class="form-control"
                 id="novZanr"
                 name="novZanr"
@@ -184,14 +184,27 @@
             <div class="mb-3 mt-3">
               <label for="glumci">Glumci:</label>
               <div class="input-group mb-3">
-                <input
+                <!-- <input
                   type="text"
                   oninput="validateInput(this)"
                   class="form-control"
                   id="glumci"
                   name="glumci"
+                /> -->
+                <input
+                  type="text"
+                  oninput="validateAndToggleButton(this, 'dodajGlumca')"
+                  class="form-control"
+                  id="glumci"
+                  name="glumci"
                 />
-                <button class="btn btn-success" type="button" id="dodajGlumca">
+                <!-- <button class="btn btn-success" type="button" id="dodajGlumca"> -->
+                <button
+                  class="btn btn-success"
+                  type="button"
+                  id="dodajGlumca"
+                  disabled
+                >
                   +
                 </button>
               </div>

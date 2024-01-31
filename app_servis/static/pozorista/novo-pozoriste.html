@@ -69,7 +69,7 @@
       <h1>Novo pozorište</h1>
       <br />
       <br />
-      <form class="row" id="forma" method="post" action="/novo-pozoriste">
+      <form class="row" id="forma" method="post" action="/admin/novo-pozoriste">
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="naziv">Naziv:</label>
@@ -97,7 +97,7 @@
               <div class="input-group mb-3">
                 <input
                   type="text"
-                  oninput="validateInput(this)"
+                  oninput="validateAndToggleButton(this, 'dodajPredstavu')"
                   class="form-control"
                   id="predstave"
                   name="predstave"

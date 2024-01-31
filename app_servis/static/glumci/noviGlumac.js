@@ -54,6 +54,14 @@ function validateInput(inputElement) {
 }
 
 function dodajPredstavu(id) {
+  // Check if the play already exists in the list
+  var existingPlays = document.querySelectorAll("#unetePredstave > span.badge");
+  for (var i = 0; i < existingPlays.length; i++) {
+    if (existingPlays[i].dataset.id === id) {
+      alert("Predstava već postoji u listi.");
+      return;
+    }
+  }
   // Creating span element
   var span = document.createElement("span");
   span.classList.add("badge");
@@ -87,4 +95,17 @@ function dodajPredstavu(id) {
       this.parentNode.parentNode.removeChild(this.parentNode);
     }
   });
+}
+//samo ako je validan input dodaj novi el
+function validateAndToggleButton(inputElement, buttonId) {
+  var isValid;
+  if (inputElement.value.length >= 3) {
+    isValid = true;
+  } else {
+    isValid = false;
+  }
+  var button = document.getElementById(buttonId);
+  if (button) {
+    button.disabled = !isValid;
+  }
 }
