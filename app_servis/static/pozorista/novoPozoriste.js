@@ -74,6 +74,19 @@ window.addEventListener("load", function () {
       dodajPredstavu(id);
       document.getElementById("predstave").value = "";
     });
+
+  function updatePredstavaInput() {
+    var spanovi = document.querySelectorAll("#unetePredstave > span.badge");
+    var niz = [];
+    for (let i = 0; i < spanovi.length; i++) {
+      niz.push(spanovi[i].dataset.id);
+    }
+    var jsonString = JSON.stringify(niz);
+
+    var predstaveInput = document.getElementById("predstaveInput");
+    predstaveInput.value = jsonString;
+    console.log(predstaveInput.value);
+  }
 });
 
 // function validate() {
@@ -178,16 +191,17 @@ function dodajPredstavu(id) {
     }
   });
 
-  function updatePredstavaInput() {
-    var spanovi = document.querySelectorAll("#unetePredstave > span.badge");
-    var niz = [];
-    for (let i = 0; i < spanovi.length; i++) {
-      niz.push(spanovi[i].dataset.id);
-    }
-    var jsonString = JSON.stringify(niz);
+  //   function updatePredstavaInput() {
+  //     var spanovi = document.querySelectorAll("#unetePredstave > span.badge");
+  //     var niz = [];
+  //     for (let i = 0; i < spanovi.length; i++) {
+  //       niz.push(spanovi[i].dataset.id);
+  //     }
+  //     var jsonString = JSON.stringify(niz);
 
-    var predstaveInput = "predstaveInput";
-    document.getElementById(predstaveInput).value = jsonString;
-    console.log(document.getElementById(predstaveInput).value);
-  }
+  //     var predstaveInput = "predstaveInput";
+  //     document.getElementById(predstaveInput).value = jsonString;
+  //     console.log(document.getElementById(predstaveInput).value);
+  //   }
+  // }
 }
