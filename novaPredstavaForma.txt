@@ -1,0 +1,3 @@
+{"naziv":"afsddd","datum":"2024-02-04","vreme":"14:02","pozoriste":"jdp","sala":"Scena Studio JDP","zanr":"Predstava za decu","glumciInput":"[\"Ljiljana Bozic\"]","cena":"1"}
+{"naziv":"afsddd","datum":"2024-02-04","vreme":"14:02","pozoriste":"jdp","sala":"Scena Studio JDP","zanr":"Predstava za decu","glumciInput":"[\"Ljiljana Bozic\"]","cena":"1"}
+{"naziv":"afsddd","datum":"2024-02-04","vreme":"14:02","pozoriste":"jdp","sala":"Scena Studio JDP","zanr":"Predstava za decu","glumciInput":"[\"Ljiljana Bozic\"]","cena":"1"}

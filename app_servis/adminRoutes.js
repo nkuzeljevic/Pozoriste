@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const BP = require("body-parser");
 const Joi = require("joi");
+const fs = require("fs");
 
 router.use(BP.urlencoded({ extended: false }));
 
@@ -11,6 +12,7 @@ router.get("/", (req, res) => {
 });
 
 //Pozoriste
+
 router.get("/pozorista/novo-pozoriste.html", (req, res) => {
   res.sendFile(
     path.join(__dirname, "static", "pozorista", "novo-pozoriste.html")
@@ -41,12 +43,48 @@ router.post("/novo-pozoriste", (req, res) => {
         )
     );
   } else {
+    //svaki novi red menjamo sa <br> posto npr opis moze da bude multiline
+    req.body.opis.replace(/\r?\n|\r/g, "<br>");
+    fs.appendFile(
+      "novoPozoristeForma.txt",
+      JSON.stringify(req.body) + "\n",
+      function (err, succ) {
+        res.send("Poruka je poslata, očekujte odgovor uskoro");
+      }
+    );
+
     // Process the successful form submission
-    res.send("Form submitted successfully");
+    // res.send("Form submitted successfully");
   }
 
   console.log(req.body);
   // res.send(req.body);
+});
+
+router.get("/pozorista", (req, res) => {
+  console.log("Request received for /admin/pozorista");
+  const pozorista = [];
+
+  fs.readFile("novoPozoristeForma.txt", "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading file:", err);
+      res
+        .status(500)
+        .send({ error: "Greška pri čitanju fajla novoPozoristeForma.txt" });
+      return;
+    }
+    //else…
+    const redovi = data.split("\n");
+
+    for (let i = 0; i < redovi.length - 1; i++) {
+      let obj = JSON.parse(redovi[i]);
+      pozorista.push(obj);
+    }
+    console.log(pozorista);
+    res.json(pozorista);
+  });
+
+  // res.send("sva pozorista");
 });
 
 //Sala
@@ -72,8 +110,17 @@ router.post("/nova-sala", (req, res) => {
         )
     );
   } else {
+    //svaki novi red menjamo sa <br> posto npr opis moze da bude multiline
+    // req.body.opis.replace(/\r?\n|\r/g, "<br>");
+    fs.appendFile(
+      "novaSalaForma.txt",
+      JSON.stringify(req.body) + "\n",
+      function (err, succ) {
+        res.send("Poruka je poslata, očekujte odgovor uskoro");
+      }
+    );
     // Process the successful form submission
-    res.send("Form submitted successfully");
+    // res.send("Form submitted successfully");
   }
 
   // res.send(req.body);
@@ -112,8 +159,17 @@ router.post("/nova-predstava", (req, res) => {
         )
     );
   } else {
+    //svaki novi red menjamo sa <br> posto npr opis moze da bude multiline
+    // req.body.opis.replace(/\r?\n|\r/g, "<br>");
+    fs.appendFile(
+      "novaPredstavaForma.txt",
+      JSON.stringify(req.body) + "\n",
+      function (err, succ) {
+        res.send("Poruka je poslata, očekujte odgovor uskoro");
+      }
+    );
     // Process the successful form submission
-    res.send("Form submitted successfully");
+    // res.send("Form submitted successfully");
   }
   // res.send(req.body);
   console.log(req.body);
@@ -142,8 +198,17 @@ router.post("/novi-glumac", (req, res) => {
         )
     );
   } else {
+    //svaki novi red menjamo sa <br> posto npr opis moze da bude multiline
+    req.body.opis.replace(/\r?\n|\r/g, "<br>");
+    fs.appendFile(
+      "noviGlumacForma.txt",
+      JSON.stringify(req.body) + "\n",
+      function (err, succ) {
+        res.send("Poruka je poslata, očekujte odgovor uskoro");
+      }
+    );
     // Process the successful form submission
-    res.send("Form submitted successfully");
+    // res.send("Form submitted successfully");
   }
   // res.send(req.body);
   console.log(req.body);
@@ -172,8 +237,17 @@ router.post("/rezervacija", (req, res) => {
         )
     );
   } else {
+    //svaki novi red menjamo sa <br> posto npr opis moze da bude multiline
+    // req.body.opis.replace(/\r?\n|\r/g, "<br>");
+    fs.appendFile(
+      "novaRezervacijaForma.txt",
+      JSON.stringify(req.body) + "\n",
+      function (err, succ) {
+        res.send("Poruka je poslata, očekujte odgovor uskoro");
+      }
+    );
     // Process the successful form submission
-    res.send("Form submitted successfully");
+    // res.send("Form submitted successfully");
   }
   // res.send(req.body);
   console.log(req.body);
