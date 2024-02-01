@@ -1,3 +1,4 @@
-{"naziv":"afsddd","pozoriste":"jdp","brMesta":"1"}
-{"naziv":"afsddd","pozoriste":"jdp","brMesta":"1"}
-{"naziv":"afsddd","pozoriste":"jdp","brMesta":"1"}
+{"naziv":"Sala 1","pozoriste":"zvezdaraTeatar","brMesta":"123"}
+{"naziv":"Sala 2","pozoriste":"bdp","brMesta":"456"}
+{"naziv":"Sala 3","pozoriste":"atelje","brMesta":"234"}
+{"naziv":"Sala 2","pozoriste":"pozoristeNaTerazijama","brMesta":"3"}

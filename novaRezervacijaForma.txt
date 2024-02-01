@@ -1,3 +1,0 @@
-{"rezervacija":"prihvacena"}
-{"rezervacija":"prihvacena"}
-{"rezervacija":"prihvacena"}

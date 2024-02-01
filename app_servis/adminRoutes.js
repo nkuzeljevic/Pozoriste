@@ -68,9 +68,7 @@ router.get("/pozorista", (req, res) => {
   fs.readFile("novoPozoristeForma.txt", "utf8", (err, data) => {
     if (err) {
       console.error("Error reading file:", err);
-      res
-        .status(500)
-        .send({ error: "Greška pri čitanju fajla novoPozoristeForma.txt" });
+      res.status(500).send({ error: "Greška pri čitanju fajla" });
       return;
     }
     //else…
@@ -88,6 +86,28 @@ router.get("/pozorista", (req, res) => {
 });
 
 //Sala
+router.get("/sale", (req, res) => {
+  console.log("Request received for /admin/sale");
+  const sale = [];
+
+  fs.readFile("novaSalaForma.txt", "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading file:", err);
+      res.status(500).send({ error: "Greška pri čitanju fajla" });
+      return;
+    }
+    //else…
+    const redovi = data.split("\n");
+
+    for (let i = 0; i < redovi.length - 1; i++) {
+      let obj = JSON.parse(redovi[i]);
+      sale.push(obj);
+    }
+    console.log(sale);
+    res.json(sale);
+  });
+});
+
 router.get("/sale/nova-sala.html", (req, res) => {
   res.sendFile(path.join(__dirname, "static", "sale", "nova-sala.html"));
 });
@@ -128,6 +148,30 @@ router.post("/nova-sala", (req, res) => {
 });
 
 //Predstave
+router.get("/predstave", (req, res) => {
+  console.log("Request received for /admin/predstave");
+  const predstave = [];
+
+  fs.readFile("novaPredstavaForma.txt", "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading file:", err);
+      res.status(500).send({ error: "Greška pri čitanju fajla" });
+      return;
+    }
+    //else…
+    const redovi = data.split("\n");
+
+    for (let i = 0; i < redovi.length - 1; i++) {
+      let obj = JSON.parse(redovi[i]);
+      predstave.push(obj);
+    }
+    console.log(predstave);
+    res.json(predstave);
+  });
+
+  // res.send("sva pozorista");
+});
+
 router.get("/predstave/nova-predstava.html", (req, res) => {
   res.sendFile(
     path.join(__dirname, "static", "predstave", "nova-predstava.html")
@@ -176,6 +220,28 @@ router.post("/nova-predstava", (req, res) => {
 });
 
 //Glumci
+router.get("/glumci", (req, res) => {
+  console.log("Request received for /admin/glumci");
+  const glumci = [];
+
+  fs.readFile("noviGlumacForma.txt", "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading file:", err);
+      res.status(500).send({ error: "Greška pri čitanju fajla" });
+      return;
+    }
+    //else…
+    const redovi = data.split("\n");
+
+    for (let i = 0; i < redovi.length - 1; i++) {
+      let obj = JSON.parse(redovi[i]);
+      glumci.push(obj);
+    }
+    console.log(glumci);
+    res.json(glumci);
+  });
+});
+
 router.get("/glumci/novi-glumac.html", (req, res) => {
   res.sendFile(path.join(__dirname, "static", "glumci", "novi-glumac.html"));
 });

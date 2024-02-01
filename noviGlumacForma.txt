@@ -1,3 +1,4 @@
-{"ime":"aavgb","opis":"aaa","predstaveInput":"[\"lala\"]"}
-{"ime":"aavgb","opis":"aaa","predstaveInput":"[\"lala\"]"}
-{"ime":"aavgb","opis":"aaa","predstaveInput":"[\"lala\"]"}
+{"ime":"Darko","opis":"Aaaa","predstaveInput":"[\"lala\"]"}
+{"ime":"Branko","opis":"Aaaa","predstaveInput":"[\"lala\"]"}
+{"ime":"Marko","opis":"Aaaa","predstaveInput":"[\"lala\"]"}
+{"ime":"Ziroslav","opis":"mmm","predstaveInput":"[\"ababa\",\"lala\"]"}

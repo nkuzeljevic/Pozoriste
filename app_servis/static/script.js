@@ -1,8 +1,8 @@
-$(window).resize(function () {
-  if ($(window).width() > 926) {
-    $(".navbar-collapse").collapse("hide");
-  }
-});
+// $(window).resize(function () {
+//   if ($(window).width() > 926) {
+//     $(".navbar-collapse").collapse("hide");
+//   }
+// });
 
 // document.addEventListener("DOMContentLoaded", function () {
 //   document

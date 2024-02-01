@@ -1,3 +1,4 @@
-{"naziv":"afsddd","datum":"2024-02-04","vreme":"14:02","pozoriste":"jdp","sala":"Scena Studio JDP","zanr":"Predstava za decu","glumciInput":"[\"Ljiljana Bozic\"]","cena":"1"}
-{"naziv":"afsddd","datum":"2024-02-04","vreme":"14:02","pozoriste":"jdp","sala":"Scena Studio JDP","zanr":"Predstava za decu","glumciInput":"[\"Ljiljana Bozic\"]","cena":"1"}
-{"naziv":"afsddd","datum":"2024-02-04","vreme":"14:02","pozoriste":"jdp","sala":"Scena Studio JDP","zanr":"Predstava za decu","glumciInput":"[\"Ljiljana Bozic\"]","cena":"1"}
+{"naziv":"Predstava 1","datum":"2024-02-09","vreme":"17:15","pozoriste":"bdp","sala":"Velika scena","zanr":"komedija","glumciInput":"[\"Marko\"]","cena":"1234"}
+{"naziv":"Predstava 2","datum":"2024-02-10","vreme":"17:15","pozoriste":"jdp","sala":"Velika scena Ljuba Tadić","zanr":"opera","glumciInput":"[\"Marko\"]","cena":"1234"}
+{"naziv":"Predstava 3","datum":"2024-02-11","vreme":"17:15","pozoriste":"zvezdaraTeatar","sala":"Scena Bata Stojković","zanr":"drama","glumciInput":"[\"Marko\"]","cena":"1234"}
+{"naziv":"Predstava 4","datum":"2024-02-02","vreme":"17:57","pozoriste":"bdp","sala":"Velika scena","zanr":"bbbb","glumciInput":"[\"aaa\",\"Marko\"]","cena":"111"}
