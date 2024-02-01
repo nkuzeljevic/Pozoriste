@@ -1,35 +1,181 @@
 const express = require("express");
 const router = express.Router();
 const BP = require("body-parser");
+const Joi = require("joi");
 
 router.use(BP.urlencoded({ extended: false }));
 
+//Dashboard
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "static", "admin", "index.html"));
 });
 
+//Pozoriste
+router.get("/pozorista/novo-pozoriste.html", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "static", "pozorista", "novo-pozoriste.html")
+  );
+});
+
 router.post("/novo-pozoriste", (req, res) => {
+  const shema = Joi.object().keys({
+    naziv: Joi.string().trim().min(5).max(25).required(),
+    adresa: Joi.string().trim().min(5).max(35).required(),
+    opis: Joi.string().trim().min(1).required(),
+    email: Joi.string().email({ minDomainSegments: 2 }),
+    telefon: Joi.string()
+      .trim()
+      .pattern(/^[0-9]{3}\/?[0-9]{6,7}$/)
+      .required(),
+    predstaveInput: Joi.string().trim().min(3).max(25).required(),
+  });
+
+  const { error, succ } = shema.validate(req.body);
+
+  if (error) {
+    // Redirect back to the form with error details
+    res.redirect(
+      "/pozorista/novo-pozoriste.html?error=" +
+        encodeURIComponent(
+          error.details.map((detail) => detail.message).join(", ")
+        )
+    );
+  } else {
+    // Process the successful form submission
+    res.send("Form submitted successfully");
+  }
+
   console.log(req.body);
-  res.send(req.body);
+  // res.send(req.body);
+});
+
+//Sala
+router.get("/sale/nova-sala.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "sale", "nova-sala.html"));
 });
 
 router.post("/nova-sala", (req, res) => {
-  res.send(req.body);
+  const shema = Joi.object().keys({
+    naziv: Joi.string().trim().min(5).max(25).required(),
+    pozoriste: Joi.string().trim().min(1).required(),
+    brMesta: Joi.number().integer().min(1).required(),
+  });
+
+  const { error, succ } = shema.validate(req.body);
+
+  if (error) {
+    // Redirect back to the form with error details
+    res.redirect(
+      "/sale/nova-sala.html?error=" +
+        encodeURIComponent(
+          error.details.map((detail) => detail.message).join(", ")
+        )
+    );
+  } else {
+    // Process the successful form submission
+    res.send("Form submitted successfully");
+  }
+
+  // res.send(req.body);
   console.log(req.body);
+});
+
+//Predstave
+router.get("/predstave/nova-predstava.html", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "static", "predstave", "nova-predstava.html")
+  );
 });
 
 router.post("/nova-predstava", (req, res) => {
-  res.send(req.body);
+  const shema = Joi.object().keys({
+    naziv: Joi.string().trim().min(5).max(25).required(),
+    datum: Joi.date().greater("now").required(),
+    vreme: Joi.string()
+      .regex(/^([01]\d|2[0-3]):([0-5]\d)$/)
+      .required(),
+    pozoriste: Joi.string().trim().min(1).required(),
+    sala: Joi.string().trim().min(1).required(),
+    zanr: Joi.string().trim().min(1).required(),
+    glumciInput: Joi.string().trim().min(3).max(25).required(),
+    cena: Joi.number().greater(0).required(),
+  });
+
+  const { error, succ } = shema.validate(req.body);
+
+  if (error) {
+    // Redirect back to the form with error details
+    res.redirect(
+      "/predstave/nova-predstava.html?error=" +
+        encodeURIComponent(
+          error.details.map((detail) => detail.message).join(", ")
+        )
+    );
+  } else {
+    // Process the successful form submission
+    res.send("Form submitted successfully");
+  }
+  // res.send(req.body);
   console.log(req.body);
+});
+
+//Glumci
+router.get("/glumci/novi-glumac.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "glumci", "novi-glumac.html"));
 });
 
 router.post("/novi-glumac", (req, res) => {
-  res.send(req.body);
+  const shema = Joi.object().keys({
+    ime: Joi.string().trim().min(5).max(35).required(),
+    opis: Joi.string().trim().min(1).required(),
+    predstaveInput: Joi.string().trim().min(3).max(25).required(),
+  });
+
+  const { error, succ } = shema.validate(req.body);
+
+  if (error) {
+    // Redirect back to the form with error details
+    res.redirect(
+      "/glumci/novi-glumac.html?error=" +
+        encodeURIComponent(
+          error.details.map((detail) => detail.message).join(", ")
+        )
+    );
+  } else {
+    // Process the successful form submission
+    res.send("Form submitted successfully");
+  }
+  // res.send(req.body);
   console.log(req.body);
 });
 
+//Rezervacije
+router.get("/rezervacije/rezervacija.html", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "static", "rezervacije", "rezervacija.html")
+  );
+});
+
 router.post("/rezervacija", (req, res) => {
-  res.send(req.body);
+  const shema = Joi.object().keys({
+    rezervacija: Joi.string().empty("").required(),
+  });
+
+  const { error, succ } = shema.validate(req.body);
+
+  if (error) {
+    // Redirect back to the form with error details
+    res.redirect(
+      "/rezervacije/rezervacija.html?error=" +
+        encodeURIComponent(
+          error.details.map((detail) => detail.message).join(", ")
+        )
+    );
+  } else {
+    // Process the successful form submission
+    res.send("Form submitted successfully");
+  }
+  // res.send(req.body);
   console.log(req.body);
 });
 

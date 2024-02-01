@@ -22,6 +22,7 @@
 //   }
 //   return validno;
 // }
+
 window.addEventListener("load", function () {
   //sadrzaj funkcije koja ce se pozvati kada browser proglasi stranicu ucitanom
   //tj DOM tree potpuno formiranim
@@ -87,6 +88,32 @@ window.addEventListener("load", function () {
     predstaveInput.value = jsonString;
     console.log(predstaveInput.value);
   }
+
+  // // Get error parameter from the URL
+  // var error = getParameterByName("error");
+
+  // // Display error message as an alert if present
+  // if (error) {
+  //   alert(error);
+  // }
+
+  // Function to get URL parameter by name
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return "";
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+  // Get error parameter from the URL
+  var error = getParameterByName("error");
+
+  // Display error message as an alert if present
+  if (error) {
+    alert(error);
+  }
 });
 
 // function validate() {
@@ -111,9 +138,9 @@ window.addEventListener("load", function () {
 // }
 
 function validatePhoneNumber(inputElement) {
-  // Define a regular expression pattern for a simple phone number
-  var phoneNumberPattern = /^\d{9,15}$/;
-
+  // Define a regular expression pattern for a phone number
+  // var phoneNumberPattern = /^\d{9,15}$/;
+  var phoneNumberPattern = /^[0-9]{3}\/?[0-9]{6,7}$/;
   if (phoneNumberPattern.test(inputElement.value)) {
     inputElement.classList.add("success");
     inputElement.classList.remove("error");

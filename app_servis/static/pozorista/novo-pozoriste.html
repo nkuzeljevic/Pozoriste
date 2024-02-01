@@ -91,16 +91,23 @@
               rows="3"
               placeholder="Opis..."
               class="form-control"
+              required
             ></textarea>
             <div class="mb-3 mt-3">
               <label for="naziv">Predstave:</label>
               <div class="input-group mb-3">
-                <input
+                <!-- <input
                   type="text"
                   oninput="validateAndToggleButton(this, 'dodajPredstavu')"
                   class="form-control"
                   id="predstave"
                   name="predstave"
+                /> -->
+                <input
+                  type="text"
+                  oninput="validateAndToggleButton(this, 'dodajPredstavu')"
+                  class="form-control"
+                  id="predstave"
                 />
                 <button
                   class="btn btn-success"
