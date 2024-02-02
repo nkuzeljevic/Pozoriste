@@ -29,7 +29,7 @@ router.post("/novo-pozoriste", (req, res) => {
       .trim()
       .pattern(/^[0-9]{3}\/?[0-9]{6,7}$/)
       .required(),
-    predstaveInput: Joi.string().trim().min(3).max(25).required(),
+    predstaveInput: Joi.string().trim().min(1).required(),
   });
 
   const { error, succ } = shema.validate(req.body);
@@ -100,8 +100,13 @@ router.get("/sale", (req, res) => {
     const redovi = data.split("\n");
 
     for (let i = 0; i < redovi.length - 1; i++) {
-      let obj = JSON.parse(redovi[i]);
-      sale.push(obj);
+      try {
+        let obj = JSON.parse(redovi[i]);
+        sale.push(obj);
+      } catch (parseError) {
+        console.error("Error parsing line:", parseError);
+        // Handle parsing error if needed
+      }
     }
     console.log(sale);
     res.json(sale);
@@ -115,7 +120,7 @@ router.get("/sale/nova-sala.html", (req, res) => {
 router.post("/nova-sala", (req, res) => {
   const shema = Joi.object().keys({
     naziv: Joi.string().trim().min(5).max(25).required(),
-    pozoriste: Joi.string().trim().min(1).required(),
+    izabranoPozoriste: Joi.string().trim().min(1).required(),
     brMesta: Joi.number().integer().min(1).required(),
   });
 
@@ -130,10 +135,23 @@ router.post("/nova-sala", (req, res) => {
         )
     );
   } else {
-    //svaki novi red menjamo sa <br> posto npr opis moze da bude multiline
-    // req.body.opis.replace(/\r?\n|\r/g, "<br>");
+    // Get the selected text from the option, not the ID
+    const selectedPozoriste = req.body.pozoriste;
+    // const formData = {
+    //   Naziv: req.body.naziv,
+    //   Pozoriste: req.body.pozoriste,
+    //   "Broj mesta": req.body.brMesta,
+    // };
+    // // Convert the object to JSON
+    // const formDataJSON = JSON.stringify(formData);
+
     fs.appendFile(
       "novaSalaForma.txt",
+      // JSON.stringify({
+      //   Naziv: req.body.naziv,
+      //   izabranoPozoriste: selectedPozoriste,
+      //   "Broj mesta": req.body.brMesta,
+      // }) + "\n",
       JSON.stringify(req.body) + "\n",
       function (err, succ) {
         res.send("Poruka je poslata, očekujte odgovor uskoro");
@@ -162,8 +180,13 @@ router.get("/predstave", (req, res) => {
     const redovi = data.split("\n");
 
     for (let i = 0; i < redovi.length - 1; i++) {
-      let obj = JSON.parse(redovi[i]);
-      predstave.push(obj);
+      try {
+        let obj = JSON.parse(redovi[i]);
+        predstave.push(obj);
+      } catch (parseError) {
+        console.error("Error parsing line:", parseError);
+        // Handle parsing error if needed
+      }
     }
     console.log(predstave);
     res.json(predstave);
@@ -185,10 +208,10 @@ router.post("/nova-predstava", (req, res) => {
     vreme: Joi.string()
       .regex(/^([01]\d|2[0-3]):([0-5]\d)$/)
       .required(),
-    pozoriste: Joi.string().trim().min(1).required(),
+    izabranoPozoriste: Joi.string().trim().min(1).required(),
     sala: Joi.string().trim().min(1).required(),
     zanr: Joi.string().trim().min(1).required(),
-    glumciInput: Joi.string().trim().min(3).max(25).required(),
+    glumciInput: Joi.string().trim().min(3).required(),
     cena: Joi.number().greater(0).required(),
   });
 
@@ -250,7 +273,7 @@ router.post("/novi-glumac", (req, res) => {
   const shema = Joi.object().keys({
     ime: Joi.string().trim().min(5).max(35).required(),
     opis: Joi.string().trim().min(1).required(),
-    predstaveInput: Joi.string().trim().min(3).max(25).required(),
+    predstaveInput: Joi.string().trim().min(1).required(),
   });
 
   const { error, succ } = shema.validate(req.body);

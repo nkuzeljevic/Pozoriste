@@ -1,2 +1,3 @@
 {"naziv":"Novo pozoriste","opis":"Opis","predstaveInput":"[\"ababa\"]","adresa":"Moja adresa","telefon":"0000000000","email":"aa@bb.com"}
 {"naziv":"Drugo pozoriste","opis":"Volim pozoriste","predstaveInput":"[\"ababa\"]","adresa":"Neka druga","telefon":"0000000000","email":"aa@bb.com"}
+{"naziv":"Novo 2","opis":"aaa","predstaveInput":"[\"ababa\",\"lala\"]","adresa":"asdsd","telefon":"0000000000","email":"aa@bb.com"}

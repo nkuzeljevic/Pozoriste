@@ -58,3 +58,14 @@ h3 {
 .success {
   border-color: green;
 }
+
+table th {
+  width: 10%; /* Adjust the width as needed */
+  text-align: left; /* Optional: Align text to the left */
+  background-color: #f0f0f0; /* Optional: Add a background color for headers */
+  padding: 8px; /* Optional: Add padding for better spacing */
+}
+
+table td {
+  padding: 8px; /* Optional: Add padding for better spacing */
+}

@@ -2,3 +2,4 @@
 {"ime":"Branko","opis":"Aaaa","predstaveInput":"[\"lala\"]"}
 {"ime":"Marko","opis":"Aaaa","predstaveInput":"[\"lala\"]"}
 {"ime":"Ziroslav","opis":"mmm","predstaveInput":"[\"ababa\",\"lala\"]"}
+{"ime":"Marko Zarkovic","opis":"U opisu nesto pise","predstaveInput":"[\"Kasablanka\",\"Kako biti veliki covek\"]"}

@@ -84,12 +84,13 @@
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="pozoriste">Pozorište:</label>
-            <select
+            <!-- <select
               class="form-select"
               name="pozoriste"
               id="pozoriste"
               required
-            >
+            > -->
+            <select class="form-select" id="pozoriste" required>
               <option value="">Izaberi pozorište...</option>
               <option value="atelje">Atelje 212</option>
               <option value="bdp">Beogradsko dramsko pozorište</option>
@@ -99,6 +100,12 @@
               </option>
               <option value="zvezdaraTeatar">Zvezdara teatar</option>
             </select>
+            <!-- Add a hidden input field to store the selected text -->
+            <input
+              type="hidden"
+              id="izabranoPozoriste"
+              name="izabranoPozoriste"
+            />
           </div>
         </div>
         <div class="col-md-6 col-sm-12">

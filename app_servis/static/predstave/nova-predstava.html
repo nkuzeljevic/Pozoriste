@@ -71,6 +71,7 @@
         onsubmit="return validate()"
         class="row"
         method="post"
+        id="forma"
         action="/admin/nova-predstava"
       >
         <div class="col-md-6 col-sm-12">
@@ -115,10 +116,16 @@
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="pozoriste">Pozorište:</label>
-            <select
+            <!-- <select
               class="form-select"
               onchange="updateHallOptions()"
               name="pozoriste"
+              id="pozoriste"
+              required
+            > -->
+            <select
+              class="form-select"
+              onchange="updateHallOptions()"
               id="pozoriste"
               required
             >
@@ -131,6 +138,12 @@
               </option>
               <option value="zvezdaraTeatar">Zvezdara teatar</option>
             </select>
+
+            <input
+              type="hidden"
+              id="izabranoPozoriste"
+              name="izabranoPozoriste"
+            />
           </div>
         </div>
 

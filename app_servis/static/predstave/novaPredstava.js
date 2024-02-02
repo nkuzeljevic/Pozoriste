@@ -39,24 +39,75 @@ window.addEventListener("load", function () {
   //spreciti datume starije od danas
   document.getElementById("datum").min = new Date().toISOString().split("T")[0];
 
-  document.getElementById("btnUnesi").addEventListener("click", function () {
-    const formData = {
-      naziv: document.getElementById("naziv").value,
-      pozoriste: document.getElementById("pozoriste").value,
-      datum: document.getElementById("datum").value,
-      vreme: document.getElementById("vreme").value,
-      sala: document.getElementById("sala").value,
-      cena: document.getElementById("cena").value,
-      brMesta: document.getElementById("brMesta").value,
-    };
+  document.getElementById("forma").addEventListener("submit", function (event) {
+    var nazivElement = document.getElementById("naziv");
+    var datumElement = document.getElementById("datum");
+    var vremeElement = document.getElementById("vreme");
+    var pozoristeElement = document.getElementById("pozoriste");
+    var izabranoPozoristeElement = document.getElementById("izabranoPozoriste");
+    var salaElement = document.getElementById("sala");
+    var zanrElement = document.getElementById("zanr");
+    var glumciInputElement = document.getElementById("glumciInput");
+    var cenaElement = document.getElementById("cena");
 
-    if (validate(formData)) {
-      console.log("Form data submitted:", formData);
-      // Perform form submission or any other actions here
+    if (
+      nazivElement.classList.contains("error") ||
+      datumElement.classList.contains("error") ||
+      vremeElement.classList.contains("error") ||
+      pozoristeElement.classList.contains("error") ||
+      izabranoPozoristeElement.classList.contains("error") ||
+      salaElement.classList.contains("error") ||
+      zanrElement.classList.contains("error") ||
+      glumciInputElement.classList.contains("error") ||
+      cenaElement.classList.contains("error")
+    ) {
+      alert("Molimo ispravite greške pre čuvanja.");
+      event.preventDefault(); // Prevent form submission
     } else {
-      console.log("Form data validation failed.");
+      //  Obrada da se salje naziv pozorista, a ne ID
+      const selectElement = document.getElementById("pozoriste");
+      const izabranoPozoriste =
+        selectElement.options[selectElement.selectedIndex].text;
+
+      // Update the hidden input field (optional, for server-side validation)
+      document.getElementById("izabranoPozoriste").value = izabranoPozoriste;
     }
   });
+
+  // document.getElementById("btnUnesi").addEventListener("click", function () {
+  //   console.log("Button clicked");
+  //   const selectElement = document.getElementById("pozoriste");
+  //   const selectedOption = selectElement.options[selectElement.selectedIndex];
+
+  //   console.log("Selected Option Value:", selectedOption.value);
+  //   console.log("Selected Option Text:", selectedOption.text);
+  //   const formData = {
+  //     naziv: document.getElementById("naziv").value,
+  //     datum: document.getElementById("datum").value,
+  //     vreme: document.getElementById("vreme").value,
+  //     pozoriste: selectedOption.value,
+  //     izabranoPozoriste: selectedOption.text,
+  //     sala: document.getElementById("sala").value,
+  //     zanr: document.getElementById("zanr").value,
+  //     glumciInput: document.getElementById("glumciInput").value,
+  //     cena: document.getElementById("cena").value,
+  //   };
+  //   console.log("Form Data:", formData);
+  //   if (validate(formData)) {
+  //     console.log("Form data submitted:", formData);
+  //     // Perform form submission or any other actions here
+  //   } else {
+  //     console.log("Form data validation failed.");
+  //     // Obrada da se salje naziv pozorista, a ne ID
+  //     // console.log(document.getElementById("pozoriste"));
+  //     // const selectElement = document.getElementById("pozoriste");
+  //     // const izabranoPozoriste =
+  //     //   selectElement.options[selectElement.selectedIndex].text;
+
+  //     // // Update the hidden input field (optional, for server-side validation)
+  //     // document.getElementById("izabranoPozoriste").value = izabranoPozoriste;
+  //   }
+  // });
 
   var addedGenres = [];
   //Novi zanr

@@ -17,6 +17,14 @@ window.addEventListener("load", function () {
     ) {
       alert("Molimo ispravite greške pre čuvanja.");
       event.preventDefault(); // Prevent form submission
+    } else {
+      //  Obrada da se salje naziv pozorista, a ne ID
+      const selectElement = document.getElementById("pozoriste");
+      const izabranoPozoriste =
+        selectElement.options[selectElement.selectedIndex].text;
+
+      // Update the hidden input field (optional, for server-side validation)
+      document.getElementById("izabranoPozoriste").value = izabranoPozoriste;
     }
   });
 

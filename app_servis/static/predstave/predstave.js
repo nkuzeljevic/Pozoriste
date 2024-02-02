@@ -15,13 +15,14 @@ window.addEventListener("load", function () {
         const playDate = new Date(play.datum);
 
         // Format date as DD.MM.YYYY
-        const formattedDate = playDate
-          .toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          })
-          .replace(/\//g, ".");
+        const formattedDate =
+          playDate
+            .toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })
+            .replace(/\//g, ".") + ".";
 
         // Parse glumciInput into an array
         const glumciArray = JSON.parse(play.glumciInput);
@@ -32,13 +33,13 @@ window.addEventListener("load", function () {
                     ${play.naziv}
                   </td>
                   <td>
-                    ${play.pozoriste}
+                    ${play.izabranoPozoriste}
                   </td>
                   <td>
                     ${formattedDate}
                   </td>
                   <td>
-                    ${play.vreme}
+                    ${play.vreme}h
                   </td>
                   <td>
                     ${play.sala}

@@ -32,12 +32,21 @@ window.addEventListener("load", function () {
     .then((pozorista) => {
       // Function to create a table based on theater data
       const createTable = (theater) => {
+        const predstaveArray = JSON.parse(theater.predstaveInput);
+        const predstaveListItems = predstaveArray
+          .map(
+            (predstava) =>
+              `<li class="list-group-item podlista">${predstava}</li>`
+          )
+          .join("");
         return `
+        <br />
+        <hr />
+        <br />
         <div class="row">
         <h3>${theater.naziv}</h3>
           <div class="table-responsive">
             <table class="table table-striped">
-              <tbody>
                 <tr>
                   <th>Opis</th>
                   <td>
@@ -60,7 +69,7 @@ window.addEventListener("load", function () {
                   <th>Predstave</th>
                   <td>
                     <ul class="list-group">
-                      <li class="list-group-item">${theater.predstaveInput}</li>
+                      ${predstaveListItems}
                     </ul>
                   </td>
                 </tr>
@@ -78,7 +87,6 @@ window.addEventListener("load", function () {
                       >
                   </td>
                 </tr>
-              </tbody>
             </table>
           </div>
           </div>
@@ -93,7 +101,7 @@ window.addEventListener("load", function () {
       // Dynamically add the link to main.css
       const styleLink = document.createElement("link");
       styleLink.rel = "stylesheet";
-      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      styleLink.href = "/main.css";
       document.head.appendChild(styleLink);
     })
     // .catch(error => console.error("Error fetching data:", error));
