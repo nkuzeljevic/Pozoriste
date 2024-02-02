@@ -48,7 +48,7 @@ window.addEventListener("load", function () {
                     ${play.cena} RSD
                   </td>
                   <td>
-                    ${play.zanr}
+                    ${play.izabraniZanr}
                   </td>
                    <td>
                     ${glumciArray.join(", ")}

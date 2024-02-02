@@ -47,6 +47,7 @@ window.addEventListener("load", function () {
     var izabranoPozoristeElement = document.getElementById("izabranoPozoriste");
     var salaElement = document.getElementById("sala");
     var zanrElement = document.getElementById("zanr");
+    var izabraniZanrElement = document.getElementById("izabraniZanr");
     var glumciInputElement = document.getElementById("glumciInput");
     var cenaElement = document.getElementById("cena");
 
@@ -58,6 +59,7 @@ window.addEventListener("load", function () {
       izabranoPozoristeElement.classList.contains("error") ||
       salaElement.classList.contains("error") ||
       zanrElement.classList.contains("error") ||
+      izabraniZanrElement.classList.contains("error") ||
       glumciInputElement.classList.contains("error") ||
       cenaElement.classList.contains("error")
     ) {
@@ -65,12 +67,21 @@ window.addEventListener("load", function () {
       event.preventDefault(); // Prevent form submission
     } else {
       //  Obrada da se salje naziv pozorista, a ne ID
-      const selectElement = document.getElementById("pozoriste");
+      const selectElementPozoriste = document.getElementById("pozoriste");
       const izabranoPozoriste =
-        selectElement.options[selectElement.selectedIndex].text;
+        selectElementPozoriste.options[selectElementPozoriste.selectedIndex]
+          .text;
 
       // Update the hidden input field (optional, for server-side validation)
       document.getElementById("izabranoPozoriste").value = izabranoPozoriste;
+
+      //Slanje izabranog zanra
+      const selectElementZanr = document.getElementById("zanr");
+      const izabraniZanr =
+        selectElementZanr.options[selectElementZanr.selectedIndex].text;
+
+      // Update the hidden input field (optional, for server-side validation)
+      document.getElementById("izabraniZanr").value = izabraniZanr;
     }
   });
 

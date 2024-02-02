@@ -1,4 +1,3 @@
-{"naziv":"Predstava 1","datum":"2024-02-10","vreme":"17:00","izabranoPozoriste":"Atelje 212","sala":"Scena Petar Kralj","zanr":"Pozoriste za decu","glumciInput":"[\"Marko Markovic\"]","cena":"1111"}
-{"naziv":"Predstava 2","datum":"2024-02-04","vreme":"17:01","izabranoPozoriste":"Beogradsko dramsko pozorište","sala":"Mala sala","zanr":"drama","glumciInput":"[\"Marko\"]","cena":"1234"}
-{"naziv":"Predstava 3","datum":"2024-02-24","vreme":"17:01","izabranoPozoriste":"Jugoslovensko dramsko pozorište","sala":"Velika scena Ljuba Tadić","zanr":"mjuzikl","glumciInput":"[\"Marko\",\"Darka\"]","cena":"1234"}
-{"naziv":"Predstava 4","datum":"2024-02-15","vreme":"17:01","izabranoPozoriste":"Pozorište na Terazijama","sala":"Velika scena","zanr":"mjuzikl","glumciInput":"[\"Darka\"]","cena":"1234"}
+{"naziv":"Predstava 1","datum":"2024-02-11","vreme":"17:14","izabranoPozoriste":"Jugoslovensko dramsko pozorište","sala":"Velika scena Ljuba Tadić","izabraniZanr":"Drama","glumciInput":"[\"Marko Markovic\"]","cena":"1111"}
+{"naziv":"Predstava 2","datum":"2024-02-11","vreme":"17:17","izabranoPozoriste":"Atelje 212","sala":"Scena Petar Kralj","izabraniZanr":"Novi zanr","glumciInput":"[\"Marko Markovic\",\"Branko Brankovic\"]","cena":"1234"}
+{"naziv":"Predstava 3","datum":"2024-02-11","vreme":"17:17","izabranoPozoriste":"Zvezdara teatar","sala":"Scena Bata Stojković","izabraniZanr":"Opera","glumciInput":"[\"Branko Brankovic\"]","cena":"1234"}

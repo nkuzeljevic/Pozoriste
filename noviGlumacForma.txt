@@ -1,5 +1,4 @@
-{"ime":"Darko","opis":"Aaaa","predstaveInput":"[\"lala\"]"}
-{"ime":"Branko","opis":"Aaaa","predstaveInput":"[\"lala\"]"}
-{"ime":"Marko","opis":"Aaaa","predstaveInput":"[\"lala\"]"}
-{"ime":"Ziroslav","opis":"mmm","predstaveInput":"[\"ababa\",\"lala\"]"}
 {"ime":"Marko Zarkovic","opis":"U opisu nesto pise","predstaveInput":"[\"Kasablanka\",\"Kako biti veliki covek\"]"}
+{"ime":"Marko Markovic","opis":"Opisujemo glumca ovde ","predstaveInput":"[\"Labudica\"]"}
+{"ime":"Branko Brankovic","opis":"Opisujemo glumca ovde ","predstaveInput":"[\"Labudica\",\"Kako do pobede\"]"}
+{"ime":"Zivoslav Stamenkovic","opis":"Opisujemo glumca ovde ","predstaveInput":"[\"Labudica\",\"Kako do pobede\",\"Krcmarica\"]"}

@@ -210,7 +210,7 @@ router.post("/nova-predstava", (req, res) => {
       .required(),
     izabranoPozoriste: Joi.string().trim().min(1).required(),
     sala: Joi.string().trim().min(1).required(),
-    zanr: Joi.string().trim().min(1).required(),
+    izabraniZanr: Joi.string().trim().min(1).required(),
     glumciInput: Joi.string().trim().min(3).required(),
     cena: Joi.number().greater(0).required(),
   });
