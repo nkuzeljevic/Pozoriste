@@ -27,7 +27,10 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         allowNull: false,
       },
-      datum: { type: DataTypes.DATE, allowNull: false },
+      datum: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      },
       vreme: { type: DataTypes.TIME, allowNull: false },
       cena: { type: DataTypes.DOUBLE, allowNull: false },
     },

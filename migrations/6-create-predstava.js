@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       datum: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
       },
       vreme: {
         type: Sequelize.STRING,

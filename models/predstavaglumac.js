@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(Predstava, { foreignKey: "idPredstave" });
       this.belongsTo(Glumac, { foreignKey: "idGlumca" });
     }
+    // static associate(models) {
+    //   PredstavaGlumac.belongsTo(models.Predstava, {
+    //     foreignKey: "idPredstave",
+    //   });
+    //   PredstavaGlumac.belongsTo(models.Glumac, { foreignKey: "idGlumca" });
+    // }
   }
   PredstavaGlumac.init(
     { idPredstave: DataTypes.INTEGER, idGlumca: DataTypes.INTEGER },

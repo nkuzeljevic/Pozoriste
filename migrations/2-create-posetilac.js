@@ -1,40 +1,40 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Posetiocis', {
+    await queryInterface.createTable("Posetilacs", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       imePrezime: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       lozinka: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       brojTelefona: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       uloga: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Posetiocis');
-  }
+    await queryInterface.dropTable("Posetilacs");
+  },
 };

@@ -1,4 +1,15 @@
 const express = require("express");
+const {
+  sequelize,
+  Glumac,
+  Posetilac,
+  Pozoriste,
+  Predstava,
+  PredstavaGlumac,
+  Rezervacija,
+  Sala,
+  Zanr,
+} = require("../models");
 const route = express.Router();
 const BP = require("body-parser");
 
@@ -9,7 +20,8 @@ route.use(express.urlencoded({ extended: true }));
 //GET koji vraca sve zapise iz baze (posto smo u modulu, vec se nalazimo u /admin/pozoriste)
 route.get("/", async (req, res) => {
   try {
-    return res.json("svi glumac");
+    const glumci = await Glumac.findAll();
+    return res.json(glumci);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri citanju", data: err });
@@ -19,7 +31,8 @@ route.get("/", async (req, res) => {
 //GET koji vraca po specificnom id-ju
 route.get("/:id", async (req, res) => {
   try {
-    return res.json("glumac čiji je id=" + req.params.id);
+    const glumac = await Glumac.findByPk(req.params.id);
+    return res.json(glumac);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri citanju", data: err });
@@ -29,7 +42,8 @@ route.get("/:id", async (req, res) => {
 //POST sa podacima u body
 route.post("/", async (req, res) => {
   try {
-    return res.json("unos novog glumac čiji su podaci u req.body");
+    const novi = await Glumac.create(req.body);
+    return res.json(novi);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri unosu", data: err });
@@ -39,11 +53,11 @@ route.post("/", async (req, res) => {
 //PUT koji radi izmenu
 route.put("/:id", async (req, res) => {
   try {
-    return res.json(
-      "izmena podataka glumac čiji je id=" +
-        req.params.id +
-        " a podaci su u req.body"
-    );
+    const glumac = await Glumac.findByPk(req.params.id);
+    glumac.ime = req.body.ime;
+    glumac.opis = req.body.opis;
+    glumac.save();
+    return res.json(glumac);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri izmeni", data: err });
@@ -53,7 +67,9 @@ route.put("/:id", async (req, res) => {
 //DELETE brise po prosledjenom id-ju
 route.delete("/:id", async (req, res) => {
   try {
-    return res.json(req.params.id); //vraca id obrisanog
+    const glumac = await Glumac.findByPk(req.params.id);
+    glumac.destroy();
+    return res.json(glumac.id);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri brisanju", data: err });

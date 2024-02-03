@@ -2,6 +2,18 @@ const express = require("express");
 
 const app = express();
 
+const {
+  sequelize,
+  Glumac,
+  Posetilac,
+  Pozoriste,
+  Predstava,
+  PredstavaGlumac,
+  Rezervacija,
+  Sala,
+  Zanr,
+} = require("../models");
+
 app.get("/", (req, res) => {
   res.send("Hello from REST API service");
 });
@@ -27,6 +39,8 @@ app.use("/admin/rezervacija", rezervacijaRoutes);
 const zanrRoutes = require("./routes/zanr.js");
 app.use("/admin/zanr", zanrRoutes);
 
-app.listen(9000, () => {
+app.listen({ port: 9000 }, async () => {
   console.log("Started server on localhost:9000");
+  await sequelize.sync({ force: true });
+  console.log("DB synced");
 });

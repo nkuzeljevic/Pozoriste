@@ -1,4 +1,15 @@
 const express = require("express");
+const {
+  sequelize,
+  Glumac,
+  Posetilac,
+  Pozoriste,
+  Predstava,
+  PredstavaGlumac,
+  Rezervacija,
+  Sala,
+  Zanr,
+} = require("../models");
 const route = express.Router();
 const BP = require("body-parser");
 
