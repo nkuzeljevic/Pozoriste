@@ -1,15 +1,5 @@
 const express = require("express");
-const {
-  sequelize,
-  Glumac,
-  Posetilac,
-  Pozoriste,
-  Predstava,
-  PredstavaGlumac,
-  Rezervacija,
-  Sala,
-  Zanr,
-} = require("../models");
+const { sequelize, Sala } = require("../../models");
 const route = express.Router();
 const BP = require("body-parser");
 
@@ -20,7 +10,8 @@ route.use(express.urlencoded({ extended: true }));
 //GET koji vraca sve zapise iz baze (posto smo u modulu, vec se nalazimo u /admin/pozoriste)
 route.get("/", async (req, res) => {
   try {
-    return res.json("svi sala");
+    const sala = await Sala.findAll();
+    return res.json(sala);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri citanju", data: err });
@@ -30,7 +21,8 @@ route.get("/", async (req, res) => {
 //GET koji vraca po specificnom id-ju
 route.get("/:id", async (req, res) => {
   try {
-    return res.json("sala čiji je id=" + req.params.id);
+    const sala = await Sala.findByPk(req.params.id);
+    return res.json(sala);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri citanju", data: err });
@@ -40,7 +32,12 @@ route.get("/:id", async (req, res) => {
 //POST sa podacima u body
 route.post("/", async (req, res) => {
   try {
-    return res.json("unos novog sala čiji su podaci u req.body");
+    const novi = {};
+    novi.naziv = req.body.naziv;
+    novi.idPozorista = req.body.idPozorista;
+    novi.brojMesta = req.body.brojMesta;
+    const insertovani = await Sala.create(novi);
+    return res.json(insertovani);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri unosu", data: err });
@@ -50,11 +47,12 @@ route.post("/", async (req, res) => {
 //PUT koji radi izmenu
 route.put("/:id", async (req, res) => {
   try {
-    return res.json(
-      "izmena podataka sala čiji je id=" +
-        req.params.id +
-        " a podaci su u req.body"
-    );
+    const novi = await Sala.findByPk(req.params.id);
+    novi.naziv = req.body.naziv;
+    novi.idPozorista = req.body.idPozorista;
+    novi.brojMesta = req.body.brojMesta;
+    novi.save();
+    return res.json(novi);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri izmeni", data: err });
@@ -64,7 +62,9 @@ route.put("/:id", async (req, res) => {
 //DELETE brise po prosledjenom id-ju
 route.delete("/:id", async (req, res) => {
   try {
-    return res.json(req.params.id); //vraca id obrisanog
+    const sala = await Sala.findByPk(req.params.id);
+    sala.destroy();
+    return res.json(sala.id); //vraca id obrisanog
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri brisanju", data: err });

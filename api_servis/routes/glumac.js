@@ -1,15 +1,5 @@
 const express = require("express");
-const {
-  sequelize,
-  Glumac,
-  Posetilac,
-  Pozoriste,
-  Predstava,
-  PredstavaGlumac,
-  Rezervacija,
-  Sala,
-  Zanr,
-} = require("../models");
+const { sequelize, Glumac } = require("../../models");
 const route = express.Router();
 const BP = require("body-parser");
 
@@ -42,8 +32,11 @@ route.get("/:id", async (req, res) => {
 //POST sa podacima u body
 route.post("/", async (req, res) => {
   try {
-    const novi = await Glumac.create(req.body);
-    return res.json(novi);
+    const novi = {};
+    novi.ime = req.body.ime;
+    novi.opis = req.body.opis;
+    const insertovani = await Glumac.create(novi);
+    return res.json(insertovani);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri unosu", data: err });

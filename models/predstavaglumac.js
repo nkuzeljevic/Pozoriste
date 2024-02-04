@@ -8,8 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({ Predstava, Glumac }) {
-      this.belongsTo(Predstava, { foreignKey: "idPredstave" });
-      this.belongsTo(Glumac, { foreignKey: "idGlumca" });
+      // this.belongsTo(Predstava, { foreignKey: "idPredstave" });
+      // this.belongsTo(Glumac, { foreignKey: "idGlumca" });
+      this.belongsTo(Predstava, { foreignKey: "idPredstave", targetKey: "id" });
+      this.belongsTo(Glumac, { foreignKey: "idGlumca", targetKey: "id" });
     }
     // static associate(models) {
     //   PredstavaGlumac.belongsTo(models.Predstava, {
@@ -19,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     // }
   }
   PredstavaGlumac.init(
-    { idPredstave: DataTypes.INTEGER, idGlumca: DataTypes.INTEGER },
+    {},
+    // { idPredstave: DataTypes.INTEGER, idGlumca: DataTypes.INTEGER },
     {
       sequelize,
       modelName: "PredstavaGlumac",

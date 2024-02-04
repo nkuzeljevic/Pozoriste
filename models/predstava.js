@@ -8,20 +8,28 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({ Pozoriste, Zanr, Sala, PredstavaGlumac, Rezervacija }) {
-      this.belongsTo(Pozoriste, { foreignKey: "idPozorista" });
-      this.belongsTo(Zanr, { foreignKey: "idZanra" });
-      this.belongsTo(Sala, { foreignKey: "idSale" });
-      this.hasMany(PredstavaGlumac, { foreignKey: "idPredstave" });
-      this.hasMany(Rezervacija, { foreignKey: "idPredstave" });
+      // this.belongsTo(Pozoriste, { foreignKey: "idPozorista" });
+      // this.belongsTo(Zanr, { foreignKey: "idZanra" });
+      // this.belongsTo(Sala, { foreignKey: "idSale" });
+      // this.hasMany(PredstavaGlumac, { foreignKey: "idPredstave" });
+      // this.hasMany(Rezervacija, { foreignKey: "idPredstave" });
+      this.belongsTo(Pozoriste, { foreignKey: "idPozorista", targetKey: "id" });
+      this.belongsTo(Zanr, { foreignKey: "idZanra", targetKey: "id" });
+      this.belongsTo(Sala, { foreignKey: "idSale", targetKey: "id" });
+      this.hasMany(PredstavaGlumac, {
+        foreignKey: "idPredstave",
+        targetKey: "id",
+      });
+      this.hasMany(Rezervacija, { foreignKey: "idPredstave", targetKey: "id" });
     }
   }
   Predstava.init(
     {
-      idPredstave: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
+      // idPredstave: {
+      //   type: DataTypes.INTEGER,
+      //   primaryKey: true,
+      //   autoIncrement: true,
+      // },
       naziv: {
         type: DataTypes.STRING(120),
         unique: true,

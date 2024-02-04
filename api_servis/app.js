@@ -41,6 +41,6 @@ app.use("/admin/zanr", zanrRoutes);
 
 app.listen({ port: 9000 }, async () => {
   console.log("Started server on localhost:9000");
-  await sequelize.sync({ force: true });
+  // await sequelize.sync({ force: true });
   console.log("DB synced");
 });

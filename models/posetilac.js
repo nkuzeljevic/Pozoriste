@@ -8,16 +8,17 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({ Rezervacija }) {
-      this.hasMany(Rezervacija, { foreignKey: "idPosetioca" });
+      // this.hasMany(Rezervacija, { foreignKey: "idPosetioca" });
+      this.hasMany(Rezervacija, { foreignKey: "idPosetioca", targetKey: "id" });
     }
   }
   Posetilac.init(
     {
-      idPosetioca: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
+      // idPosetioca: {
+      //   type: DataTypes.INTEGER,
+      //   primaryKey: true,
+      //   autoIncrement: true,
+      // },
       imePrezime: {
         type: DataTypes.STRING(120),
         unique: true,
