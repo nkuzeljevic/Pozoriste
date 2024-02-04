@@ -6,18 +6,39 @@ window.addEventListener("load", function () {
       location.href = "/glumci/novi-glumac.html";
     });
 
-  fetch("/admin/glumci")
+  // fetch("/admin/glumci")
+  fetch("http://localhost:9000/admin/glumac")
     .then((response) => response.json())
     .then((glumci) => {
+      console.log(glumci);
       // Function to create a table based on theater data
       const createTable = (actors) => {
-        const predstaveArray = JSON.parse(actors.predstaveInput);
-        const predstaveListItems = predstaveArray
-          .map(
-            (predstava) =>
-              `<li class="list-group-item podlista">${predstava}</li>`
-          )
-          .join("");
+        // const predstaveArray = JSON.parse(actors.predstaveInput);
+        // const predstaveListItems = predstaveArray
+        //   .map(
+        //     (predstava) =>
+        //       `<li class="list-group-item podlista">${predstava}</li>`
+        //   )
+        //   .join("");
+        // Extract the predstave associated with the glumac
+        // const predstaveListItems = actors.PredstavaGlumacs.map((pg) => {
+        //   // For each PredstavaGlumac, you can access the associated Predstava
+        //   const predstava = pg.Predstava;
+        //   return `<li class="list-group-item podlista">${
+        //     predstava ? predstava.naziv : "N/A"
+        //   }</li>`;
+        // }).join("");
+
+        const predstaveListItems =
+          actors.PredstavaGlumacs && Array.isArray(actors.PredstavaGlumacs)
+            ? actors.PredstavaGlumacs.map((pg) => {
+                // For each PredstavaGlumac, you can access the associated Predstava
+                const predstava = pg.Predstava;
+                return `<li class="list-group-item podlista">${
+                  predstava ? predstava.naziv : "N/A"
+                }</li>`;
+              }).join("")
+            : "";
         return `
     <div class="col-md-4 col-sm-12">
       <div class="mb-3 mt-3">
@@ -28,7 +49,7 @@ window.addEventListener("load", function () {
           ${predstaveListItems}
         </ul>
         <br />
-        <a href="izmeni-glumca.html" class="btn btn-primary btn-sm">Izmeni</a>
+        <a href="izmeni-glumca.html?id=${actors.id}" class="btn btn-primary btn-sm">Izmeni</a>
       </div>
     </div>
   `;

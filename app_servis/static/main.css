@@ -69,3 +69,23 @@ table th {
 table td {
   padding: 8px; /* Optional: Add padding for better spacing */
 }
+
+.ime {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.opis {
+  /* background-color: black;
+  color: white; */
+  text-align: justify;
+  min-height: 140px;
+  max-height: 200px;
+  overflow-y: auto; /* Enable vertical scrollbar when content overflows */
+}
+.lista {
+  /* background-color: black;
+  color: white; */
+  text-align: justify;
+}

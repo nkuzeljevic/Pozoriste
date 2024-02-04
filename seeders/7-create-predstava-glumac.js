@@ -29,6 +29,16 @@ module.exports = {
         idPredstave: "4",
         idGlumca: "3",
       },
+      {
+        id: "6",
+        idPredstave: "5",
+        idGlumca: "2",
+      },
+      {
+        id: "7",
+        idPredstave: "5",
+        idGlumca: "5",
+      },
     ]);
   },
 

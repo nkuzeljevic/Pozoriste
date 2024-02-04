@@ -27,7 +27,7 @@ module.exports = {
       {
         id: "5",
         ime: "Miodrag Dragičević",
-        opis: "Rođen je 1994. godine u Beogradu. Završio je sportsku gimnaziju i trenirao košarku sedam godina. Nakon toga se posvetio glumi i završio Fakultet dramskih umetnosti u Beogradu u klasi profesorke Biljane Mašić.",
+        opis: "Rođen je 1994. godine u Beogradu. Završio je sportsku gimnaziju. Nakon toga se posvetio glumi i završio Fakultet dramskih umetnosti u Beogradu u klasi profesorke Biljane Mašić.",
       },
     ]);
   },
@@ -40,6 +40,5 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     await queryInterface.bulkDelete("Glumac", null, {});
-
   },
 };

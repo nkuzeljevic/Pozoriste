@@ -1,5 +1,10 @@
 const express = require("express");
-const { sequelize, Glumac } = require("../../models");
+const {
+  sequelize,
+  Glumac,
+  PredstavaGlumac,
+  Predstava,
+} = require("../../models");
 const route = express.Router();
 const BP = require("body-parser");
 
@@ -10,7 +15,14 @@ route.use(express.urlencoded({ extended: true }));
 //GET koji vraca sve zapise iz baze (posto smo u modulu, vec se nalazimo u /admin/pozoriste)
 route.get("/", async (req, res) => {
   try {
-    const glumci = await Glumac.findAll();
+    const glumci = await Glumac.findAll({
+      include: [
+        {
+          model: PredstavaGlumac,
+          include: [Predstava],
+        },
+      ],
+    });
     return res.json(glumci);
   } catch (err) {
     console.log(err);

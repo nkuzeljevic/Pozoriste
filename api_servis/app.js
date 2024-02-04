@@ -1,5 +1,5 @@
 const express = require("express");
-
+const cors = require("cors");
 const app = express();
 
 const {
@@ -13,6 +13,11 @@ const {
   Sala,
   Zanr,
 } = require("../models");
+
+const corsOptions = {
+  origin: ["http://localhost:8000", "http://127.0.0.1:8000"],
+};
+app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.send("Hello from REST API service");
