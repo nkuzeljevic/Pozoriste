@@ -10,8 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ Predstava, Sala }) {
       // this.hasMany(Predstava, { foreignKey: "idPozorista" });
       // this.hasMany(Sala, { foreignKey: "idPozorista" });
-      this.hasMany(Predstava, { foreignKey: "idPozorista", targetKey: "id" });
-      this.hasMany(Sala, { foreignKey: "idPozorista", targetKey: "id" });
+      this.hasMany(Predstava, {
+        foreignKey: "idPozorista",
+        targetKey: "id",
+        as: "predstave",
+      });
+      this.hasMany(Sala, {
+        foreignKey: "idPozorista",
+        targetKey: "id",
+        as: "sale",
+      });
     }
   }
   Pozoriste.init(

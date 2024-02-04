@@ -6,9 +6,10 @@ window.addEventListener("load", function () {
       location.href = "/predstave/nova-predstava.html";
     });
 
-  fetch("/admin/predstave")
+  fetch("http://localhost:9000/admin/predstava")
     .then((response) => response.json())
     .then((predstave) => {
+      console.log(predstave);
       // Function to create a table based on theater data
       const createTable = (play) => {
         // Parse datum into a Date object
@@ -24,8 +25,25 @@ window.addEventListener("load", function () {
             })
             .replace(/\//g, ".") + ".";
 
-        // Parse glumciInput into an array
-        const glumciArray = JSON.parse(play.glumciInput);
+        const pozoristeName = play.pozorista ? play.pozorista.naziv : "N/A";
+        const salaName = play.sale ? play.sale.naziv : "N/A";
+        const zanrNames = play.zanr
+          ? Array.isArray(play.zanr)
+            ? play.zanr.map((zanr) => zanr.naziv).join(", ")
+            : play.zanr.naziv
+          : "N/A";
+        // const glumacNames = play.glumci
+        //   ? play.glumci.map((glumci) => glumci.naziv).join(", ")
+        //   : "N/A";
+
+        const glumacNames = play.PredstavaGlumacs
+          ? play.PredstavaGlumacs.map((pg) =>
+              pg.Glumac ? pg.Glumac.ime : "N/A"
+            ).join(", ")
+          : "N/A";
+
+        // // Parse glumciInput into an array
+        // const glumciArray = JSON.parse(play.glumciInput);
         return `
 
                 <tr>
@@ -33,7 +51,7 @@ window.addEventListener("load", function () {
                     ${play.naziv}
                   </td>
                   <td>
-                    ${play.izabranoPozoriste}
+                    ${pozoristeName}
                   </td>
                   <td>
                     ${formattedDate}
@@ -42,19 +60,19 @@ window.addEventListener("load", function () {
                     ${play.vreme}h
                   </td>
                   <td>
-                    ${play.sala}
+                    ${salaName}
                   </td>
                   <td>
                     ${play.cena} RSD
                   </td>
                   <td>
-                    ${play.izabraniZanr}
+                     ${zanrNames}
                   </td>
                    <td>
-                    ${glumciArray.join(", ")}
+                    ${glumacNames}
                   </td>
                   <td>
-                  <a href="izmeni-predstavu.html" class="btn btn-primary btn-sm"
+                  <a href="izmeni-predstavu.html?id=${play.id}" class="btn btn-primary btn-sm"
                     >Izmeni</a
                   >
                   </td>

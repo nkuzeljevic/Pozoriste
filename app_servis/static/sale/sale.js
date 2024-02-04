@@ -71,6 +71,7 @@ window.addEventListener("load", function () {
   });
 
   const createTable = (hall) => {
+    const pozoristeName = hall.pozorista ? hall.pozorista.naziv : "N/A";
     return `
 
                 <tr>
@@ -78,13 +79,13 @@ window.addEventListener("load", function () {
                     ${hall.naziv}
                   </td>
                   <td>
-                    ${hall.izabranoPozoriste}
+                    ${pozoristeName}
                   </td>
                   <td>
-                    ${hall.brMesta}
+                    ${hall.brojMesta}
                   </td>
                   <td>
-                  <a href="izmeni-salu.html" class="btn btn-primary btn-sm"
+                  <a href="izmeni-salu.html?id=${hall.id}" class="btn btn-primary btn-sm"
                     >Izmeni</a
                   >
                   </td>
@@ -93,7 +94,7 @@ window.addEventListener("load", function () {
   };
 
   const updateTable = () => {
-    fetch("/admin/sale")
+    fetch("http://localhost:9000/admin/sala")
       .then((response) => response.json())
       .then((sale) => {
         const tableBody = document.getElementById("sale");

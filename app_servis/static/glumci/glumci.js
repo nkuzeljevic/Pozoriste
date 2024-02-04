@@ -46,7 +46,7 @@ window.addEventListener("load", function () {
         <p class="form-control opis">${actors.opis}</p>
         <h5>Pozorišne predstave:</h5>
         <ul class="list-group lista">
-          ${predstaveListItems}
+          ${predstaveListItems} 
         </ul>
         <br />
         <a href="izmeni-glumca.html?id=${actors.id}" class="btn btn-primary btn-sm">Izmeni</a>

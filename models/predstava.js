@@ -13,12 +13,25 @@ module.exports = (sequelize, DataTypes) => {
       // this.belongsTo(Sala, { foreignKey: "idSale" });
       // this.hasMany(PredstavaGlumac, { foreignKey: "idPredstave" });
       // this.hasMany(Rezervacija, { foreignKey: "idPredstave" });
-      this.belongsTo(Pozoriste, { foreignKey: "idPozorista", targetKey: "id" });
-      this.belongsTo(Zanr, { foreignKey: "idZanra", targetKey: "id" });
-      this.belongsTo(Sala, { foreignKey: "idSale", targetKey: "id" });
+      this.belongsTo(Pozoriste, {
+        foreignKey: "idPozorista",
+        targetKey: "id",
+        as: "pozorista",
+      });
+      this.belongsTo(Zanr, {
+        foreignKey: "idZanra",
+        targetKey: "id",
+        as: "zanr",
+      });
+      this.belongsTo(Sala, {
+        foreignKey: "idSale",
+        targetKey: "id",
+        as: "sale",
+      });
       this.hasMany(PredstavaGlumac, {
         foreignKey: "idPredstave",
         targetKey: "id",
+        as: "PredstavaGlumacs",
       });
       this.hasMany(Rezervacija, { foreignKey: "idPredstave", targetKey: "id" });
     }

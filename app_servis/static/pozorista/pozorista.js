@@ -27,19 +27,22 @@ window.addEventListener("load", function () {
   //   });
   // }
 
-  fetch("/admin/pozorista")
+  fetch("http://localhost:9000/admin/pozoriste")
     .then((response) => response.json())
     .then((pozorista) => {
+      console.log(pozorista);
       // Function to create a table based on theater data
       const createTable = (theater) => {
-        const predstaveArray = JSON.parse(theater.predstaveInput);
-        const predstaveListItems = predstaveArray
-          .map(
-            (predstava) =>
-              `<li class="list-group-item podlista">${predstava}</li>`
-          )
-          .join("");
-        return `
+        // const predstaveArray = JSON.parse(theater.predstaveInput);
+        // const predstaveListItems = predstaveArray
+        //   .map(
+        //     (predstava) =>
+        //       `<li class="list-group-item podlista">${predstava}</li>`
+        //   )
+        //   .join("");
+
+        try {
+          return `
         <br />
         <hr />
         <br />
@@ -69,20 +72,35 @@ window.addEventListener("load", function () {
                   <th>Predstave</th>
                   <td>
                     <ul class="list-group">
-                      ${predstaveListItems}
+                        ${theater.predstave
+                          .map((predstava) => {
+                            return `<li class="list-group-item podlista">${predstava.naziv}</li>`;
+                          })
+                          .join("")}
                     </ul>
                   </td>
                 </tr>
                 <tr>
                   <th>
                     <a href="/sale/sale.html" class="btn btn-secondary">Sale</a></th>
-                    <td>                    
-                    </td>
+                  <td>
+                    <ul class="list-group">
+                      <li class="list-group-item">
+                  ${theater.sale
+                    .map((sala) => {
+                      return `<li class="list-group-item podlista">${sala.naziv}</li>`;
+                    })
+                    .join("")}
+                      </li>
+                    </ul>                    
+                  </td>
                 </tr>
                 <tr>
                   <th></th>
                   <td>
-                    <a href="izmeni-pozoriste.html" class="btn btn-primary btn-sm float-end"
+                    <a href="izmeni-pozoriste.html?id=${
+                      theater.id
+                    }" class="btn btn-primary btn-sm float-end"
                       >Izmeni</a
                       >
                   </td>
@@ -91,6 +109,12 @@ window.addEventListener("load", function () {
           </div>
           </div>
           `;
+        } catch (error) {
+          console.error(
+            "Error fetching associated Predstava instances:",
+            error
+          );
+        }
       };
       // Insert tables into the main container
       const mainContainer = document.querySelector(".container");
@@ -110,5 +134,6 @@ window.addEventListener("load", function () {
     //     .catch(error => {
     //       console.error('Error:', error);
     //     });
+
     .catch((error) => console.error("Error fetching data:", error));
 });
