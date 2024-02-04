@@ -10,8 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ Predstava, Posetilac }) {
       // this.belongsTo(Predstava, { foreignKey: "idPredstave" });
       // this.belongsTo(Posetilac, { foreignKey: "idPosetioca" });
-      this.belongsTo(Predstava, { foreignKey: "idPredstave", targetKey: "id" });
-      this.belongsTo(Posetilac, { foreignKey: "idPosetioca", targetKey: "id" });
+      this.belongsTo(Predstava, {
+        foreignKey: "idPredstave",
+        targetKey: "id",
+        as: "predstave",
+      });
+      this.belongsTo(Posetilac, {
+        foreignKey: "idPosetioca",
+        targetKey: "id",
+        as: "posetilac",
+      });
       // this.belongsTo(Sala, { foreignKey: "idSale" });
     }
   }

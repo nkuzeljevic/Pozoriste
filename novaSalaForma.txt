@@ -1,5 +1,0 @@
-{"naziv":"Sala 1","izabranoPozoriste":"Atelje 212","brMesta":"11"}
-{"naziv":"Sala 2","izabranoPozoriste":"Beogradsko dramsko pozorište","brMesta":"11"}
-{"naziv":"Sala 3","izabranoPozoriste":"Jugoslovensko dramsko pozorište","brMesta":"11"}
-{"naziv":"Sala 4","izabranoPozoriste":"Pozorište na Terazijama","brMesta":"11"}
-{"naziv":"Sala 5","izabranoPozoriste":"Zvezdara teatar","brMesta":"11"}

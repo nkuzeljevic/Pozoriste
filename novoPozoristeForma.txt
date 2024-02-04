@@ -1,3 +1,0 @@
-{"naziv":"Pozoriste 1","opis":"Ovde se pise opis","predstaveInput":"[\"Konobarica\",\"Kako do pobede\"]","adresa":"Milentija Popovica 2","telefon":"0670056789","email":"aa@bb.com"}
-{"naziv":"Pozoriste 2","opis":"Ovde se pise opis","predstaveInput":"[\"Kako do pobede\"]","adresa":"Milentija Popovica 2","telefon":"0670056789","email":"aa@bb.com"}
-{"naziv":"Pozoriste 3","opis":"Ovde se pise opis","predstaveInput":"[\"Kako do pobede\",\"Labudovo jezero\"]","adresa":"Milentija Popovica 2","telefon":"0670056789","email":"aa@bb.com"}

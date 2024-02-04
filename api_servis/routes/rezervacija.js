@@ -1,5 +1,10 @@
 const express = require("express");
-const { sequelize, Rezervacija } = require("../../models");
+const {
+  sequelize,
+  Rezervacija,
+  Predstava,
+  Posetilac,
+} = require("../../models");
 const route = express.Router();
 const BP = require("body-parser");
 
@@ -10,7 +15,18 @@ route.use(express.urlencoded({ extended: true }));
 //GET koji vraca sve zapise iz baze (posto smo u modulu, vec se nalazimo u /admin/pozoriste)
 route.get("/", async (req, res) => {
   try {
-    const rezervacija = await Rezervacija.findAll();
+    const rezervacija = await Rezervacija.findAll({
+      include: [
+        {
+          model: Predstava,
+          as: "predstave",
+        },
+        {
+          model: Posetilac,
+          as: "posetilac",
+        },
+      ],
+    });
     return res.json(rezervacija);
   } catch (err) {
     console.log(err);
