@@ -273,7 +273,7 @@ router.post("/novi-glumac", (req, res) => {
   const shema = Joi.object().keys({
     ime: Joi.string().trim().min(5).max(35).required(),
     opis: Joi.string().trim().min(1).required(),
-    predstaveInput: Joi.string().trim().min(1).required(),
+    izabranaPredstava: Joi.string().trim().min(1).required(),
   });
 
   const { error, succ } = shema.validate(req.body);

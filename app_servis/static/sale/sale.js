@@ -76,7 +76,7 @@ window.addEventListener("load", function () {
 
                 <tr>
                   <td>
-                    ${hall.naziv}
+                    ${hall.naziv} 
                   </td>
                   <td>
                     ${pozoristeName}

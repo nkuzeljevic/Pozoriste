@@ -7,6 +7,12 @@ const {
 } = require("../../models");
 const route = express.Router();
 const BP = require("body-parser");
+const Joi = require("joi");
+const fs = require("fs");
+const path = require("path");
+const logStream = fs.createWriteStream(path.join(__dirname, "sequelize.log"), {
+  flags: "a",
+});
 
 route.use(BP.urlencoded({ extended: false }));
 route.use(express.json());
@@ -20,13 +26,20 @@ route.get("/", async (req, res) => {
         {
           model: PredstavaGlumac,
           include: [Predstava],
+          as: "PredstavaGlumacs",
         },
       ],
     });
     return res.json(glumci);
   } catch (err) {
-    console.log(err);
+    if (err.name === "SequelizeDatabaseError") {
+      console.error("Database error:", err);
+    } else {
+      console.error(err);
+    }
     res.status(500).json({ error: "Greska pri citanju", data: err });
+    console.log(err);
+    // res.status(500).json({ error: "Greska pri citanju", data: err });
   }
 });
 
@@ -43,15 +56,56 @@ route.get("/:id", async (req, res) => {
 
 //POST sa podacima u body
 route.post("/", async (req, res) => {
-  try {
-    const novi = {};
-    novi.ime = req.body.ime;
-    novi.opis = req.body.opis;
-    const insertovani = await Glumac.create(novi);
-    return res.json(insertovani);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Greska pri unosu", data: err });
+  console.log("Request Object:", req);
+  const shema = Joi.object().keys({
+    ime: Joi.string().trim().min(5).max(35).required(),
+    opis: Joi.string().trim().min(1).required(),
+    izabranaPredstava: Joi.string().trim().min(1).required(),
+  });
+
+  const { error, succ } = shema.validate(req.body);
+  if (error) {
+    console.error("Validation Error:", error);
+    return res.status(400).json({
+      error: error.details.map((detail) => detail.message).join(", "),
+    });
+  } else {
+    try {
+      // Extract data from the request
+      const { ime, opis, izabranaPredstava } = req.body;
+
+      // Validate if izabranaPredstava is provided
+      if (!izabranaPredstava) {
+        return res
+          .status(400)
+          .json({ error: "Izabrana predstava nije pravilno poslata." });
+      }
+
+      // Create a new Glumac
+      const noviGlumac = await Glumac.create({
+        ime: ime,
+        opis: opis,
+      });
+      try {
+        await PredstavaGlumac.create({
+          idPredstave: izabranaPredstava,
+          idGlumca: noviGlumac.id,
+        });
+        console.log("Record created successfully.");
+        logStream.write(
+          "Record created successfully." + JSON.stringify(req.body)
+        );
+      } catch (error) {
+        console.error("Error creating record:", error);
+        logStream.write(`Error creating record: ${error}\n`);
+      }
+      // Create a new PredstavaGlumac association
+
+      return res.json(noviGlumac);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Greska pri unosu", data: err });
+    }
   }
 });
 

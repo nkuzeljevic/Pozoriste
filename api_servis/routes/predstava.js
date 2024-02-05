@@ -68,8 +68,14 @@ route.post("/", async (req, res) => {
     novi.idSale = req.body.idSale;
     novi.cena = req.body.cena;
     novi.idZanra = req.body.idZanra;
+    // Create a new Predstava or retrieve existing based on the name
+    // const insertovani = await Predstava.findOrCreate({
+    //   where: { naziv: novi.naziv },
+    //   defaults: novi,
+    // });
     const insertovani = await Predstava.create(novi);
     return res.json(insertovani);
+    // return res.json({ id: insertovani.id });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri unosu", data: err });
