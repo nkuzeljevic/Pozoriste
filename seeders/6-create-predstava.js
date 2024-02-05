@@ -54,6 +54,16 @@ module.exports = {
         cena: 1500,
         idZanra: "2",
       },
+      {
+        id: "6",
+        naziv: "Marija Magdalena",
+        idPozorista: "2",
+        datum: new Date("2023-12-27"),
+        vreme: "20:30",
+        idSale: "5",
+        cena: 1500,
+        idZanra: "2",
+      },
     ]);
   },
 

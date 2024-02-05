@@ -29,7 +29,6 @@ router.post("/novo-pozoriste", (req, res) => {
       .trim()
       .pattern(/^[0-9]{3}\/?[0-9]{6,7}$/)
       .required(),
-    predstaveInput: Joi.string().trim().min(1).required(),
   });
 
   const { error, succ } = shema.validate(req.body);

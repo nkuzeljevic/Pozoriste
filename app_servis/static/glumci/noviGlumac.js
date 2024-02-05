@@ -73,8 +73,13 @@ window.addEventListener("load", function () {
           // Handle 400 Bad Request error
           if (response.status === 400) {
             return response.text().then((errorMessage) => {
-              // console.error("Bad Request error:", errorMessage);
-              alert(errorMessage); // Display the error message
+              const errorDetails = JSON.parse(errorMessage);
+
+              if (errorDetails.error && errorDetails.error.includes("ime")) {
+                alert("Ime mora da ima barem 5 karaktera.");
+              } else {
+                alert(errorMessage); // Display the original error message
+              }
               throw new Error(errorMessage);
             });
           } else {

@@ -93,7 +93,7 @@
               class="form-control"
               required
             ></textarea>
-            <div class="mb-3 mt-3">
+            <!-- <div class="mb-3 mt-3">
               <label for="naziv">Predstave:</label>
               <div class="input-group mb-3">
                 <!-- <input
@@ -103,7 +103,7 @@
                   id="predstave"
                   name="predstave"
                 /> -->
-                <input
+            <!-- <input
                   type="text"
                   oninput="validateAndToggleButton(this, 'dodajPredstavu')"
                   class="form-control"
@@ -117,9 +117,9 @@
                   +
                 </button>
               </div>
-            </div>
-            <div id="unetePredstave">
-              <!-- <span class="badge bg-secondary" data-id="1">
+            </div> -->
+            <!-- <div id="unetePredstave"> -->
+            <!-- <span class="badge bg-secondary" data-id="1">
                   Strujosek
                   <button type="button" class="btn btn-default btn-sm">X</button> 
                 </span>
@@ -127,8 +127,18 @@
                     Pristanak
                     <button type="button" class="btn btn-default btn-sm">X</button>
                 </span> -->
-            </div>
-            <input type="hidden" name="predstaveInput" id="predstaveInput" />
+            <!-- </div>
+            <input type="hidden" name="predstaveInput" id="predstaveInput" /> -->
+            <br />
+            <label class="form-label" for="email">E-mail:</label>
+            <input
+              type="text"
+              id="email"
+              oninput="validateEmail(this)"
+              class="form-control"
+              name="email"
+              required
+            />
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
@@ -152,17 +162,6 @@
               placeholder="0112345678"
               class="form-control"
               name="telefon"
-              required
-            />
-
-            <br />
-            <label class="form-label" for="email">E-mail:</label>
-            <input
-              type="text"
-              id="email"
-              oninput="validateEmail(this)"
-              class="form-control"
-              name="email"
               required
             />
           </div>
