@@ -60,7 +60,15 @@ route.post("/", async (req, res) => {
   const shema = Joi.object().keys({
     ime: Joi.string().trim().min(5).max(35).required(),
     opis: Joi.string().trim().min(1).required(),
-    izabranaPredstava: Joi.string().trim().min(1).required(),
+    // izabranaPredstava: Joi.array()
+    //   .items(
+    //     Joi.object({
+    //       id: Joi.string().trim().min(1).required(),
+    //       name: Joi.string().trim().min(1).required(),
+    //     })
+    //   )
+    //   .required(),
+    izabranaPredstava: Joi.array().items(Joi.string().trim().min(1)).required(),
   });
 
   const { error, succ } = shema.validate(req.body);
@@ -73,9 +81,10 @@ route.post("/", async (req, res) => {
     try {
       // Extract data from the request
       const { ime, opis, izabranaPredstava } = req.body;
+      logStream.write("from body: \n" + JSON.stringify(req.body));
 
       // Validate if izabranaPredstava is provided
-      if (!izabranaPredstava) {
+      if (!izabranaPredstava || izabranaPredstava.length === 0) {
         return res
           .status(400)
           .json({ error: "Izabrana predstava nije pravilno poslata." });
@@ -87,14 +96,20 @@ route.post("/", async (req, res) => {
         opis: opis,
       });
       try {
-        await PredstavaGlumac.create({
-          idPredstave: izabranaPredstava,
-          idGlumca: noviGlumac.id,
-        });
-        console.log("Record created successfully.");
-        logStream.write(
-          "Record created successfully." + JSON.stringify(req.body)
-        );
+        // await PredstavaGlumac.create({
+        //   idPredstave: izabranePredstave,
+        //   idGlumca: noviGlumac.id,
+        // Create PredstavaGlumac associations for each izabranaPredstava
+        for (const izabrana of izabranaPredstava) {
+          await PredstavaGlumac.create({
+            idPredstave: izabrana,
+            idGlumca: noviGlumac.id,
+          });
+          console.log("Record created successfully.");
+          logStream.write(
+            "Record created successfully." + JSON.stringify(req.body)
+          );
+        }
       } catch (error) {
         console.error("Error creating record:", error);
         logStream.write(`Error creating record: ${error}\n`);

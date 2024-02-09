@@ -20,6 +20,39 @@
 //   }
 // });
 window.addEventListener("load", function () {
+  fetch("http://localhost:9000/admin/glumac")
+    .then((response) => response.json())
+    .then((glumci) => {
+      console.log(glumci);
+
+      const createOption = (glumci) => {
+        return `<option value="${glumci.id}">${glumci.ime}</option>`;
+      };
+
+      // Append options to the select element
+      glumci.forEach((glumac) => {
+        const optionHTML = createOption(glumac);
+        selectElementGlumci.insertAdjacentHTML("beforeend", optionHTML);
+      });
+
+      // Dynamically add the link to main.css
+      const styleLink = document.createElement("link");
+      styleLink.rel = "stylesheet";
+      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      document.head.appendChild(styleLink);
+    });
+  const selectElementGlumci = document.getElementById("glumci");
+  const hiddenInputGlumci = document.getElementById("glumciInput");
+
+  selectElementGlumci.addEventListener("change", function () {
+    // const selectedGlumacId = selectElementGlumci.value;
+    // // Update the hidden input field with the selected Predstava ID
+    // hiddenInputGlumci.value = selectedGlumacId;
+    const selectedGlumacIds = Array.from(
+      selectElementGlumci.selectedOptions
+    ).map((option) => option.value);
+    hiddenInputGlumci.value = JSON.stringify(selectedGlumacIds);
+  });
   // document.addEventListener("DOMContentLoaded", function () {
 
   // Initialize the hall options based on the default selected theater
@@ -82,6 +115,31 @@ window.addEventListener("load", function () {
 
       // Update the hidden input field (optional, for server-side validation)
       document.getElementById("izabraniZanr").value = izabraniZanr;
+
+      event.preventDefault();
+      const novaPredstava = {
+        naziv: document.getElementById("naziv").value,
+        datum: document.getElementById("datum").value,
+        vreme: document.getElementById("vreme").value,
+        izabranoPozoriste: document.getElementById("izabranoPozoriste").value,
+        izabraniZanr: document.getElementById("izabraniZanr").value,
+        sala: document.getElementById("sala").value,
+        glumciInput: document.getElementById("glumciInput").value,
+        cena: document.getElementById("cena").value,
+      };
+
+      fetch("http://localhost:9000/admin/predstava", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(novaPredstava),
+      })
+        .then((succ) => succ.json())
+        .then((data) => {
+          //dobili smo objekat novounesenog jela, koje ima svoj id, super
+          //mozemo nazad na spisak, a mozemo i na izmenu tog jela
+          window.location.href = `/predstave/predstave.html`;
+        })
+        .catch((err) => console.log(err));
     }
   });
 
@@ -153,30 +211,30 @@ window.addEventListener("load", function () {
   });
 
   //dodavanje novog glumca
-  document.getElementById("dodajGlumca").addEventListener("click", function () {
-    var id = document.getElementById("glumci").value;
-    if (!id) {
-      alert("Unesi glumca");
-      return;
-    }
-    dodajGlumca(id);
-    document.getElementById("glumci").value = "";
+  // document.getElementById("dodajGlumca").addEventListener("click", function () {
+  //   var id = document.getElementById("glumci").value;
+  //   if (!id) {
+  //     alert("Unesi glumca");
+  //     return;
+  //   }
+  //   dodajGlumca(id);
+  //   document.getElementById("glumci").value = "";
 
-    //prevodjenje glumaca u json
-    updateGlumciInput();
-    // var spanovi = document.querySelectorAll("#unetiGlumci > span.badge");
-    // var niz = [];
-    // for (let i = 0; i < spanovi.length; i++) {
-    //   niz.push(spanovi[i].dataset.id);
-    // }
-    // var jsonString = JSON.stringify(niz);
+  //   //prevodjenje glumaca u json
+  //   updateGlumciInput();
+  //   // var spanovi = document.querySelectorAll("#unetiGlumci > span.badge");
+  //   // var niz = [];
+  //   // for (let i = 0; i < spanovi.length; i++) {
+  //   //   niz.push(spanovi[i].dataset.id);
+  //   // }
+  //   // var jsonString = JSON.stringify(niz);
 
-    // var glumciInput = "glumciInput";
-    // document.getElementById(glumciInput).value = jsonString;
-    // console.log(document.getElementById(glumciInput).value);
-    // // Continue with form submission if no errors
-    // return true;
-  });
+  //   // var glumciInput = "glumciInput";
+  //   // document.getElementById(glumciInput).value = jsonString;
+  //   // console.log(document.getElementById(glumciInput).value);
+  //   // // Continue with form submission if no errors
+  //   // return true;
+  // });
   // Function to get URL parameter by name
   function getParameterByName(name, url) {
     if (!url) url = window.location.href;

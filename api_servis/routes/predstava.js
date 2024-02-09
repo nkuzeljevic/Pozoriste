@@ -10,6 +10,11 @@ const {
 } = require("../../models");
 const route = express.Router();
 const BP = require("body-parser");
+const fs = require("fs");
+const path = require("path");
+const logStream = fs.createWriteStream(path.join(__dirname, "sequelize.log"), {
+  flags: "a",
+});
 
 route.use(BP.urlencoded({ extended: false }));
 route.use(express.json());
@@ -68,16 +73,51 @@ route.post("/", async (req, res) => {
     novi.idSale = req.body.idSale;
     novi.cena = req.body.cena;
     novi.idZanra = req.body.idZanra;
+    novi.glumciInput = req.body.glumciInput;
     // Create a new Predstava or retrieve existing based on the name
     // const insertovani = await Predstava.findOrCreate({
     //   where: { naziv: novi.naziv },
     //   defaults: novi,
     // });
-    const insertovani = await Predstava.create(novi);
-    return res.json(insertovani);
-    // return res.json({ id: insertovani.id });
+    const novaPredstava = await Predstava.create({
+      naziv: novi.naziv,
+      idPozorista: novi.idPozorista.id,
+      datum: novi.datum,
+      vreme: novi.vreme,
+      idSale: novi.idSale.id,
+      cena: novi.cena,
+      idZanra: novi.idZanra.id,
+    });
+
+    //   await PredstavaGlumac.create({
+    //     idPredstave: novaPredstava.id,
+    //     idGlumca: glumciInput,
+    //   });
+    //   // const insertovani = await Predstava.create(novi);
+    //   return res.json(novaPredstava);
+    //   // return res.json({ id: insertovani.id });
+    // } catch (err) {
+    //   console.log(err);
+    //   res.status(500).json({ error: "Greska pri unosu", data: err });
+    // }
+    try {
+      await PredstavaGlumac.create({
+        idPredstave: novaPredstava.id,
+        idGlumca: glumciInput,
+      });
+      console.log("Record created successfully.");
+      logStream.write(
+        "Record created successfully.\n" + JSON.stringify(req.body)
+      );
+    } catch (error) {
+      console.error("Error creating record:", error);
+      logStream.write(`Error creating record: ${error}\n`);
+    }
+    // Create a new PredstavaGlumac association
+
+    return res.json(novaPredstava);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ error: "Greska pri unosu", data: err });
   }
 });
