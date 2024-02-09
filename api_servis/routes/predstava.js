@@ -70,23 +70,29 @@ route.post("/", async (req, res) => {
     novi.idPozorista = req.body.idPozorista;
     novi.datum = req.body.datum;
     novi.vreme = req.body.vreme;
-    novi.idSale = req.body.idSale;
+    novi.idSale = req.body.izabranaSala;
     novi.cena = req.body.cena;
     novi.idZanra = req.body.idZanra;
-    novi.glumciInput = req.body.glumciInput;
+    novi.izabraniGlumci = req.body.izabraniGlumci;
     // Create a new Predstava or retrieve existing based on the name
     // const insertovani = await Predstava.findOrCreate({
     //   where: { naziv: novi.naziv },
     //   defaults: novi,
     // });
+    // Validate if izabranaPredstava is provided
+    if (!novi.izabraniGlumci || novi.izabraniGlumci.length === 0) {
+      return res
+        .status(400)
+        .json({ error: "Izabrani glumci nisu pravilno poslati." });
+    }
     const novaPredstava = await Predstava.create({
       naziv: novi.naziv,
-      idPozorista: novi.idPozorista.id,
+      idPozorista: novi.idPozorista,
       datum: novi.datum,
       vreme: novi.vreme,
-      idSale: novi.idSale.id,
+      idSale: novi.idSale,
       cena: novi.cena,
-      idZanra: novi.idZanra.id,
+      idZanra: novi.idZanra,
     });
 
     //   await PredstavaGlumac.create({
@@ -101,14 +107,24 @@ route.post("/", async (req, res) => {
     //   res.status(500).json({ error: "Greska pri unosu", data: err });
     // }
     try {
-      await PredstavaGlumac.create({
-        idPredstave: novaPredstava.id,
-        idGlumca: glumciInput,
-      });
-      console.log("Record created successfully.");
-      logStream.write(
-        "Record created successfully.\n" + JSON.stringify(req.body)
-      );
+      for (const izabrani of novi.izabraniGlumci) {
+        await PredstavaGlumac.create({
+          idPredstave: novaPredstava.id,
+          idGlumca: izabrani,
+        });
+        console.log("Record created successfully.");
+        logStream.write(
+          "Record created successfully." + JSON.stringify(req.body)
+        );
+      }
+      // await PredstavaGlumac.create({
+      //   idPredstave: novaPredstava.id,
+      //   idGlumca: glumciInput,
+      // });
+      // console.log("Record created successfully.");
+      // logStream.write(
+      //   "Record created successfully.\n" + JSON.stringify(req.body)
+      // );
     } catch (error) {
       console.error("Error creating record:", error);
       logStream.write(`Error creating record: ${error}\n`);

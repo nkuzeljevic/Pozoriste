@@ -129,14 +129,14 @@
               id="pozoriste"
               required
             >
-              <option value=""></option>
-              <option value="atelje">Atelje 212</option>
+              <option value="">Izaberi pozoriste...</option>
+              <!-- <option value="atelje">Atelje 212</option>
               <option value="bdp">Beogradsko dramsko pozorište</option>
               <option value="jdp">Jugoslovensko dramsko pozorište</option>
               <option value="pozoristeNaTerazijama">
                 Pozorište na Terazijama
               </option>
-              <option value="zvezdaraTeatar">Zvezdara teatar</option>
+              <option value="zvezdaraTeatar">Zvezdara teatar</option> -->
             </select>
 
             <input
@@ -151,6 +151,7 @@
           <div class="mb-3 mt-3">
             <label for="sala">Sala:</label>
             <select class="form-select" id="sala" name="sala" required></select>
+            <input type="hidden" id="izabranaSala" name="izabranaSala" />
           </div>
         </div>
 
@@ -205,6 +206,18 @@
             <div class="mb-3 mt-3">
               <label for="glumci">Glumci:</label>
               <div class="input-group mb-3">
+                <select class="form-select" id="glumci">
+                  <option value="">Izaberi glumca...</option>
+                </select>
+                <input
+                  type="hidden"
+                  id="izabraniGlumci"
+                  name="izabraniGlumci"
+                />
+                <button class="btn btn-success" type="button" id="dodajGlumca">
+                  +
+                </button>
+
                 <!-- <input
                   type="text"
                   oninput="validateInput(this)"
@@ -234,11 +247,9 @@
                 >
                   +
                 </button> -->
-                <select class="form-select" size="4" id="glumci">
-                  <!-- <option value="">Izaberi glumca...</option> -->
-                </select>
-                <input type="hidden" id="glumciInput" name="glumciInput" />
               </div>
+              <div id="unetiGlumci"></div>
+              <input type="hidden" name="glumciInput" id="glumciInput" />
             </div>
           </div>
           <!-- <div id="unetiGlumci"></div>

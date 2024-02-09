@@ -7,6 +7,19 @@ route.use(BP.urlencoded({ extended: false }));
 route.use(express.json());
 route.use(express.urlencoded({ extended: true }));
 
+// GET koji vraca sale po idPozorista
+route.get("/pozoriste/:idPozorista", async (req, res) => {
+  try {
+    const halls = await Sala.findAll({
+      where: { idPozorista: req.params.idPozorista },
+    });
+    return res.json(halls);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Error fetching halls", data: err });
+  }
+});
+
 //GET koji vraca sve zapise iz baze (posto smo u modulu, vec se nalazimo u /admin/pozoriste)
 route.get("/", async (req, res) => {
   try {
