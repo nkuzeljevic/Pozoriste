@@ -74,7 +74,7 @@ route.post("/", async (req, res) => {
     izabranoPozoriste: Joi.string().trim().min(1).required(),
     izabranaSala: Joi.string().trim().min(1).required(),
     izabraniZanr: Joi.string().trim().min(1).required(),
-    glumciInput: Joi.string().trim().min(3).required(),
+    glumciInput: Joi.string().trim().min(1).required(),
     cena: Joi.number().greater(0).required(),
   });
 

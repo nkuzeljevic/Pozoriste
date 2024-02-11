@@ -322,15 +322,56 @@ window.addEventListener("load", function () {
   document
     .getElementById("dodajNovZanr")
     .addEventListener("click", function () {
-      var id = document.getElementById("novZanr").value;
-      if (!id) {
+      // var id = document.getElementById("novZanr").value;
+      var naziv = document.getElementById("novZanr").value;
+      // if (!id) {
+      if (!naziv) {
         alert("Unesi žanr");
         return;
       }
-      dodajZanr(id);
-      addedGenres.push(id); // Keep track of added genres
+      // // dodajZanr(id);
+      // dodajZanr(naziv);
+
+      // addedGenres.push(id); // Keep track of added genres
+      // document.getElementById("novZanr").value = "";
+      // document.getElementById("zanr").value = id;
+      (async () => {
+        try {
+          const response = await fetch("http://localhost:9000/admin/zanr", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ naziv }),
+          });
+
+          if (!response.ok) {
+            throw new Error("Server error: " + response.status);
+          }
+
+          const novoDodatiZanr = await response.json();
+          appendZanrToSelect(novoDodatiZanr);
+        } catch (error) {
+          console.error("Error adding genre:", error);
+          if (error.response && error.response.status === 400) {
+            const errorDetails = await error.response.json();
+
+            if (
+              errorDetails.error === "Validation failed" &&
+              errorDetails.details
+            ) {
+              const errorMessage = errorDetails.details
+                .map((detail) => `${detail.field}: ${detail.message}`)
+                .join("\n");
+
+              alert(`Validation failed:\n${errorMessage}`);
+            } else {
+              alert("Server error: " + errorDetails.error);
+            }
+          } else {
+            alert("Naziv mora da ima barem 5 kraktera.");
+          }
+        }
+      })();
       document.getElementById("novZanr").value = "";
-      document.getElementById("zanr").value = id;
     });
 
   //Obrisi zanr
@@ -374,6 +415,10 @@ window.addEventListener("load", function () {
     // // Continue with form submission if no errors
     // return true;
   });
+
+  function showAlert(message) {
+    alert(message);
+  }
   // Function to get URL parameter by name
   function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -589,22 +634,56 @@ function validateAndToggleButton(inputElement, buttonId) {
     button.disabled = !isValid;
   }
 }
-function dodajZanr(id) {
-  // Check if the genre already exists in the list
+// function dodajZanr(id) {
+async function dodajZanr(naziv) {
+  // // Check if the genre already exists in the list
+  // var existingGenres = document.querySelectorAll("#zanr option");
+  // for (var i = 0; i < existingGenres.length; i++) {
+  //   if (existingGenres[i].value === id) {
+  //     alert("Žanr već postoji u listi.");
+  //     return;
+  //   }
+  // }
+  // // Creating span element
+  // var option = document.createElement("option");
+  // // option.dataset.value = id;
+  // option.value = id;
+  // option.dataset.naziv = naziv;
+  // option.innerHTML = naziv;
+
+  // //Append span to the unetePredstave
+  // document.getElementById("zanr").appendChild(option);
+  try {
+    const response = await fetch("http://localhost:9000/admin/zanr", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ naziv }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Server error: " + response.status);
+    }
+
+    const novoDodatiZanr = await response.json();
+    appendZanrToSelect(novoDodatiZanr);
+  } catch (err) {
+    console.error("Error adding genre:", err);
+    alert("Error adding genre. Check the console for details.");
+  }
+}
+
+function appendZanrToSelect(zanr) {
   var existingGenres = document.querySelectorAll("#zanr option");
   for (var i = 0; i < existingGenres.length; i++) {
-    if (existingGenres[i].value === id) {
+    if (existingGenres[i].value === zanr.id.toString()) {
       alert("Žanr već postoji u listi.");
       return;
     }
   }
-  // Creating span element
-  var option = document.createElement("option");
-  // option.dataset.value = id;
-  option.value = id;
-  option.innerHTML = id;
 
-  //Append span to the unetePredstave
+  var option = document.createElement("option");
+  option.value = zanr.id;
+  option.innerHTML = zanr.naziv;
   document.getElementById("zanr").appendChild(option);
 }
 
