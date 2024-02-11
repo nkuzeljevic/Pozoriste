@@ -241,13 +241,39 @@ window.addEventListener("load", function () {
       console.log(JSON.stringify(niz));
       console.log(novaPredstava);
 
-      alert("pozdrav;");
+      // alert("pozdrav;");
       fetch("http://localhost:9000/admin/predstava", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(novaPredstava),
       })
-        .then((succ) => succ.json())
+        .then((response) => {
+          console.log("Response status:", response.status);
+          if (!response.ok) {
+            // Handle 400 Bad Request error
+            if (response.status === 400) {
+              return response.json().then((errorDetails) => {
+                console.log("Error details:", errorDetails);
+                if (
+                  errorDetails.error === "Validation failed" &&
+                  errorDetails.details
+                ) {
+                  // Handle validation errors
+                  errorDetails.details.forEach((detail) => {
+                    alert(detail.message);
+                  });
+                } else {
+                  throw new Error("Server error: " + response.status);
+                }
+              });
+
+              // });
+            } else {
+              throw new Error("Server error: " + response.status);
+            }
+          }
+          return response.json();
+        })
         .then((data) => {
           console.log("Fetched Predstava Data:", data);
           window.location.href = `/predstave/predstave.html`;
