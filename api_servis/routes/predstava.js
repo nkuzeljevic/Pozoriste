@@ -67,23 +67,29 @@ route.post("/", async (req, res) => {
   try {
     const novi = {};
     novi.naziv = req.body.naziv;
-    novi.idPozorista = req.body.idPozorista;
+    novi.idPozorista = req.body.izabranoPozoriste;
     novi.datum = req.body.datum;
     novi.vreme = req.body.vreme;
     novi.idSale = req.body.izabranaSala;
     novi.cena = req.body.cena;
-    novi.idZanra = req.body.idZanra;
-    novi.izabraniGlumci = req.body.izabraniGlumci;
-    // Create a new Predstava or retrieve existing based on the name
+    novi.idZanra = req.body.izabraniZanr;
+    novi.izabraniGlumci = req.body.glumciInput
+      .split(",")
+      .map((id) => id.trim()); // Create a new Predstava or retrieve existing based on the name
     // const insertovani = await Predstava.findOrCreate({
     //   where: { naziv: novi.naziv },
     //   defaults: novi,
     // });
+    logStream.write("from body: \n" + JSON.stringify(req.body));
     // Validate if izabranaPredstava is provided
     if (!novi.izabraniGlumci || novi.izabraniGlumci.length === 0) {
       return res
         .status(400)
         .json({ error: "Izabrani glumci nisu pravilno poslati." });
+    }
+    // Validate if izabranaSala is provided
+    if (!novi.idSale) {
+      return res.status(400).json({ error: "Sala nije pravilno poslata." });
     }
     const novaPredstava = await Predstava.create({
       naziv: novi.naziv,

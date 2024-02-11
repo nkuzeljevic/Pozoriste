@@ -208,7 +208,7 @@ router.post("/nova-predstava", (req, res) => {
       .regex(/^([01]\d|2[0-3]):([0-5]\d)$/)
       .required(),
     izabranoPozoriste: Joi.string().trim().min(1).required(),
-    sala: Joi.string().trim().min(1).required(),
+    izabranaSala: Joi.string().trim().min(1).required(),
     izabraniZanr: Joi.string().trim().min(1).required(),
     glumciInput: Joi.string().trim().min(3).required(),
     cena: Joi.number().greater(0).required(),

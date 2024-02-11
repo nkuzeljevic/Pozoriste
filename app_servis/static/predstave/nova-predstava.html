@@ -150,7 +150,9 @@
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="sala">Sala:</label>
-            <select class="form-select" id="sala" name="sala" required></select>
+            <select class="form-select" id="sala" required>
+              <!-- <option value="">Izaberi salu...</option> -->
+            </select>
             <input type="hidden" id="izabranaSala" name="izabranaSala" />
           </div>
         </div>
@@ -161,10 +163,10 @@
             <!-- <select class="form-select" id="zanr" name="zanr" required> -->
             <select class="form-select" id="zanr" required>
               <option value="">Izaberi žanr...</option>
-              <option value="komedija">Komedija</option>
+              <!-- <option value="komedija">Komedija</option>
               <option value="drama">Drama</option>
               <option value="opera">Opera</option>
-              <option value="mjuzikl">Mjuzikl</option>
+              <option value="mjuzikl">Mjuzikl</option> -->
             </select>
             <input type="hidden" id="izabraniZanr" name="izabraniZanr" />
           </div>
@@ -209,11 +211,7 @@
                 <select class="form-select" id="glumci">
                   <option value="">Izaberi glumca...</option>
                 </select>
-                <input
-                  type="hidden"
-                  id="izabraniGlumci"
-                  name="izabraniGlumci"
-                />
+                <input type="hidden" id="izabraniGlumci" />
                 <button class="btn btn-success" type="button" id="dodajGlumca">
                   +
                 </button>
