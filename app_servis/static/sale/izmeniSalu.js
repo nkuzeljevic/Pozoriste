@@ -109,6 +109,24 @@ window.addEventListener("load", function () {
         if (!response.ok) {
           //Handle 400 Bad Request error
           if (response.status === 400) {
+            // return response.text().then((errorMessage) => {
+            //   const errorDetails = JSON.parse(errorMessage);
+            //   if (
+            //     errorDetails.error &&
+            //     errorDetails.error.includes("brMesta")
+            //   ) {
+            //     alert("Broj mesta mora biti veći od 0.");
+            //   } else if (
+            //     errorDetails.error &&
+            //     errorDetails.error.includes("naziv")
+            //   ) {
+            //     alert("Naziv mora da ima barem 5 karaktera.");
+            //   } else {
+            //     alert(errorMessage); // Display the original error message
+            //   }
+
+            //   throw new Error(errorMessage);
+            // });
             const errorDetails = await response.json();
             console.log("Error details:", errorDetails);
             if (
