@@ -2,6 +2,7 @@ const express = require("express");
 const { sequelize, Sala, Pozoriste } = require("../../models");
 const route = express.Router();
 const BP = require("body-parser");
+const Joi = require("joi");
 
 route.use(BP.urlencoded({ extended: false }));
 route.use(express.json());
@@ -51,16 +52,37 @@ route.get("/:id", async (req, res) => {
 
 //POST sa podacima u body
 route.post("/", async (req, res) => {
-  try {
-    const novi = {};
-    novi.naziv = req.body.naziv;
-    novi.idPozorista = req.body.idPozorista;
-    novi.brojMesta = req.body.brojMesta;
-    const insertovani = await Sala.create(novi);
-    return res.json(insertovani);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Greska pri unosu", data: err });
+  const shema = Joi.object().keys({
+    naziv: Joi.string().trim().min(5).max(25).required(),
+    izabranoPozoriste: Joi.string().trim().min(1).required(),
+    brMesta: Joi.number().integer().min(1).required(),
+  });
+
+  const { error, succ } = shema.validate(req.body);
+
+  if (error) {
+    console.error("Validation Error:", error);
+    return res.status(400).json({
+      // error: error.details.map((detail) => detail.message).join(", "),
+      error: "Validation failed",
+      details: error.details.map((detail) => ({
+        field: detail.context.key,
+        message: detail.message,
+      })),
+    });
+  } else {
+    try {
+      const novi = {};
+      novi.naziv = req.body.naziv;
+      novi.idPozorista = req.body.izabranoPozoriste;
+      novi.brojMesta = req.body.brMesta;
+
+      const insertovani = await Sala.create(novi);
+      return res.json(insertovani);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: "Greska pri unosu", data: err });
+    }
   }
 });
 
