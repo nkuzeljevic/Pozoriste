@@ -90,13 +90,19 @@
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="pozoriste">Pozorište:</label>
-            <input
+            <!-- <input
               type="text"
               id="pozoriste"
               oninput="validateInput(this)"
               name="pozoriste"
               class="form-control"
               required
+            /> -->
+            <select class="form-select" id="pozoriste" required></select>
+            <input
+              type="hidden"
+              id="izabranoPozoriste"
+              name="izabranoPozoriste"
             />
           </div>
         </div>
@@ -120,7 +126,10 @@
             <br />
             <button class="btn btn-primary">Sačuvaj</button>
             <!-- <a href="pozorista.html" class="btn btn-link">Nazad</a> -->
-            <a href="#" class="btn btn-danger">Obriši</a>
+            <button id="btnObrisi" type="button" class="btn btn-danger">
+              Obriši
+            </button>
+            <!-- <a href="#" class="btn btn-danger">Obriši</a> -->
             <button
               id="btnNazadIzmeniSalu"
               type="button"
