@@ -98,14 +98,56 @@
             ></textarea>
             <div class="mb-3 mt-3">
               <label for="predstave">Predstave:</label>
-              <input
+              <ul class="list-group" id="predstaveList">
+                <!-- <li class="list-group-item">An item</li>
+                <li class="list-group-item">A second item</li>
+                <li class="list-group-item">A third item</li>
+                <li class="list-group-item">A fourth item</li>
+                <li class="list-group-item">And a fifth one</li> -->
+              </ul>
+
+              <!-- <input
                 type="text"
                 id="predstave"
                 oninput="validateInput(this)"
                 name="predstave"
                 class="form-control"
                 required
-              />
+              /> -->
+            </div>
+            <div class="mb-3 mt-3">
+              <button
+                class="btn btn-danger"
+                type="button"
+                id="btnObrisiIzabrane"
+              >
+                Obriši izabrane
+              </button>
+            </div>
+            <div class="mb-3 mt-3 row">
+              <div class="col-md-11 col-sm-12">
+                <select class="form-select" id="selectPredstave">
+                  <option value="">Izaberi novu predstavu...</option>
+                </select>
+                <input
+                  type="hidden"
+                  id="izabranaPredstava"
+                  name="izabranaPredstava"
+                />
+              </div>
+              <div class="col-md-1 col-sm-12">
+                <button
+                  class="btn btn-success"
+                  type="button"
+                  id="dodajPredstavu"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <div id="unetePredstave"></div>
+              <input type="hidden" name="predstaveInput" id="predstaveInput" />
             </div>
           </div>
         </div>
@@ -114,6 +156,9 @@
           <div class="mt-3 mb-3">
             <button class="btn btn-primary">Unesi</button>
             <!-- <a href="pozorista.html" class="btn btn-link">Nazad</a> -->
+            <button id="btnObrisi" type="button" class="btn btn-danger">
+              Obriši
+            </button>
             <button
               id="btnNazadIzmeniGlumca"
               type="button"
