@@ -1,0 +1,4 @@
+from body: 
+{"naziv":"bbbbb","datum":"2024-02-17","vreme":"14:34","izabranoPozoriste":"3","izabraniZanr":"1","izabranaSala":"3","glumciInput":"5","cena":"1000"}Record created successfully.{"naziv":"bbbbb","datum":"2024-02-17","vreme":"14:34","izabranoPozoriste":"3","izabraniZanr":"1","izabranaSala":"3","glumciInput":"5","cena":"1000"}from body: 
+{"ime":"aaaaa","opis":"ss","izabranaPredstava":[]}from body: 
+{"ime":"aaaaa","opis":"ss","izabranaPredstava":["4","12"]}Record created successfully.{"ime":"aaaaa","opis":"ss","izabranaPredstava":["4","12"]}Record created successfully.{"ime":"aaaaa","opis":"ss","izabranaPredstava":["4","12"]}

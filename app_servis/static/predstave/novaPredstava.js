@@ -260,14 +260,14 @@ window.addEventListener("load", function () {
                 ) {
                   // Handle validation errors
                   errorDetails.details.forEach((detail) => {
-                    alert(detail.message);
+                    alert("Naziv mora da ima barem 5 kraktera.");
                   });
+                  // Do not proceed with redirect if there are validation errors
+                  return Promise.reject(new Error("Validation failed"));
                 } else {
                   throw new Error("Server error: " + response.status);
                 }
               });
-
-              // });
             } else {
               throw new Error("Server error: " + response.status);
             }
@@ -275,10 +275,16 @@ window.addEventListener("load", function () {
           return response.json();
         })
         .then((data) => {
-          console.log("Fetched Predstava Data:", data);
-          window.location.href = `/predstave/predstave.html`;
+          if (data) {
+            console.log("Fetched Predstava Data:", data);
+            window.location.href = `/predstave/predstave.html`;
+          }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          if (err.message !== "Validation failed") {
+            console.log(err);
+          }
+        });
     }
   });
 
@@ -367,7 +373,7 @@ window.addEventListener("load", function () {
               alert("Server error: " + errorDetails.error);
             }
           } else {
-            alert("Naziv mora da ima barem 5 kraktera.");
+            alert("Zanr mora da ima barem 5 kraktera.");
           }
         }
       })();
