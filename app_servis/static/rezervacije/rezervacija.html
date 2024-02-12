@@ -78,37 +78,36 @@
       <form class="row" method="post" id="forma" action="/admin/rezervacija">
         <dl class="row">
           <dt class="col-sm-3">Predstava:</dt>
-          <dd class="col-sm-9">Laž, Beogradsko dramsko Pozorište</dd>
+          <dd class="col-sm-9" id="predstava"></dd>
 
           <dt class="col-sm-3">Zakazano vreme:</dt>
-          <dd class="col-sm-9">22.12.2023, 20:00</dd>
+          <dd class="col-sm-9" id="vreme"></dd>
 
           <dt class="col-sm-3">Email posetioca:</dt>
-          <dd class="col-sm-9">dtomovic@gmail.com</dd>
+          <dd class="col-sm-9" id="email"></dd>
 
           <dt class="col-sm-3">Sala:</dt>
-          <dd class="col-sm-9">Velika scena</dd>
+          <dd class="col-sm-9" id="sala"></dd>
 
           <dt class="col-sm-3">Broj mesta:</dt>
-          <dd class="col-sm-9">22</dd>
+          <dd class="col-sm-9" id="brojMesta"></dd>
 
           <dt class="col-sm-3">Cena:</dt>
-          <dd class="col-sm-9">1100 RSD</dd>
+          <dd class="col-sm-9" id="cena"></dd>
 
           <dt class="col-sm-6">
-            <select
-              class="form-select"
-              name="rezervacija"
-              id="rezervacija"
-              onchange="submitForm()"
-              required
-            >
+            <select class="form-select" name="status" id="status" required>
               <option value="">Izaberi status...</option>
               <option value="nova">Nova</option>
               <option value="prihvacena">Prihvaćena</option>
               <option value="odbijena">Odbijena</option>
             </select>
           </dt>
+          <dd class="col-sm-1">
+            <button id="btnObrisi" type="button" class="btn btn-danger">
+              Obriši
+            </button>
+          </dd>
         </dl>
       </form>
     </main>
