@@ -99,10 +99,19 @@
             ></textarea>
 
             <br />
-            <label for="predstave">Predstave:</label>
+            <!-- <label for="predstave">Predstave:</label>
             <ul class="list-group">
               <li class="list-group-item">Primer</li>
-            </ul>
+            </ul> -->
+            <label class="form-label" for="email">E-mail:</label>
+            <input
+              type="text"
+              id="email"
+              oninput="validateEmail(this)"
+              class="form-control"
+              name="email"
+              required
+            />
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
@@ -130,22 +139,16 @@
             />
 
             <br />
-            <label class="form-label" for="email">E-mail:</label>
-            <input
-              type="text"
-              id="email"
-              oninput="validateEmail(this)"
-              class="form-control"
-              name="email"
-              required
-            />
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
           <div class="mt-3 mb-3">
             <button class="btn btn-primary">Sačuvaj</button>
             <!-- <a href="pozorista.html" class="btn btn-link">Nazad</a> -->
-            <a href="#" class="btn btn-danger">Obriši</a>
+            <button id="btnObrisi" type="button" class="btn btn-danger">
+              Obriši
+            </button>
+            <!-- <a href="#" class="btn btn-danger">Obriši</a> -->
             <button
               id="btnNazadIzmeniPozoriste"
               type="button"

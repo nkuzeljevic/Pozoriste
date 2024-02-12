@@ -80,18 +80,37 @@ route.post("/", async (req, res) => {
 
 //PUT koji radi izmenu
 route.put("/:id", async (req, res) => {
-  try {
-    const novi = await Pozoriste.findByPk(req.params.id);
-    novi.naziv = req.body.naziv;
-    novi.opis = req.body.opis;
-    novi.adresa = req.body.adresa;
-    novi.telefon = req.body.telefon;
-    novi.email = req.body.email;
-    novi.save();
-    return res.json(novi);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Greska pri izmeni", data: err });
+  const shema = Joi.object().keys({
+    naziv: Joi.string().trim().min(5).max(25).required(),
+    adresa: Joi.string().trim().min(5).max(35).required(),
+    opis: Joi.string().trim().min(1).required(),
+    email: Joi.string().email({ minDomainSegments: 2 }),
+    telefon: Joi.string()
+      .trim()
+      .pattern(/^[0-9]{3}\/?[0-9]{6,7}$/)
+      .required(),
+  });
+
+  const { error, succ } = shema.validate(req.body);
+  if (error) {
+    console.error("Validation Error:", error);
+    return res.status(400).json({
+      error: error.details.map((detail) => detail.message).join(", "),
+    });
+  } else {
+    try {
+      const novi = await Pozoriste.findByPk(req.params.id);
+      novi.naziv = req.body.naziv;
+      novi.opis = req.body.opis;
+      novi.adresa = req.body.adresa;
+      novi.telefon = req.body.telefon;
+      novi.email = req.body.email;
+      novi.save();
+      return res.json(novi);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: "Greska pri izmeni", data: err });
+    }
   }
 });
 
