@@ -218,10 +218,7 @@ route.delete("/:id", async (req, res) => {
     // Delete the Glumac
     await glumac.destroy();
 
-    return res.json({
-      success: true,
-      message: "Glumac and associations deleted successfully.",
-    });
+    return res.json(glumac.id);
   } catch (err) {
     console.error(err);
     res
