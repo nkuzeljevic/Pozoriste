@@ -135,7 +135,7 @@ route.post("/", async (req, res) => {
 //PUT koji radi izmenu
 route.put("/:id", async (req, res) => {
   const shema = Joi.object().keys({
-    ime: Joi.string().trim().min(5).max(35).required(),
+    ime: Joi.string().trim().min(5).max(35).required(), 
     opis: Joi.string().trim().min(1).required(),
     izabranaPredstava: Joi.array().items(Joi.string().trim().min(1)).required(),
   });

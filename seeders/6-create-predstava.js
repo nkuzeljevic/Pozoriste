@@ -60,7 +60,7 @@ module.exports = {
         idPozorista: "2",
         datum: new Date("2023-12-27"),
         vreme: "20:30",
-        idSale: "5",
+        idSale: "2",
         cena: 1500,
         idZanra: "2",
       },

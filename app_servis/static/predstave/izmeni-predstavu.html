@@ -90,13 +90,19 @@
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="pozoriste">Pozorište:</label>
-            <input
+            <!-- <input
               type="text"
               id="pozoriste"
               oninput="validateInput(this)"
               name="pozoriste"
               class="form-control"
               required
+            /> -->
+            <select class="form-select" id="pozoriste" required></select>
+            <input
+              type="hidden"
+              id="izabranoPozoriste"
+              name="izabranoPozoriste"
             />
           </div>
         </div>
@@ -130,14 +136,18 @@
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="sala">Sala:</label>
-            <input
+            <!-- <input
               type="text"
               id="sala"
               name="sala"
               oninput="validateInput(this)"
               class="form-control"
               required
-            />
+            /> -->
+            <select class="form-select" id="sala" required>
+              <!-- <option value="">Izaberi salu...</option> -->
+            </select>
+            <input type="hidden" id="izabranaSala" name="izabranaSala" />
           </div>
         </div>
 
@@ -157,28 +167,53 @@
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="zanr">Žanr:</label>
-            <input
+            <!-- <input
               type="text"
               id="zanr"
               name="zanr"
               class="form-control"
               oninput="validateInput(this)"
               required
-            />
+            /> -->
+            <select class="form-select" id="zanr" required></select>
+            <input type="hidden" id="izabraniZanr" name="izabraniZanr" />
           </div>
         </div>
 
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="glumci">Glumci:</label>
-            <input
+            <!-- <input
               type="text"
               id="glumci"
               name="glumci"
               class="form-control"
               oninput="validateInput(this)"
               required
-            />
+            /> -->
+            <ul class="list-group" id="glumciList"></ul>
+          </div>
+          <div class="mb-3 mt-3">
+            <button class="btn btn-danger" type="button" id="btnObrisiIzabrane">
+              Obriši izabrane
+            </button>
+          </div>
+          <div class="mb-3 mt-3 row">
+            <div class="col-md-11 col-sm-12">
+              <select class="form-select" id="selectGlumca">
+                <option value="">Izaberi novog glumca...</option>
+              </select>
+              <input type="hidden" id="izabraniGlumac" name="izabraniGlumac" />
+            </div>
+            <div class="col-md-1 col-sm-12">
+              <button class="btn btn-success" type="button" id="dodajGlumca">
+                +
+              </button>
+            </div>
+          </div>
+          <div class="mb-3 mt-3">
+            <div id="unetiGlumci"></div>
+            <input type="hidden" name="glumciInput" id="glumciInput" />
           </div>
         </div>
 
@@ -199,7 +234,10 @@
           <div class="mt-3 mb-3">
             <button class="btn btn-primary">Sačuvaj</button>
             <!-- <a href="pozorista.html" class="btn btn-link">Nazad</a> -->
-            <a href="#" class="btn btn-danger">Obriši</a>
+            <!-- <a href="#" class="btn btn-danger">Obriši</a> -->
+            <button id="btnObrisi" type="button" class="btn btn-danger">
+              Obriši
+            </button>
             <button
               id="btnNazadIzmeniPredstavu"
               type="button"

@@ -55,7 +55,15 @@ route.get("/", async (req, res) => {
 //GET koji vraca po specificnom id-ju
 route.get("/:id", async (req, res) => {
   try {
-    const predstava = await Predstava.findByPk(req.params.id);
+    const predstava = await Predstava.findByPk(req.params.id, {
+      include: [
+        {
+          model: PredstavaGlumac,
+          include: [Glumac],
+          as: "PredstavaGlumacs",
+        },
+      ],
+    });
     return res.json(predstava);
   } catch (err) {
     console.log(err);
@@ -176,17 +184,68 @@ route.post("/", async (req, res) => {
 
 //PUT koji radi izmenu
 route.put("/:id", async (req, res) => {
+  const shema = Joi.object().keys({
+    naziv: Joi.string().trim().min(5).max(25).required(),
+    datum: Joi.date().greater("now").required(),
+    vreme: Joi.string()
+      .regex(/^([01]\d|2[0-3]):([0-5]\d)$/)
+      .required(),
+    izabranoPozoriste: Joi.string().trim().min(1).required(),
+    izabranaSala: Joi.string().trim().min(1).required(),
+    izabraniZanr: Joi.string().trim().min(1).required(),
+    izabraniGlumac: Joi.array().items(Joi.string().trim().min(1)).required(),
+    cena: Joi.number().greater(0).required(),
+  });
+
+  const { error, succ } = shema.validate(req.body);
+
+  if (error) {
+    console.error("Validation Error:", error);
+    return res.status(400).json({
+      error: error.details.map((detail) => detail.message).join(", "),
+    });
+  }
   try {
-    const novi = await Predstava.findByPk(req.params.id);
-    novi.naziv = req.body.naziv;
-    novi.idPozorista = req.body.idPozorista;
-    novi.datum = req.body.datum;
-    novi.vreme = req.body.vreme;
-    novi.idSale = req.body.idSale;
-    novi.cena = req.body.cena;
-    novi.idZanra = req.body.idZanra;
-    novi.save();
-    return res.json(novi);
+    const predstava = await Predstava.findByPk(req.params.id);
+
+    if (!predstava) {
+      return res.status(404).json({ error: "Predstava not found." });
+    }
+    predstava.naziv = req.body.naziv;
+    predstava.idPozorista = req.body.izabranoPozoriste;
+    predstava.datum = req.body.datum;
+    predstava.vreme = req.body.vreme;
+    predstava.idSale = req.body.izabranaSala;
+    predstava.cena = req.body.cena;
+    predstava.idZanra = req.body.izabraniZanr;
+
+    const izabraniGlumac = req.body.izabraniGlumac;
+
+    if (!izabraniGlumac || izabraniGlumac.length === 0) {
+      return res
+        .status(400)
+        .json({ error: "Izabrani glumac nije pravilno poslat." });
+    }
+
+    // Iterate through izabranaPredstava
+    for (const idGlumca of izabraniGlumac) {
+      // Check if the relationship already exists in PredstavaGlumac
+      const existingRelationship = await PredstavaGlumac.findOne({
+        where: { idPredstave: predstava.id, idGlumca: idGlumca },
+      });
+
+      // If the relationship doesn't exist, create it
+      if (!existingRelationship) {
+        await PredstavaGlumac.create({
+          idPredstave: predstava.id,
+          idGlumca: idGlumca,
+        });
+        console.log("New association created successfully.");
+      }
+    }
+    await predstava.save();
+
+    return res.json(predstava);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri izmeni", data: err });
@@ -197,11 +256,53 @@ route.put("/:id", async (req, res) => {
 route.delete("/:id", async (req, res) => {
   try {
     const predstava = await Predstava.findByPk(req.params.id);
-    predstava.destroy();
+
+    // Check if the predstava exists
+    if (!predstava) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Predstava not found." });
+    }
+
+    // Find and delete all associations in PredstavaGlumac for the given Glumac id
+    await PredstavaGlumac.destroy({
+      where: { idPredstave: req.params.id },
+    });
+    await predstava.destroy();
     return res.json(predstava.id); //vraca id obrisanog
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri brisanju", data: err });
+  }
+});
+
+// DELETE route to remove relationship between glumac and predstava
+route.delete("/:predstavaId/glumac/:glumacId", async (req, res) => {
+  try {
+    const { glumacId, predstavaId } = req.params;
+    // Log the generated SQL query to the console
+    const deleteQuery = `DELETE FROM PredstavaGlumacs WHERE idGlumca = ${glumacId} AND idPredstave = ${predstavaId}`;
+    console.log("Generated SQL query:", deleteQuery);
+
+    // Check if the relationship exists
+    const predstavaGlumac = await PredstavaGlumac.findOne({
+      where: {
+        idGlumca: glumacId,
+        idPredstave: predstavaId,
+      },
+    });
+
+    if (!predstavaGlumac) {
+      return res.status(404).json({ error: "Relacija nije pronađena." });
+    }
+
+    // Delete the relationship
+    await predstavaGlumac.destroy();
+
+    return res.json({ success: true });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Greska pri brisanju relacije", data: err });
   }
 });
 module.exports = route;
