@@ -1,5 +1,5 @@
 var id = null;
-
+var niz = [];
 window.addEventListener("load", function () {
   var url = new URL(window.location.href);
   id = url.searchParams.get("id");
@@ -55,7 +55,12 @@ window.addEventListener("load", function () {
           const listItem = document.createElement("li");
           listItem.classList.add("list-group-item", "podlista");
           listItem.textContent = predstava ? predstava.naziv : "N/A";
+          // Set the data-id attribute with Predstava ID
+          listItem.dataset.id = predstava ? predstava.id : null;
+
           predstaveUl.appendChild(listItem);
+
+          niz.push(listItem.dataset.id);
         });
       } else {
         console.log("No PredstavaGlumacs data found.");
@@ -66,56 +71,64 @@ window.addEventListener("load", function () {
     })
     .catch((err) => console.log(err));
 
-  // document
-  //   .getElementById("btnObrisiIzabrane")
-  //   .addEventListener("click", function () {
-  //     if (confirm("Potvrdi brisanje")) {
-  //       // Get the ul element by its id
-  //       const predstaveUl = document.getElementById("unetePredstave");
+  document
+    .getElementById("btnObrisiIzabrane")
+    .addEventListener("click", function () {
+      // Get the ul element by its id
+      const predstaveUl = document.getElementById("predstaveList");
 
-  //       // Find all selected predstave li elements
-  //       const selectedPredstaveLi = predstaveUl.querySelectorAll("li");
+      // Find all selected predstave li elements
+      const selectedPredstaveLi = predstaveUl.querySelectorAll("li");
 
-  //       // Create an array to store promises for each fetch request
-  //       const deleteRequests = [];
+      // Check if the NodeList is empty
+      if (selectedPredstaveLi.length === 0) {
+        console.log("The list is empty.");
+        return; // Exit the function if the list is empty
+      }
 
-  //       // Iterate through selected predstave li elements
-  //       selectedPredstaveLi.forEach((predstavaLi) => {
-  //         const predstavaId = predstavaLi.dataset.id;
+      // Ask for confirmation before proceeding
+      if (!confirm("Potvrdi brisanje")) {
+        return; // Exit the function if the user cancels the confirmation
+      }
 
-  //         // Send a request to delete the relationship in the database
-  //         const deleteRequest = fetch(
-  //           `http://localhost:9000/admin/glumac/${id}/predstava/${predstavaId}`,
-  //           {
-  //             method: "DELETE",
-  //           }
-  //         )
-  //           .then((resp) => resp.json())
-  //           .then((data) => {
-  //             // Remove the corresponding li element from the UI
-  //             predstavaLi.remove();
-  //           });
+      // Create an array to store promises for each fetch request
+      const deleteRequests = [];
 
-  //         // Add the promise to the array
-  //         deleteRequests.push(deleteRequest);
-  //       });
+      // Iterate through selected predstave li elements
+      selectedPredstaveLi.forEach((predstavaLi) => {
+        const predstavaId = predstavaLi.dataset.id;
 
-  //       // Execute all delete requests concurrently
-  //       Promise.all(deleteRequests)
-  //         .then(() => {
-  //           // Inform the user about successful deletion
-  //           alert("Predstave su uspešno obrisane.");
-  //         })
-  //         .catch((err) => console.log(err));
-  //     } else {
-  //       return;
-  //     }
-  //   });
+        // Send a request to delete the relationship in the database
+        const deleteRequest = fetch(
+          `http://localhost:9000/admin/glumac/${id}/predstava/${predstavaId}`,
+          {
+            method: "DELETE",
+          }
+        )
+          .then((resp) => resp.json())
+          .then((data) => {
+            // Remove the corresponding li element from the UI
+            predstavaLi.remove();
+          });
+
+        // Add the promise to the array
+        deleteRequests.push(deleteRequest);
+      });
+
+      // Execute all delete requests concurrently
+      Promise.all(deleteRequests)
+        .then(() => {
+          // Inform the user about successful deletion
+          alert("Predstave su uspešno obrisane.");
+          window.location.href = `http://localhost:8000/glumci/izmeni-glumca.html?id=${id}`;
+        })
+        .catch((err) => console.log(err));
+    });
   //sadrzaj funkcije koja ce se pozvati kada browser proglasi stranicu ucitanom
   //tj DOM tree potpuno formiranim
   document.getElementById("forma").addEventListener("submit", function (event) {
     var imeElement = document.getElementById("ime");
-    var predstavaElement = document.getElementById("predstave");
+    var predstavaElement = document.getElementById("predstaveInput");
 
     // Check if the input has the 'error' class
     if (
@@ -127,10 +140,61 @@ window.addEventListener("load", function () {
     }
 
     var spanovi = document.querySelectorAll("#unetePredstave > span.badge");
-    var niz = [];
+
     for (let i = 0; i < spanovi.length; i++) {
       niz.push(spanovi[i].dataset.id);
     }
+
+    event.preventDefault();
+    const izmeniGlumca = {
+      ime: document.getElementById("ime").value,
+      opis: document.getElementById("opis").value,
+      izabranaPredstava: niz,
+    };
+    fetch("http://localhost:9000/admin/glumac/" + id, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(izmeniGlumca),
+    })
+      .then(async (response) => {
+        console.log("Response status:", response.status);
+        if (!response.ok) {
+          //Handle 400 Bad Request error
+          if (response.status === 400) {
+            return response.text().then((errorMessage) => {
+              const errorDetails = JSON.parse(errorMessage);
+
+              if (errorDetails.error && errorDetails.error.includes("ime")) {
+                alert("Ime i prezime moraju da imaju barem 5 karaktera.");
+              } else if (
+                errorDetails.error &&
+                errorDetails.error.includes("opis")
+              ) {
+                alert("Molimo unesite opis.");
+              } else if (
+                errorDetails.error &&
+                errorDetails.error.includes("izabranaPredstava")
+              ) {
+                alert("Molimo izaberite predstavu");
+              } else {
+                alert(errorMessage); // Display the original error message
+              }
+
+              throw new Error(errorMessage);
+            });
+          } else {
+            throw new Error("Server error: " + response.status);
+          }
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // alert("Fetched Predstava Data:", data);
+        // alert("podaci su: " + novaSala.izabranoPozoriste);
+        window.location.href = `/glumci/glumci.html`;
+      })
+      .catch((err) => console.log(err));
+
     // Continue with form submission if no errors
     return true;
   });
@@ -151,6 +215,23 @@ window.addEventListener("load", function () {
     .addEventListener("click", function () {
       location.href = "/glumci/glumci.html";
     });
+
+  document.getElementById("btnObrisi").addEventListener("click", function () {
+    if (confirm("Potvrdi brisanje")) {
+      fetch("http://localhost:9000/admin/glumac/" + id, {
+        method: "DELETE",
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          //response sadrzi samo id obrisanog
+          alert("Obrisan je zapis čiji je id: " + data);
+          window.location.href = `/glumci/glumci.html`;
+        })
+        .catch((err) => console.log(err));
+    } else {
+      return;
+    }
+  });
 });
 function validateInput(inputElement) {
   //   var validno = true;
