@@ -157,7 +157,7 @@
           </div>
         </div>
 
-        <div class="col-md-5 col-sm-12">
+        <div class="col-md-4 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="zanr">Žanr:</label>
             <!-- <select class="form-select" id="zanr" name="zanr" required> -->
@@ -179,7 +179,14 @@
             </button>
           </div>
         </div>
-
+        <div class="col-md-1 col-sm-12">
+          <br />
+          <div class="mb-3 mt-3">
+            <button class="btn btn-danger" type="button" id="izmeniZanr">
+              Izmeni
+            </button>
+          </div>
+        </div>
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="naziv">Dodaj novi žanr:</label>
@@ -201,6 +208,26 @@
                 +
               </button>
             </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <div class="mb-3 mt-3">
+            <label>Izmeni zanr:</label>
+            <input
+              type="text"
+              oninput="validateInput(this,)"
+              class="form-control"
+              id="izmeni"
+            />
+            <input type="hidden" id="izmeniId" />
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-12">
+          <div class="mb-3 mt-3">
+            <br />
+            <button class="btn btn-success" type="button" id="sacuvajZanr">
+              Sačuvaj
+            </button>
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
@@ -281,6 +308,7 @@
             />
           </div> -->
         <!-- </div> -->
+        <div class="col-md-6 col-sm-12"></div>
 
         <div class="col-md-6 col-sm-12">
           <div class="mt-3 mb-3">

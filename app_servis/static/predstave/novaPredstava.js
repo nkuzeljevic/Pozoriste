@@ -355,6 +355,7 @@ window.addEventListener("load", function () {
 
           const novoDodatiZanr = await response.json();
           appendZanrToSelect(novoDodatiZanr);
+          location.reload();
         } catch (error) {
           console.error("Error adding genre:", error);
           if (error.response && error.response.status === 400) {
@@ -381,20 +382,47 @@ window.addEventListener("load", function () {
     });
 
   //Obrisi zanr
-  document.getElementById("obrisiZanr").addEventListener("click", function () {
-    var selectedGenre = document.getElementById("zanr").value;
-    if (confirm("Da li si siguran da želiš da obrišeš?")) {
-      if (selectedGenre) {
-        removeOptionByValue(document.getElementById("zanr"), selectedGenre);
+  document
+    .getElementById("obrisiZanr")
+    .addEventListener("click", async function () {
+      var selectedGenre = document.getElementById("zanr").value;
 
-        // Remove the genre from the addedGenres array
-        var index = addedGenres.indexOf(selectedGenre);
-        if (index !== -1) {
-          addedGenres.splice(index, 1);
+      if (!selectedGenre) {
+        alert("Izaberi žanr koji želiš da obrišeš");
+        return;
+      }
+
+      if (confirm("Da li si siguran da želiš da obrišeš?")) {
+        try {
+          const response = await fetch(
+            "http://localhost:9000/admin/zanr/" + selectedGenre,
+            {
+              method: "DELETE",
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Server error: " + response.status);
+          }
+
+          const deletedGenre = await response.json();
+
+          alert("Obrisan je žanr čiji je id: " + deletedGenre);
+
+          // Remove the genre from the addedGenres array
+          var index = addedGenres.indexOf(selectedGenre);
+          if (index !== -1) {
+            addedGenres.splice(index, 1);
+          }
+
+          // Remove the option from the select element
+          removeOptionByValue(document.getElementById("zanr"), selectedGenre);
+        } catch (error) {
+          console.error("Error deleting genre:", error);
+          // Handle errors appropriately
         }
       }
-    }
-  });
+    });
 
   //dodavanje novog glumca
   document.getElementById("dodajGlumca").addEventListener("click", function () {
@@ -446,6 +474,83 @@ window.addEventListener("load", function () {
   // (async () => {
   //   await updateHallOptions();
   // })();
+  document.getElementById("izmeniZanr").addEventListener("click", function () {
+    // Get the selected option from the zanr select element
+    const selectedOption =
+      selectElementZanrovi.options[selectElementZanrovi.selectedIndex];
+
+    // Check if selectedOption is defined before accessing its properties
+    if (selectedOption) {
+      const selectedZanrId = selectedOption.value;
+      const selectedZanrName = selectedOption.dataset.name;
+
+      // Set the value and text of the izmeni input field
+      document.getElementById("izmeni").value = selectedZanrName;
+      // Optionally, you can set the value of a hidden input field with the selected zanr ID
+      document.getElementById("izmeniId").value = selectedZanrId;
+    } else {
+      console.error("No option selected.");
+    }
+  });
+
+  document.getElementById("sacuvajZanr").addEventListener("click", function () {
+    // Get the values from the izmeni input field
+    const izmeniValue = document.getElementById("izmeni").value.trim();
+
+    // Ensure that the izmeni input field is not empty
+    if (izmeniValue) {
+      // Get the selected option from the zanr select element
+      const selectedOption =
+        selectElementZanrovi.options[selectElementZanrovi.selectedIndex];
+
+      // Check if selectedOption is defined before accessing its properties
+      if (selectedOption) {
+        const selectedZanrId = selectedOption.value;
+
+        // Make a PUT request to update the genre in the database
+        fetch("http://localhost:9000/admin/zanr/" + selectedZanrId, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ naziv: izmeniValue }),
+        })
+          .then(async (response) => {
+            console.log("Response status:", response.status);
+            if (!response.ok) {
+              //Handle 400 Bad Request error
+              if (response.status === 400) {
+                return response.text().then((errorMessage) => {
+                  const errorDetails = JSON.parse(errorMessage);
+
+                  if (
+                    errorDetails.error &&
+                    errorDetails.error.includes("naziv")
+                  ) {
+                    alert("Naziv mora da ima barem 5 karaktera.");
+                  } else {
+                    alert(errorMessage); // Display the original error message
+                  }
+
+                  throw new Error(errorMessage);
+                });
+              } else {
+                throw new Error("Server error: " + response.status);
+              }
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // alert("Fetched Predstava Data:", data);
+            // alert("podaci su: " + novaSala.izabranoPozoriste);
+            window.location.href = `/predstave/nova-predstava.html`;
+          })
+          .catch((err) => console.log(err));
+      } else {
+        console.error("No option selected.");
+      }
+    } else {
+      console.error("Izmeni input field cannot be empty.");
+    }
+  });
 });
 
 async function updateHallOptions() {

@@ -73,6 +73,19 @@ route.post("/", async (req, res) => {
 
 //PUT koji radi izmenu
 route.put("/:id", async (req, res) => {
+  const shema = Joi.object().keys({
+    naziv: Joi.string().trim().min(5).max(25).required(),
+  });
+
+  const { error, succ } = shema.validate(req.body);
+
+  if (error) {
+    console.error("Validation Error:", error);
+    return res.status(400).json({
+      error: error.details.map((detail) => detail.message).join(", "),
+    });
+  }
+
   try {
     const novi = await Zanr.findByPk(req.params.id);
     novi.naziv = req.body.naziv;
