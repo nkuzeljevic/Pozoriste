@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><base href="http://localhost:8000/admin/">
+    <title>Nova predstava</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../../main.css" />
+    <!-- <script defer src="/script.js"></script> -->
+  </head>
+  <body>
+    <main class="container">
+      <div class="row">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="../../admin/index.html"
+                  >Dashboard <span class="sr-only"></span
+                ></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../admin/pozorista/pozorista.html"
+                  >Pozorišta</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../admin/predstave/predstave.html"
+                  >Predstave</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../admin/glumci/glumci.html">Ansambl</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../admin/posetioci/posetioci.html"
+                  >Posetioci</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../admin/rezervacije/rezervacije.html"
+                  >Rezervacije</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <br />
+      <br />
+      <h1>Nova predstava</h1>
+      <form
+        onsubmit="return validate()"
+        class="row"
+        method="post"
+        id="forma"
+        action="/admin/nova-predstava"
+      >
+        <div class="col-md-6 col-sm-12">
+          <div class="mb-3 mt-3">
+            <label for="naziv">Naziv:</label>
+            <input
+              type="text"
+              oninput="validateInput(this)"
+              class="form-control"
+              id="naziv"
+              name="naziv"
+              required
+            />
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          <div class="mb-3 mt-3">
+            <label for="datum">Datum:</label>
+            <input
+              name="datum"
+              id="datum"
+              class="form-control"
+              type="date"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+          <div class="mb-3 mt-3 cs-form">
+            <label for="vreme">Vreme:</label>
+            <input
+              type="time"
+              id="vreme"
+              name="vreme"
+              class="form-control"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <div class="mb-3 mt-3">
+            <label for="pozoriste">Pozorište:</label>
+            <!-- <select
+              class="form-select"
+              onchange="updateHallOptions()"
+              name="pozoriste"
+              id="pozoriste"
+              required
+            > -->
+            <select
+              class="form-select"
+              onchange="updateHallOptions()"
+              id="pozoriste"
+              required
+            >
+              <option value="">Izaberi pozoriste...</option>
+              <!-- <option value="atelje">Atelje 212</option>
+              <option value="bdp">Beogradsko dramsko pozorište</option>
+              <option value="jdp">Jugoslovensko dramsko pozorište</option>
+              <option value="pozoristeNaTerazijama">
+                Pozorište na Terazijama
+              </option>
+              <option value="zvezdaraTeatar">Zvezdara teatar</option> -->
+            </select>
+
+            <input
+              type="hidden"
+              id="izabranoPozoriste"
+              name="izabranoPozoriste"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <div class="mb-3 mt-3">
+            <label for="sala">Sala:</label>
+            <select class="form-select" id="sala" required>
+              <!-- <option value="">Izaberi salu...</option> -->
+            </select>
+            <input type="hidden" id="izabranaSala" name="izabranaSala" />
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+          <div class="mb-3 mt-3">
+            <label for="zanr">Žanr:</label>
+            <!-- <select class="form-select" id="zanr" name="zanr" required> -->
+            <select class="form-select" id="zanr" required>
+              <option value="">Izaberi žanr...</option>
+              <!-- <option value="komedija">Komedija</option> 
+              <option value="drama">Drama</option>
+              <option value="opera">Opera</option>
+              <option value="mjuzikl">Mjuzikl</option> -->
+            </select>
+            <input type="hidden" id="izabraniZanr" name="izabraniZanr" />
+          </div>
+        </div>
+        <div class="col-md-1 col-sm-12">
+          <br />
+          <div class="mb-3 mt-3">
+            <button class="btn btn-danger" type="button" id="obrisiZanr">
+              Obriši
+            </button>
+          </div>
+        </div>
+        <div class="col-md-1 col-sm-12">
+          <br />
+          <div class="mb-3 mt-3">
+            <button class="btn btn-danger" type="button" id="izmeniZanr">
+              Izmeni
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <div class="mb-3 mt-3">
+            <label for="naziv">Dodaj novi žanr:</label>
+            <div class="input-group mb-3">
+              <!-- <input
+                type="text"
+                oninput="validateAndToggleButton(this, 'dodajNovZanr')"
+                class="form-control"
+                id="novZanr"
+                name="novZanr"
+              /> -->
+              <input
+                type="text"
+                oninput="validateAndToggleButton(this, 'dodajNovZanr')"
+                class="form-control"
+                id="novZanr"
+              />
+              <button class="btn btn-success" type="button" id="dodajNovZanr">
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <div class="mb-3 mt-3">
+            <label>Izmeni zanr:</label>
+            <input
+              type="text"
+              oninput="validateInput(this,)"
+              class="form-control"
+              id="izmeni"
+            />
+            <input type="hidden" id="izmeniId" />
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-12">
+          <div class="mb-3 mt-3">
+            <br />
+            <button class="btn btn-success" type="button" id="sacuvajZanr">
+              Sačuvaj
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <div class="mb-3 mt-3">
+            <div class="mb-3 mt-3">
+              <label for="glumci">Glumci:</label>
+              <div class="input-group mb-3">
+                <select class="form-select" id="glumci">
+                  <option value="">Izaberi glumca...</option>
+                </select>
+                <input type="hidden" id="izabraniGlumci" />
+                <button class="btn btn-success" type="button" id="dodajGlumca">
+                  +
+                </button>
+
+                <!-- <input
+                  type="text"
+                  oninput="validateInput(this)"
+                  class="form-control"
+                  id="glumci"
+                  name="glumci"
+                /> -->
+                <!-- <input
+                  type="text"
+                  oninput="validateAndToggleButton(this, 'dodajGlumca')"
+                  class="form-control"
+                  id="glumci"
+                  name="glumci"
+                /> -->
+                <!-- <input
+                  type="text"
+                  oninput="validateAndToggleButton(this, 'dodajGlumca')"
+                  class="form-control"
+                  id="glumci"
+                /> -->
+                <!-- <button class="btn btn-success" type="button" id="dodajGlumca"> -->
+                <!-- <button
+                  class="btn btn-success"
+                  type="button"
+                  id="dodajGlumca"
+                  disabled
+                >
+                  +
+                </button> -->
+              </div>
+              <div id="unetiGlumci"></div>
+              <input type="hidden" name="glumciInput" id="glumciInput" />
+            </div>
+          </div>
+          <!-- <div id="unetiGlumci"></div>
+          <input type="hidden" name="glumciInput" id="glumciInput" /> -->
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <div class="mb-3 mt-3">
+            <label for="cena">Cena:</label>
+            <input
+              type="number"
+              min="1"
+              id="cena"
+              name="cena"
+              class="form-control"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- <div class="col-md-6 col-sm-12"> -->
+        <!-- <div class="mb-3 mt-3">
+            <label for="brMesta">Broj mesta:</label>
+            <input
+              type="number"
+              min="1"
+              id="brMesta"
+              name="brMesta"
+              class="form-control"
+              required
+            />
+          </div> -->
+        <!-- </div> -->
+        <div class="col-md-6 col-sm-12"></div>
+
+        <div class="col-md-6 col-sm-12">
+          <div class="mt-3 mb-3">
+            <br />
+            <button class="btn btn-primary" id="btnUnesi">Unesi</button>
+            <!-- <a href="pozorista.html" class="btn btn-link">Nazad</a> -->
+            <button
+              id="btnNazadPredstave"
+              type="button"
+              class="btn btn-primary float-end"
+            >
+              Nazad
+            </button>
+          </div>
+        </div>
+      </form>
+    </main>
+    <script defer src="../../admin/predstave/novaPredstava.js"></script>
+  </body>
+</html>
