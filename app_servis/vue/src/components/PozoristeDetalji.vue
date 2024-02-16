@@ -20,6 +20,9 @@
       <template v-slot:cell(cena)="row">
         {{ formatCena(row.value) }}
       </template>
+      <template v-slot:cell(vreme)="row">
+        {{ formatVreme(row.value) }}
+      </template>
     </b-table>
 
      <div class="pagination-container">
@@ -48,6 +51,7 @@
             {{ selectedPozoriste.email }}
         </div>
     </div>
+    <router-link to="/">Nazad na Pozorišta</router-link>
   </div>
 </template>
 
@@ -109,6 +113,9 @@ export default {
     },
     formatCena(cena) {
       return cena.toLocaleString() + " RSD";
+    },
+     formatVreme(vreme) {
+      return vreme.toLocaleString() + " h";
     },
     // getZanrNameById(id) {
     //   const zanr = this.zanrovi.find(z => z.id === id);

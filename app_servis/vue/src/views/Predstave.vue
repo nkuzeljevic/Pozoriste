@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="predstave-grid">
+    <br>
       <b-table
         v-if="predstaveWithNames"
         striped
@@ -10,6 +11,7 @@
         :per-page="perPage"
         :current-page="currentPage"
         id="tabelaPredstava"
+        @row-clicked="openPredstavaDetails"
       >
         <template v-slot:cell(datum)="row">
           {{ formatDatum(row.value) }}
@@ -80,6 +82,17 @@ export default {
     },
     formatCena(cena) {
       return cena.toLocaleString() + ' RSD';
+    },
+     openPredstavaDetails(predstava) {
+      // Make sure predstava has an id property
+      if (predstava.id) {
+        console.log('openPredstavaDetails sending id: ' + predstava.id);
+        this.$router.push({ name: 'PredstavaDetalji', params: { id: predstava.id } });
+      }
+    },
+    created() {
+      // Fetch predstave when the component is created
+      this.fetchPredstave();
     },
   },
   mounted() {
