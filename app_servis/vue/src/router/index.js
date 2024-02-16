@@ -14,9 +14,9 @@ const routes = [
     component: Pozorista
   },
   {
-    path: '/pozoriste/:id',
+    path: '/pozoriste-detalji/:id',
     name: 'PozoristeDetalji',
-    component: PozoristeDetalji
+    component: PozoristeDetalji,
   },
   {
     path: '/home',

@@ -1,17 +1,44 @@
 <template>
   <div class="container">
-    <h1>{{ selectedPozoriste.naziv }}</h1>
+    <h1>{{ selectedPozoriste ? selectedPozoriste.naziv : 'Loading...' }}</h1>
     <br>
-    <p>{{ selectedPozoriste.opis }}</p>
-   <!-- <div :class="{ 'podaci': true }">
-        {{selectedPozoriste.adresa}}    
+    <p class="custom-width">{{ selectedPozoriste.opis }}</p>
+    <br>
+    <br>
+    <b-table
+      v-if="predstaveWithNames"
+      striped
+      hover
+      :items="this.predstaveWithNames"
+      :fields="fields"    
+      :per-page="perPage"
+      :current-page="currentPage"
+      id="tabelaPredstava">
+      <template v-slot:cell(datum)="row">
+        {{ formatDatum(row.value) }}
+      </template>
+      <template v-slot:cell(cena)="row">
+        {{ formatCena(row.value) }}
+      </template>
+    </b-table>
+
+     <div class="pagination-container">
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="this.filteredPredstave.length"
+        :per-page="perPage"
+        aria-controls="tabelaPredstava"
+      ></b-pagination>
     </div>
-    <div :class="{ 'podaci': true }">
-        {{selectedPozoriste.telefon}}
-    </div>
-     <div :class="{ 'podaci': true }">
-        {{selectedPozoriste.email}}
-    </div> -->
+    <br>
+    <br>
+    <h2>Sale u pozorištu</h2>
+    <br>
+    <ul class="list-group">
+      <li class="list-group-item custom-width" v-for="sala in filteredSale" :key="sala.id">{{ sala.naziv }} | Dostupno: {{ sala.brojMesta }} mesta</li>
+    </ul>
+    <br>
+    <br>
     <div class="pozoristeGrid">
         <div class="pozoristeItem">
             {{ selectedPozoriste.adresa }}
@@ -25,17 +52,81 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
+
 export default {
 //   props: ['pozoriste'],
   // Fetch additional data or perform actions related to the details view
   // Use the created or mounted lifecycle hooks as needed
+  data(){
+    return{
+      perPage:4,
+      currentPage: 1,
+      fields: [
+        { key: "naziv", sortable: true, label: "Predstava" },
+        { key: "datum", sortable: true, label: "Datum" },
+        { key: "vreme", sortable: true, label: "Vreme" },
+        { key: "cena", sortable: true, label: "Cena" },
+        { key: "zanrNaziv", label: "Zanr", sortable: false },
+        { key: "salaNaziv", label: "Sala", sortable: false },
+      ],
+
+    }
+  },
   computed: {
-    ...mapState(['selectedPozoriste']),
+    ...mapState(['selectedPozoriste', 'filteredPredstave', 'zanrovi', 'sale']),
+    ...mapGetters(['getZanrById', 'getSalaById']),
     pozoristeId() {
-    return this.$route.params.id;
+      return this.$route.params.id;
+    },
+    predstaveWithNames() {
+    // Map filteredPredstave to include Zanr and Sala names
+    return this.filteredPredstave.map(predstava => {
+      const zanr = this.getZanrById(predstava.idZanra);
+      const sala = this.getSalaById(predstava.idSale);
+
+      return {
+        ...predstava,
+        zanrNaziv: zanr ? zanr.naziv : '',
+        salaNaziv: sala ? sala.naziv : '',
+      };
+    });
   },
+    filteredSale() {
+      // Filter sale based on idPozorista
+      return this.sale.filter(sala => sala.idPozorista === this.selectedPozoriste.id);
+    },
   },
+   methods: {
+    ...mapActions(['fetchPredstave']),
+    formatDatum(dateString) {
+      const date = new Date(dateString);
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+  
+      return `${day}.${month}.${year}.`;
+    },
+    formatCena(cena) {
+      return cena.toLocaleString() + " RSD";
+    },
+    getZanrNameById(id) {
+      const zanr = this.zanrovi.find(z => z.id === id);
+      return zanr ? zanr.naziv : '';
+    },
+    getSalaNameById(id) {
+      const sala = this.sale.find(s => s.id === id);
+      return sala ? sala.naziv : '';
+    },
+  },
+   mounted(){
+    console.log('Route params:', this.$route.params);
+    console.log('Selected Pozoriste:', this.selectedPozoriste);
+    this.$store.dispatch('fetchZanrovi');
+    this.$store.dispatch('fetchSale');
+    // Fetch predstave
+    this.fetchPredstave();
+  }
 };
 </script>
 
@@ -69,7 +160,7 @@ export default {
   border: 1px solid #ddd; /* Optional: Add a border for separation */
 }
 
-/* .pagination-container {
+.pagination-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -108,6 +199,10 @@ export default {
     background-color: #3498db;
     color: #fff;
   }
-} */
+}
+.custom-width {
+  width: 60%;
+  margin: 0 auto;
+}
 
 </style>

@@ -8,18 +8,37 @@ export default new Vuex.Store({
   state: {
     pozorista: [],
     selectedPozoriste: null,
+    predstave: [],
+    filteredPredstave: [],
+    zanrovi: [],
+    sale: []
   },
 
   getters: {
+    getZanrById: state => id => state.zanrovi.find(zanr => zanr.id === id),
+    getSalaById: state => id => state.sale.find(sala => sala.id === id),
   },
 
   mutations: {
+    addPredstave(state, predstave){
+      state.predstave = predstave;
+    },
     addPozorista(state, pozorista){
       state.pozorista = pozorista;
     },
     setSelectedPozoriste(state, pozoriste) {
-    state.selectedPozoriste = pozoriste;
-  },
+      console.log('Setting selectedPozoriste:', pozoriste);
+      state.selectedPozoriste = pozoriste;
+    },
+    setFilteredPredstave(state, predstave) {
+      state.filteredPredstave = predstave;
+    },
+    addZanrovi(state, zanrovi) {
+      state.zanrovi = zanrovi;
+    },
+    addSale(state, sale) {
+      state.sale = sale;
+    },
   },
 
   actions: {
@@ -28,22 +47,32 @@ export default new Vuex.Store({
         .then( res=>res.json() )
           .then( data => commit('addPozorista', data) );
     },  
-  // selectPozoriste({ commit, dispatch }, id) {
-  //   commit('setSelectedPozoristeId', id);
-  //   // Trigger navigation to the details page
-  //   dispatch('navigateToPozoristeDetalji');
-  // },
-  // // Other actions...
-  // navigateToPozoristeDetalji({ state }) {
-  //   // Navigate to the details page using Vue Router
-  //   if (state.selectedPozoristeId) {
-  //     router.push({ name: 'PozoristeDetalji', params: { id: state.selectedPozoristeId } });
-  //   }
-  // },
   selectPozoriste({ commit }, pozoriste) {
     commit('setSelectedPozoriste', pozoriste);
     // Navigate to the PozoristeDetalji route
     router.push({ name: 'PozoristeDetalji', params: { id: pozoriste.id } });
+  },
+  async fetchPredstave({ commit, state }) {
+    // Fetch all predstave
+    fetch(`http://localhost:9000/admin/predstava`)
+      .then(res => res.json())
+      .then(data => {
+        commit('addPredstave', data);
+
+        // Filter predstave based on selectedPozoriste.id
+        const filteredPredstave = data.filter(predstava => predstava.idPozorista === state.selectedPozoriste.id);
+        commit('setFilteredPredstave', filteredPredstave);
+      });
+  },
+  async fetchZanrovi({ commit }) {
+    const response = await fetch(`http://localhost:9000/admin/zanr`);
+    const data = await response.json();
+    commit('addZanrovi', data);
+  },
+  async fetchSale({ commit }) {
+    const response = await fetch(`http://localhost:9000/admin/sala`);
+    const data = await response.json();
+    commit('addSale', data);
   },
 
   },
