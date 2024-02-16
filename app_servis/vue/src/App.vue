@@ -3,7 +3,8 @@
       <img alt="Vue logo" src="@/assets/logo.png">
     <nav>
       <router-link to="/">Pozorišta</router-link> |
-      <router-link to="/home">Home</router-link> |
+      <router-link to="/predstave">Predstave</router-link>
+      <!-- <router-link to="/home">Home</router-link> | -->
     </nav>
     <router-view />
    

@@ -39,6 +39,51 @@ module.exports = {
         idPredstave: "5",
         idGlumca: "5",
       },
+      {
+        id: "8",
+        idPredstave: "6",
+        idGlumca: "1",
+      },
+      {
+        id: "9",
+        idPredstave: "7",
+        idGlumca: "5",
+      },
+      {
+        id: "10",
+        idPredstave: "8",
+        idGlumca: "3",
+      },
+      {
+        id: "11",
+        idPredstave: "8",
+        idGlumca: "4",
+      },
+      {
+        id: "12",
+        idPredstave: "9",
+        idGlumca: "2",
+      },
+      {
+        id: "13",
+        idPredstave: "10",
+        idGlumca: "2",
+      },
+      {
+        id: "14",
+        idPredstave: "11",
+        idGlumca: "1",
+      },
+      {
+        id: "15",
+        idPredstave: "12",
+        idGlumca: "3",
+      },
+      {
+        id: "16",
+        idPredstave: "12",
+        idGlumca: "4",
+      },
     ]);
   },
 

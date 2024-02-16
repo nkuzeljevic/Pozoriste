@@ -52,7 +52,7 @@ export default new Vuex.Store({
     // Navigate to the PozoristeDetalji route
     router.push({ name: 'PozoristeDetalji', params: { id: pozoriste.id } });
   },
-  async fetchPredstave({ commit, state }) {
+  async fetchPredstave({ commit }) {
     // Fetch all predstave
     fetch(`http://localhost:9000/admin/predstava`)
       .then(res => res.json())
@@ -60,9 +60,21 @@ export default new Vuex.Store({
         commit('addPredstave', data);
 
         // Filter predstave based on selectedPozoriste.id
-        const filteredPredstave = data.filter(predstava => predstava.idPozorista === state.selectedPozoriste.id);
-        commit('setFilteredPredstave', filteredPredstave);
+        // const filteredPredstave = data.filter(predstava => predstava.idPozorista === state.selectedPozoriste.id);
+        // commit('setFilteredPredstave', filteredPredstave);
       });
+  },
+
+   async filterPredstaveByPozoriste({ commit, state }) {
+    fetch(`http://localhost:9000/admin/predstava`)
+      .then(res => res.json())
+      .then(data => {
+        commit('addPredstave', data);
+      });
+    if (state.selectedPozoriste) {
+      const filteredPredstave = state.predstave.filter(predstava => predstava.idPozorista === state.selectedPozoriste.id);
+      commit('setFilteredPredstave', filteredPredstave);
+    }
   },
   async fetchZanrovi({ commit }) {
     const response = await fetch(`http://localhost:9000/admin/zanr`);

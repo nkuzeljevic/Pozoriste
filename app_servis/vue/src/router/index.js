@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Predstave from '../views/Predstave.vue'
 import Pozorista from '@/views/Pozorista.vue'
 import PozoristeDetalji from '@/views/PozoristeDetalji.vue'
 
@@ -19,9 +19,9 @@ const routes = [
     component: PozoristeDetalji,
   },
   {
-    path: '/home',
-    name: 'home',
-    component: HomeView
+    path: '/predstave',
+    name: 'predstave',
+    component: Predstave
   },
 
 ]

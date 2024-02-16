@@ -98,7 +98,7 @@ export default {
     },
   },
    methods: {
-    ...mapActions(['fetchPredstave']),
+    ...mapActions(['filterPredstaveByPozoriste']),
     formatDatum(dateString) {
       const date = new Date(dateString);
       const day = date.getDate().toString().padStart(2, '0');
@@ -110,23 +110,24 @@ export default {
     formatCena(cena) {
       return cena.toLocaleString() + " RSD";
     },
-    getZanrNameById(id) {
-      const zanr = this.zanrovi.find(z => z.id === id);
-      return zanr ? zanr.naziv : '';
-    },
-    getSalaNameById(id) {
-      const sala = this.sale.find(s => s.id === id);
-      return sala ? sala.naziv : '';
-    },
+    // getZanrNameById(id) {
+    //   const zanr = this.zanrovi.find(z => z.id === id);
+    //   return zanr ? zanr.naziv : '';
+    // },
+    // getSalaNameById(id) {
+    //   const sala = this.sale.find(s => s.id === id);
+    //   return sala ? sala.naziv : '';
+    // },
   },
-   mounted(){
-    console.log('Route params:', this.$route.params);
-    console.log('Selected Pozoriste:', this.selectedPozoriste);
-    this.$store.dispatch('fetchZanrovi');
-    this.$store.dispatch('fetchSale');
-    // Fetch predstave
-    this.fetchPredstave();
-  }
+   mounted() {
+  console.log('Route params:', this.$route.params);
+  console.log('Selected Pozoriste:', this.selectedPozoriste);
+
+  // Dispatch actions to fetch initial data
+  this.$store.dispatch('fetchZanrovi');
+  this.$store.dispatch('fetchSale');
+  this.$store.dispatch('filterPredstaveByPozoriste');
+},
 };
 </script>
 
