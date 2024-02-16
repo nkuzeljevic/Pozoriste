@@ -13,6 +13,7 @@ export default new Vuex.Store({
     zanrovi: [],
     sale: [],
     glumci: [],
+    allGlumci: [],
   },
 
   getters: {
@@ -61,6 +62,9 @@ export default new Vuex.Store({
     setGlumci(state, glumci) {
       console.log('Setting glumci:', glumci);
       state.glumci = glumci;
+    },
+    setAllGlumci(state, glumci) {
+      state.allGlumci = glumci;
     },
 },
 
@@ -142,6 +146,26 @@ export default new Vuex.Store({
 // }
     } catch (error) {
       console.error('Error fetching glumci:', error);
+    }
+  },
+  async fetchAllGlumci({ commit }) {
+    try {
+      const response = await fetch('http://localhost:9000/admin/glumac'); 
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('Received data:', data);
+      
+      if (Array.isArray(data) && data.length > 0) {
+        commit('setAllGlumci', data);
+      } else {
+        console.error('Error fetching all glumci: Invalid data format');
+      }
+    } catch (error) {
+      console.error('Error fetching all glumci:', error);
+      throw error;
     }
   },
   },

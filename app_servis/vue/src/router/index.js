@@ -4,6 +4,7 @@ import Predstave from '../views/Predstave.vue'
 import Pozorista from '@/views/Pozorista.vue'
 import PozoristeDetalji from '@/components/PozoristeDetalji.vue'
 import PredstavaDetalji from '@/components/PredstavaDetalji.vue'
+import Glumci from '@/views/Glumci.vue'
 
 
 Vue.use(VueRouter)
@@ -28,6 +29,11 @@ const routes = [
     path: '/predstave-detalji/:id',
     name: 'PredstavaDetalji',
     component: PredstavaDetalji
+  },
+  {
+    path: '/glumci',
+    name: 'glumci',
+    component: Glumci
   },
 
 ]

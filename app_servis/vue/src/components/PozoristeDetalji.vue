@@ -13,6 +13,7 @@
       :fields="fields"    
       :per-page="perPage"
       :current-page="currentPage"
+      @row-clicked="openPredstavaDetails"
       id="tabelaPredstava">
       <template v-slot:cell(datum)="row">
         {{ formatDatum(row.value) }}
@@ -110,6 +111,13 @@ export default {
       const year = date.getFullYear();
   
       return `${day}.${month}.${year}.`;
+    },
+     openPredstavaDetails(predstava) {
+      // Make sure predstava has an id property
+      if (predstava.id) {
+        console.log('openPredstavaDetails sending id: ' + predstava.id);
+        this.$router.push({ name: 'PredstavaDetalji', params: { id: predstava.id } });
+      }
     },
     formatCena(cena) {
       return cena.toLocaleString() + " RSD";
