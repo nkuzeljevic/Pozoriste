@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <h1>{{ headerTitle }}</h1>
+    <br>
     <div class="predstave-grid">
     <br>
       <b-table

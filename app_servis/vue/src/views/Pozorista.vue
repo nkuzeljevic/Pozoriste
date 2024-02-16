@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <h1>{{ headerTitle }}</h1>
+    <br>
     <div class="pozorista-grid">
       <div
         v-for="(pozoriste, index) in pozorista"

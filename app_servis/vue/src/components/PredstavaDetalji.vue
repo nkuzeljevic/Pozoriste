@@ -31,7 +31,9 @@
         <p>No glumci available.</p>
     </div>
     <div class="button-container">
-        <button class="btn btn-success" type="button">Rezerviši</button>  
+        <router-link to="/rezervacija">
+          <button class="btn btn-success" type="button">Rezerviši</button>
+        </router-link> 
         <!-- Back button to navigate back to the predstave list -->
         <router-link to="/predstave">Nazad na Predstave</router-link>
     </div>

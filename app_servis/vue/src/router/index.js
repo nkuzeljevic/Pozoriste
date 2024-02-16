@@ -5,6 +5,7 @@ import Pozorista from '@/views/Pozorista.vue'
 import PozoristeDetalji from '@/components/PozoristeDetalji.vue'
 import PredstavaDetalji from '@/components/PredstavaDetalji.vue'
 import Glumci from '@/views/Glumci.vue'
+import Rezervacija from '@/views/Rezervacija.vue'
 
 
 Vue.use(VueRouter)
@@ -34,6 +35,11 @@ const routes = [
     path: '/glumci',
     name: 'glumci',
     component: Glumci
+  },
+  {
+    path: '/rezervacija',
+    name: 'Rezervacija',
+    component: Rezervacija,
   },
 
 ]
