@@ -21,7 +21,7 @@ route.get("/pozoriste/:idPozorista", async (req, res) => {
   }
 });
 
-//GET koji vraca sve zapise iz baze (posto smo u modulu, vec se nalazimo u /admin/pozoriste)
+//GET koji vraca sve zapise iz baze 
 route.get("/", async (req, res) => {
   try {
     const sala = await Sala.findAll({
@@ -63,7 +63,6 @@ route.post("/", async (req, res) => {
   if (error) {
     console.error("Validation Error:", error);
     return res.status(400).json({
-      // error: error.details.map((detail) => detail.message).join(", "),
       error: "Validation failed",
       details: error.details.map((detail) => ({
         field: detail.context.key,
@@ -99,7 +98,6 @@ route.put("/:id", async (req, res) => {
   if (error) {
     console.error("Validation Error:", error);
     return res.status(400).json({
-      // error: error.details.map((detail) => detail.message).join(", "),
       error: "Validation failed",
       details: error.details.map((detail) => ({
         field: detail.context.key,
@@ -126,7 +124,7 @@ route.delete("/:id", async (req, res) => {
   try {
     const sala = await Sala.findByPk(req.params.id);
     sala.destroy();
-    return res.json(sala.id); //vraca id obrisanog
+    return res.json(sala.id); 
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri brisanju", data: err });

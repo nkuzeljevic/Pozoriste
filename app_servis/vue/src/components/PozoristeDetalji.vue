@@ -82,7 +82,7 @@ export default {
       return this.$route.params.id;
     },
     predstaveWithNames() {
-    // Map filteredPredstave to include Zanr and Sala names
+
     return this.filteredPredstave.map(predstava => {
       const zanr = this.getZanrById(predstava.idZanra);
       const sala = this.getSalaById(predstava.idSale);
@@ -95,7 +95,6 @@ export default {
     });
   },
     filteredSale() {
-      // Filter sale based on idPozorista
       return this.sale.filter(sala => sala.idPozorista === this.selectedPozoriste.id);
     },
   },
@@ -110,7 +109,6 @@ export default {
       return `${day}.${month}.${year}.`;
     },
      openPredstavaDetails(predstava) {
-      // Make sure predstava has an id property
       if (predstava.id) {
         console.log('openPredstavaDetails sending id: ' + predstava.id);
         this.$router.push({ name: 'PredstavaDetalji', params: { id: predstava.id } });
@@ -122,43 +120,19 @@ export default {
      formatVreme(vreme) {
       return vreme.toLocaleString() + " h";
     },
-    // getZanrNameById(id) {
-    //   const zanr = this.zanrovi.find(z => z.id === id);
-    //   return zanr ? zanr.naziv : '';
-    // },
-    // getSalaNameById(id) {
-    //   const sala = this.sale.find(s => s.id === id);
-    //   return sala ? sala.naziv : '';
-    // },
-  },
-// async mounted() {
-//   console.log('Route params:', this.$route.params);
-//   console.log('Selected Pozoriste:', this.selectedPozoriste);
 
-//   try {
-//     // Dispatch actions to fetch initial data
-//     await this.$store.dispatch('fetchZanrovi');
-//     await this.$store.dispatch('fetchSale');
-//     await this.$store.dispatch('filterPredstaveByPozoriste');
-//     console.log('Filtered Predstave:', this.filteredPredstave);
-//   } catch (error) {
-//     console.error('Error fetching data:', error);
-//   }
-// },
-// };
+  },
+
 async mounted() {
   console.log('Route params:', this.$route.params);
 
   try {
-    // Try to load selectedPozoriste from localStorage
     const savedPozoriste = localStorage.getItem('selectedPozoriste');
 
     if (savedPozoriste) {
       const parsedPozoriste = JSON.parse(savedPozoriste);
       this.$store.commit('setSelectedPozoriste', parsedPozoriste);
     }
-
-    // Dispatch actions to fetch initial data
     await this.$store.dispatch('fetchZanrovi');
     await this.$store.dispatch('fetchSale');
     await this.$store.dispatch('filterPredstaveByPozoriste');
@@ -194,10 +168,10 @@ async mounted() {
 }
 
 .pozoristeItem {
-  flex-basis: 48%; /* Adjust as needed to leave some space between items */
+  flex-basis: 48%; 
   margin-bottom: 20px;
   padding: 10px;
-  border: 1px solid #ddd; /* Optional: Add a border for separation */
+  border: 1px solid #ddd; 
 }
 
 .pagination-container {

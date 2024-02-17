@@ -67,7 +67,7 @@ h1 {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  margin: auto; /* Center the container horizontally */
+  margin: auto; 
   margin-top: 50px;
   text-align: left;
 }
@@ -76,7 +76,6 @@ h1 {
   position: relative;
 }
 
-/* Style the "Show Password" checkbox */
 .password-container input[type="checkbox"] {
   position: absolute;
   top: 50%;

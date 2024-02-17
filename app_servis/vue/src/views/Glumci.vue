@@ -19,7 +19,7 @@
 import { mapActions, mapState } from 'vuex';
 
 export default {
-  name: 'Glumci', // Updated component name
+  name: 'Glumci', 
   data() {
     return {
       headerTitle: 'Glumci',
@@ -53,9 +53,9 @@ export default {
 }
 
 .glumac-item {
-  flex-basis: 48%; /* Adjust as needed to leave some space between items */
+  flex-basis: 48%;
   margin-bottom: 20px;
   padding: 10px;
-  border: 1px solid #ddd; /* Optional: Add a border for separation */
+  border: 1px solid #ddd; 
 }
 </style>

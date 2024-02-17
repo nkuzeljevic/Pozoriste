@@ -3,6 +3,7 @@ var niz = [];
 window.addEventListener("load", function () {
   var url = new URL(window.location.href);
   id = url.searchParams.get("id");
+
   fetch("http://localhost:9000/admin/predstava")
     .then((response) => response.json())
     .then((predstave) => {
@@ -12,28 +13,26 @@ window.addEventListener("load", function () {
         return `<option value="${predstava.id}">${predstava.naziv}</option>`;
       };
 
-      // Append options to the select element
       predstave.forEach((predstava) => {
         const optionHTML = createOption(predstava);
         selectElementPredstave.insertAdjacentHTML("beforeend", optionHTML);
       });
 
-      // Dynamically add the link to main.css
       const styleLink = document.createElement("link");
       styleLink.rel = "stylesheet";
-      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      styleLink.href = "/main.css"; 
       document.head.appendChild(styleLink);
     });
 
   const selectElementPredstave = document.getElementById("selectPredstave");
   const hiddenInputPredstava = document.getElementById("izabranaPredstava");
 
-  // Add event listener to update hidden input on change
+
   selectElementPredstave.addEventListener("change", function () {
     const selectedPredstavaId = selectElementPredstave.value;
-    // Update the hidden input field with the selected Predstava ID
     hiddenInputPredstava.value = selectedPredstavaId;
   });
+
   fetch("http://localhost:9000/admin/glumac/" + id)
     .then((resp) => resp.json())
     .then((data) => {
@@ -41,13 +40,12 @@ window.addEventListener("load", function () {
 
       if (data.PredstavaGlumacs && Array.isArray(data.PredstavaGlumacs)) {
         console.log("PredstavaGlumacs:", data.PredstavaGlumacs);
-        // Extract the Predstava records from the PredstavaGlumac associations
+
         const predstave = data.PredstavaGlumacs.map((pg) => pg.Predstava);
 
         // Get the ul element by its id
         const predstaveUl = document.getElementById("predstaveList");
 
-        // Clear existing content of the ul
         predstaveUl.innerHTML = "";
 
         // Append list items for each Predstava to the ul
@@ -55,7 +53,6 @@ window.addEventListener("load", function () {
           const listItem = document.createElement("li");
           listItem.classList.add("list-group-item", "podlista");
           listItem.textContent = predstava ? predstava.naziv : "N/A";
-          // Set the data-id attribute with Predstava ID
           listItem.dataset.id = predstava ? predstava.id : null;
 
           predstaveUl.appendChild(listItem);
@@ -74,31 +71,25 @@ window.addEventListener("load", function () {
   document
     .getElementById("btnObrisiIzabrane")
     .addEventListener("click", function () {
-      // Get the ul element by its id
+
       const predstaveUl = document.getElementById("predstaveList");
 
-      // Find all selected predstave li elements
       const selectedPredstaveLi = predstaveUl.querySelectorAll("li");
 
-      // Check if the NodeList is empty
       if (selectedPredstaveLi.length === 0) {
         console.log("The list is empty.");
-        return; // Exit the function if the list is empty
+        return; 
       }
 
-      // Ask for confirmation before proceeding
       if (!confirm("Potvrdi brisanje")) {
-        return; // Exit the function if the user cancels the confirmation
+        return; 
       }
 
-      // Create an array to store promises for each fetch request
       const deleteRequests = [];
 
-      // Iterate through selected predstave li elements
       selectedPredstaveLi.forEach((predstavaLi) => {
         const predstavaId = predstavaLi.dataset.id;
 
-        // Send a request to delete the relationship in the database
         const deleteRequest = fetch(
           `http://localhost:9000/admin/glumac/${id}/predstava/${predstavaId}`,
           {
@@ -107,37 +98,31 @@ window.addEventListener("load", function () {
         )
           .then((resp) => resp.json())
           .then((data) => {
-            // Remove the corresponding li element from the UI
             predstavaLi.remove();
           });
 
-        // Add the promise to the array
         deleteRequests.push(deleteRequest);
       });
 
       // Execute all delete requests concurrently
       Promise.all(deleteRequests)
         .then(() => {
-          // Inform the user about successful deletion
           alert("Predstave su uspešno obrisane.");
-          // window.location.href = `http://localhost:8000/glumci/izmeni-glumca.html?id=${id}`;
           window.location.href = `http://localhost:8000/admin/glumci/izmeni-glumca.html?id=${id}`;
         })
         .catch((err) => console.log(err));
     });
-  //sadrzaj funkcije koja ce se pozvati kada browser proglasi stranicu ucitanom
-  //tj DOM tree potpuno formiranim
+
   document.getElementById("forma").addEventListener("submit", function (event) {
     var imeElement = document.getElementById("ime");
     var predstavaElement = document.getElementById("predstaveInput");
 
-    // Check if the input has the 'error' class
     if (
       imeElement.classList.contains("error") ||
       predstavaElement.classList.contains("error")
     ) {
       alert("Molimo ispravite greške pre čuvanja.");
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault(); 
     }
 
     var spanovi = document.querySelectorAll("#unetePredstave > span.badge");
@@ -160,7 +145,6 @@ window.addEventListener("load", function () {
       .then(async (response) => {
         console.log("Response status:", response.status);
         if (!response.ok) {
-          //Handle 400 Bad Request error
           if (response.status === 400) {
             return response.text().then((errorMessage) => {
               const errorDetails = JSON.parse(errorMessage);
@@ -178,7 +162,7 @@ window.addEventListener("load", function () {
               ) {
                 alert("Molimo izaberite predstavu");
               } else {
-                alert(errorMessage); // Display the original error message
+                alert(errorMessage); 
               }
 
               throw new Error(errorMessage);
@@ -190,14 +174,10 @@ window.addEventListener("load", function () {
         return response.json();
       })
       .then((data) => {
-        // alert("Fetched Predstava Data:", data);
-        // alert("podaci su: " + novaSala.izabranoPozoriste);
-        // window.location.href = `/glumci/glumci.html`;
         window.location.href = `/admin/glumci/glumci.html`;
       })
       .catch((err) => console.log(err));
 
-    // Continue with form submission if no errors
     return true;
   });
 
@@ -215,7 +195,6 @@ window.addEventListener("load", function () {
   document
     .getElementById("btnNazadIzmeniGlumca")
     .addEventListener("click", function () {
-      // location.href = "/glumci/glumci.html";
       location.href = "/admin/glumci/glumci.html";
     });
 
@@ -226,9 +205,7 @@ window.addEventListener("load", function () {
       })
         .then((resp) => resp.json())
         .then((data) => {
-          //response sadrzi samo id obrisanog
           alert("Obrisan je zapis čiji je id: " + data);
-          // window.location.href = `/glumci/glumci.html`;
           window.location.href = `/admin/glumci/glumci.html`;
         })
         .catch((err) => console.log(err));
@@ -238,9 +215,8 @@ window.addEventListener("load", function () {
   });
 });
 function validateInput(inputElement) {
-  //   var validno = true;
+
   if (inputElement.value.length < 3) {
-    // validno = false;
     inputElement.classList.add("error");
     inputElement.classList.remove("success");
   } else {
@@ -250,7 +226,6 @@ function validateInput(inputElement) {
   //   return validno;
 }
 function dodajPredstavu(id) {
-  // Check if the play already exists in the list
   var existingPlays = document.querySelectorAll("#unetePredstave > span.badge");
   for (var i = 0; i < existingPlays.length; i++) {
     if (existingPlays[i].dataset.id === id) {
@@ -269,7 +244,6 @@ function dodajPredstavu(id) {
   span.classList.add("bg-secondary");
   span.dataset.id = id;
   span.dataset.name = selectedOption.textContent;
-  // span.innerHTML = id;
   span.innerHTML = selectedOption.textContent;
 
   //Creting button
@@ -290,12 +264,4 @@ function dodajPredstavu(id) {
   document
     .getElementById("unetePredstave")
     .appendChild(document.createTextNode(" "));
-
-  //Brisanje dodatog elementa
-  // button.addEventListener("click", function () {
-  //   var id = this.parentNode.dataset.id;
-  //   if (confirm("Da li si siguran da želiš da obrišeš?")) {
-  //     this.parentNode.parentNode.removeChild(this.parentNode);
-  //   }
-  // });
 }

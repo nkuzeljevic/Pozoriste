@@ -7,7 +7,7 @@ window.addEventListener("load", function () {
   fetch("http://localhost:9000/admin/posetilac/" + id)
     .then((resp) => resp.json())
     .then((data) => {
-      console.log(data); //proverite sta ste dobili
+      console.log(data); 
       var selectElement = document.getElementById("uloga");
       var options = selectElement.options;
 
@@ -27,8 +27,7 @@ window.addEventListener("load", function () {
     })
     .catch((err) => console.log(err));
 
-  //sadrzaj funkcije koja ce se pozvati kada browser proglasi stranicu ucitanom
-  //tj DOM tree potpuno formiranim
+
   document.getElementById("forma").addEventListener("submit", function (event) {
     var imeElement = document.getElementById("ime");
     var ulogaElement = document.getElementById("uloga");
@@ -37,7 +36,6 @@ window.addEventListener("load", function () {
     var lozinkaElement = document.getElementById("lozinka");
     var ponoviElement = document.getElementById("ponovi");
 
-    // Check if the input has the 'error' class
     if (
       imeElement.classList.contains("error") ||
       ulogaElement.classList.contains("error") ||
@@ -47,7 +45,7 @@ window.addEventListener("load", function () {
       ponoviElement.classList.contains("error")
     ) {
       alert("Molimo ispravite greške pre čuvanja.");
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault(); 
     }
 
     event.preventDefault();
@@ -66,7 +64,6 @@ window.addEventListener("load", function () {
       .then(async (response) => {
         console.log("Response status:", response.status);
         if (!response.ok) {
-          //Handle 400 Bad Request error
           if (response.status === 400) {
             return response.text().then((errorMessage) => {
               const errorDetails = JSON.parse(errorMessage);
@@ -92,7 +89,7 @@ window.addEventListener("load", function () {
               ) {
                 alert("Ime i prezime mora da ima barem 5 karaktera.");
               } else {
-                alert(errorMessage); // Display the original error message
+                alert(errorMessage); 
               }
 
               throw new Error(errorMessage);
@@ -105,11 +102,10 @@ window.addEventListener("load", function () {
       })
       .then((data) => {
         console.log("Fetched Predstava Data:", data);
-        // alert("podaci su: " + novaSala.izabranoPozoriste);
         window.location.href = `/admin/posetioci/posetioci.html`;
       })
       .catch((err) => console.log(err));
-    // Continue with form submission if no errors
+
     return true;
   });
 
@@ -126,7 +122,6 @@ window.addEventListener("load", function () {
       })
         .then((resp) => resp.json())
         .then((data) => {
-          //response sadrzi samo id obrisanog
           alert("Obrisan je zapis čiji je id: " + data);
           window.location.href = `/admin/posetioci/posetioci.html`;
         })
@@ -151,16 +146,13 @@ function validatePhoneNumber(inputElement) {
 }
 
 function validateInput(inputElement) {
-  //   var validno = true;
   if (inputElement.value.length < 3) {
-    // validno = false;
     inputElement.classList.add("error");
     inputElement.classList.remove("success");
   } else {
     inputElement.classList.add("success");
     inputElement.classList.remove("error");
   }
-  //   return validno;
 }
 
 //Da ima karakter koji nije space ili @, @, karakter koji nije space ili @, tacka,karakter koji nije space ili @

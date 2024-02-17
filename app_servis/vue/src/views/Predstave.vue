@@ -59,7 +59,7 @@ export default {
     ...mapState(['predstave']),
     ...mapGetters(['getZanrById', 'getSalaById']),
     predstaveWithNames() {
-      // Map predstave to include Zanr and Sala names
+
       return this.predstave.map((predstava) => {
         const zanr = this.getZanrById(predstava.idZanra);
         const sala = this.getSalaById(predstava.idSale);
@@ -86,7 +86,6 @@ export default {
       return cena.toLocaleString() + ' RSD';
     },
      openPredstavaDetails(predstava) {
-      // Make sure predstava has an id property
       if (predstava.id) {
         console.log('openPredstavaDetails sending id: ' + predstava.id);
         this.$router.push({ name: 'PredstavaDetalji', params: { id: predstava.id } });
@@ -94,13 +93,11 @@ export default {
     },
   },
   created() {
-      // Fetch predstave when the component is created
     this.fetchPredstave();
     this.fetchSale();
     this.fetchZanrovi();
   },
   mounted() {
-    // Fetch predstave
     this.fetchPredstave();
     this.fetchSale();
     this.fetchZanrovi();
@@ -130,7 +127,7 @@ export default {
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  width: 100%; /* Make the container full-width */
+  width: 100%; 
 }
 
 </style>

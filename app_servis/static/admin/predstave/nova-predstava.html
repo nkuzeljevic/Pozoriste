@@ -116,13 +116,7 @@
         <div class="col-md-6 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="pozoriste">Pozorište:</label>
-            <!-- <select
-              class="form-select"
-              onchange="updateHallOptions()"
-              name="pozoriste"
-              id="pozoriste"
-              required
-            > -->
+
             <select
               class="form-select"
               onchange="updateHallOptions()"
@@ -130,13 +124,7 @@
               required
             >
               <option value="">Izaberi pozoriste...</option>
-              <!-- <option value="atelje">Atelje 212</option>
-              <option value="bdp">Beogradsko dramsko pozorište</option>
-              <option value="jdp">Jugoslovensko dramsko pozorište</option>
-              <option value="pozoristeNaTerazijama">
-                Pozorište na Terazijama
-              </option>
-              <option value="zvezdaraTeatar">Zvezdara teatar</option> -->
+
             </select>
 
             <input
@@ -151,7 +139,6 @@
           <div class="mb-3 mt-3">
             <label for="sala">Sala:</label>
             <select class="form-select" id="sala" required>
-              <!-- <option value="">Izaberi salu...</option> -->
             </select>
             <input type="hidden" id="izabranaSala" name="izabranaSala" />
           </div>
@@ -160,13 +147,8 @@
         <div class="col-md-4 col-sm-12">
           <div class="mb-3 mt-3">
             <label for="zanr">Žanr:</label>
-            <!-- <select class="form-select" id="zanr" name="zanr" required> -->
             <select class="form-select" id="zanr" required>
               <option value="">Izaberi žanr...</option>
-              <!-- <option value="komedija">Komedija</option> 
-              <option value="drama">Drama</option>
-              <option value="opera">Opera</option>
-              <option value="mjuzikl">Mjuzikl</option> -->
             </select>
             <input type="hidden" id="izabraniZanr" name="izabraniZanr" />
           </div>
@@ -191,13 +173,7 @@
           <div class="mb-3 mt-3">
             <label for="naziv">Dodaj novi žanr:</label>
             <div class="input-group mb-3">
-              <!-- <input
-                type="text"
-                oninput="validateAndToggleButton(this, 'dodajNovZanr')"
-                class="form-control"
-                id="novZanr"
-                name="novZanr"
-              /> -->
+
               <input
                 type="text"
                 oninput="validateAndToggleButton(this, 'dodajNovZanr')"
@@ -242,43 +218,11 @@
                 <button class="btn btn-success" type="button" id="dodajGlumca">
                   +
                 </button>
-
-                <!-- <input
-                  type="text"
-                  oninput="validateInput(this)"
-                  class="form-control"
-                  id="glumci"
-                  name="glumci"
-                /> -->
-                <!-- <input
-                  type="text"
-                  oninput="validateAndToggleButton(this, 'dodajGlumca')"
-                  class="form-control"
-                  id="glumci"
-                  name="glumci"
-                /> -->
-                <!-- <input
-                  type="text"
-                  oninput="validateAndToggleButton(this, 'dodajGlumca')"
-                  class="form-control"
-                  id="glumci"
-                /> -->
-                <!-- <button class="btn btn-success" type="button" id="dodajGlumca"> -->
-                <!-- <button
-                  class="btn btn-success"
-                  type="button"
-                  id="dodajGlumca"
-                  disabled
-                >
-                  +
-                </button> -->
               </div>
               <div id="unetiGlumci"></div>
               <input type="hidden" name="glumciInput" id="glumciInput" />
             </div>
           </div>
-          <!-- <div id="unetiGlumci"></div>
-          <input type="hidden" name="glumciInput" id="glumciInput" /> -->
         </div>
 
         <div class="col-md-6 col-sm-12">
@@ -294,27 +238,12 @@
             />
           </div>
         </div>
-
-        <!-- <div class="col-md-6 col-sm-12"> -->
-        <!-- <div class="mb-3 mt-3">
-            <label for="brMesta">Broj mesta:</label>
-            <input
-              type="number"
-              min="1"
-              id="brMesta"
-              name="brMesta"
-              class="form-control"
-              required
-            />
-          </div> -->
-        <!-- </div> -->
         <div class="col-md-6 col-sm-12"></div>
 
         <div class="col-md-6 col-sm-12">
           <div class="mt-3 mb-3">
             <br />
             <button class="btn btn-primary" id="btnUnesi">Unesi</button>
-            <!-- <a href="pozorista.html" class="btn btn-link">Nazad</a> -->
             <button
               id="btnNazadPredstave"
               type="button"

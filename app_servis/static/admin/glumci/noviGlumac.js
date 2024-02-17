@@ -8,64 +8,45 @@ window.addEventListener("load", function () {
         return `<option value="${predstava.id}">${predstava.naziv}</option>`;
       };
 
-      // Append options to the select element
       predstave.forEach((predstava) => {
         const optionHTML = createOption(predstava);
         selectElementPredstave.insertAdjacentHTML("beforeend", optionHTML);
       });
 
-      // Dynamically add the link to main.css
       const styleLink = document.createElement("link");
       styleLink.rel = "stylesheet";
-      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      styleLink.href = "/main.css"; 
       document.head.appendChild(styleLink);
     });
 
   const selectElementPredstave = document.getElementById("predstave");
   const hiddenInputPredstava = document.getElementById("izabranaPredstava");
 
-  // Add event listener to update hidden input on change
+ 
   selectElementPredstave.addEventListener("change", function () {
     const selectedPredstavaId = selectElementPredstave.value;
-    // Update the hidden input field with the selected Predstava ID
     hiddenInputPredstava.value = selectedPredstavaId;
   });
 
   document.getElementById("forma").addEventListener("submit", function (event) {
     var imeElement = document.getElementById("ime");
 
-    // Check if the input has the 'error' class
     if (imeElement.classList.contains("error")) {
       alert("Molimo ispravite greške pre čuvanja.");
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault(); 
     }
 
     var spanovi = document.querySelectorAll("#unetePredstave > span.badge");
     var niz = [];
     for (let i = 0; i < spanovi.length; i++) {
       niz.push(spanovi[i].dataset.id);
-      // niz.push(spanovi[i].dataset.name);
-      // niz.push({
-      //   id: spanovi[i].dataset.id,
-      //   name: spanovi[i].dataset.name,
-      // });
     }
 
-    // var predstaveInput = "predstaveInput";
-    // document.getElementById(predstaveInput).value = JSON.stringify(niz);
-    // console.log(document.getElementById(predstaveInput).value);
-
-    //Redirekcija nakon unosa novog glumca
-    event.preventDefault(); //sprecimo default ponasanje
-    // var validno = validacija(); //uradimo validaciju
-    // if (!validno) {
-    //   return;
-    // } //ako nije validno - kraj
+    event.preventDefault(); 
 
     const noviGlumac = {
       ime: document.getElementById("ime").value,
       opis: document.getElementById("opis").value,
-      // izabranaPredstava: hiddenInputPredstava.value,
       izabranaPredstava: niz,
     };
     console.log(JSON.stringify(niz));
@@ -77,15 +58,17 @@ window.addEventListener("load", function () {
     })
       .then((response) => {
         if (!response.ok) {
-          // Handle 400 Bad Request error
           if (response.status === 400) {
             return response.text().then((errorMessage) => {
               const errorDetails = JSON.parse(errorMessage);
 
               if (errorDetails.error && errorDetails.error.includes("ime")) {
                 alert("Ime mora da ima barem 5 karaktera.");
-              } else {
-                alert(errorMessage); // Display the original error message
+              }else if (errorDetails.error && errorDetails.error.includes("izabranaPredstava")){
+                alert("Molimo izaberite predstavu");
+              }
+              else {
+                alert(errorMessage); 
               }
               throw new Error(errorMessage);
             });
@@ -96,21 +79,16 @@ window.addEventListener("load", function () {
         return response.json();
       })
       .then((data) => {
-        //dobili smo objekat novounesenog jela, koje ima svoj id, super
-        //mozemo nazad na spisak, a mozemo i na izmenu tog jela
-        // window.location.href = `/glumci/glumci.html`;
          window.location.href = `/admin/glumci/glumci.html`;
       })
       .catch((err) => console.log(err));
 
-    // Continue with form submission if no errors
     return true;
   });
 
   document
     .getElementById("btnNazadGlumac")
     .addEventListener("click", function () {
-      // location.href = "/glumci/glumci.html";
       location.href = "/admin/glumci/glumci.html";
     });
 
@@ -125,7 +103,7 @@ window.addEventListener("load", function () {
       dodajPredstavu(id);
       document.getElementById("predstave").value = "";
     });
-  // Function to get URL parameter by name
+
   function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -143,21 +121,20 @@ window.addEventListener("load", function () {
     alert(error);
   }
 });
+
 function validateInput(inputElement) {
-  //   var validno = true;
+
   if (inputElement.value.length < 3) {
-    // validno = false;
     inputElement.classList.add("error");
     inputElement.classList.remove("success");
   } else {
     inputElement.classList.add("success");
     inputElement.classList.remove("error");
   }
-  //   return validno;
 }
 
 function dodajPredstavu(id) {
-  // Check if the play already exists in the list
+
   var existingPlays = document.querySelectorAll("#unetePredstave > span.badge");
   for (var i = 0; i < existingPlays.length; i++) {
     if (existingPlays[i].dataset.id === id) {
@@ -198,7 +175,6 @@ function dodajPredstavu(id) {
     .getElementById("unetePredstave")
     .appendChild(document.createTextNode(" "));
 
-  //Brisanje dodatog elementa
   button.addEventListener("click", function () {
     var id = this.parentNode.dataset.id;
     if (confirm("Da li si siguran da želiš da obrišeš?")) {
@@ -206,16 +182,4 @@ function dodajPredstavu(id) {
     }
   });
 }
-//samo ako je validan input dodaj novi el
-function validateAndToggleButton(inputElement, buttonId) {
-  var isValid;
-  if (inputElement.value.length >= 3) {
-    isValid = true;
-  } else {
-    isValid = false;
-  }
-  var button = document.getElementById(buttonId);
-  if (button) {
-    button.disabled = !isValid;
-  }
-}
+

@@ -34,15 +34,13 @@ window.addEventListener("load", function () {
         selectElementPozorista.insertAdjacentHTML("beforeend", optionHTML);
       });
 
-      // Dynamically add the link to main.css
       const styleLink = document.createElement("link");
       styleLink.rel = "stylesheet";
-      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      styleLink.href = "/main.css"; 
       document.head.appendChild(styleLink);
 
       selectElementPozorista.addEventListener("change", function () {
         const selectedPozoristaId = selectElementPozorista.value;
-        // Update the hidden input field with the selected Predstava ID
         hiddenInputPozorita.value = selectedPozoristaId;
         updateHallOptions();
       });
@@ -57,21 +55,18 @@ window.addEventListener("load", function () {
         return `<option value="${zanrovi.id}">${zanrovi.naziv}</option>`;
       };
 
-      // Append options to the select element
       zanrovi.forEach((zanr) => {
         const optionHTML = createOption(zanr);
         selectElementZanra.insertAdjacentHTML("beforeend", optionHTML);
       });
 
-      // Dynamically add the link to main.css
       const styleLink = document.createElement("link");
       styleLink.rel = "stylesheet";
-      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      styleLink.href = "/main.css"; 
       document.head.appendChild(styleLink);
 
       selectElementZanra.addEventListener("change", function () {
         const selectedZanraId = selectElementZanra.value;
-        // Update the hidden input field with the selected Predstava ID
         hiddenInputZanra.value = selectedZanraId;
       });
     });
@@ -85,23 +80,19 @@ window.addEventListener("load", function () {
         return `<option value="${glumac.id}">${glumac.ime}</option>`;
       };
 
-      // Append options to the select element
       glumci.forEach((glumac) => {
         const optionHTML = createOption(glumac);
         selectElementGlumca.insertAdjacentHTML("beforeend", optionHTML);
       });
 
-      // Dynamically add the link to main.css
       const styleLink = document.createElement("link");
       styleLink.rel = "stylesheet";
-      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      styleLink.href = "/main.css"; 
       document.head.appendChild(styleLink);
     });
 
-  // Add event listener to update hidden input on change
   selectElementGlumca.addEventListener("change", function () {
     const selectedGlumacId = selectElementGlumca.value;
-    // Update the hidden input field with the selected Predstava ID
     hiddenInputGlumca.value = selectedGlumacId;
   });
 
@@ -133,7 +124,7 @@ window.addEventListener("load", function () {
           break;
         }
       }
-      // Set the selected option in the pozoriste select element
+     
       hiddenInputZanra.value = data.idZanra;
 
       if (data.PredstavaGlumacs && Array.isArray(data.PredstavaGlumacs)) {
@@ -172,31 +163,25 @@ window.addEventListener("load", function () {
   document
     .getElementById("btnObrisiIzabrane")
     .addEventListener("click", function () {
-      // Get the ul element by its id
+
       const glumciUl = document.getElementById("glumciList");
 
-      // Find all selected predstave li elements
       const selectedGlumciLi = glumciUl.querySelectorAll("li");
 
-      // Check if the NodeList is empty
       if (selectedGlumciLi.length === 0) {
         console.log("The list is empty.");
-        return; // Exit the function if the list is empty
+        return; 
       }
 
-      // Ask for confirmation before proceeding
       if (!confirm("Potvrdi brisanje")) {
-        return; // Exit the function if the user cancels the confirmation
+        return; 
       }
 
-      // Create an array to store promises for each fetch request
       const deleteRequests = [];
 
-      // Iterate through selected predstave li elements
       selectedGlumciLi.forEach((glumacLi) => {
         const glumacId = glumacLi.dataset.id;
 
-        // Send a request to delete the relationship in the database
         const deleteRequest = fetch(
           `http://localhost:9000/admin/predstava/${id}/glumac/${glumacId}`,
           {
@@ -205,18 +190,14 @@ window.addEventListener("load", function () {
         )
           .then((resp) => resp.json())
           .then((data) => {
-            // Remove the corresponding li element from the UI
             glumacLi.remove();
           });
 
-        // Add the promise to the array
         deleteRequests.push(deleteRequest);
       });
-
-      // Execute all delete requests concurrently
+      //Izvrsi sva brisanja
       Promise.all(deleteRequests)
         .then(() => {
-          // Inform the user about successful deletion
           alert("Glumci su uspešno obrisani.");
           window.location.href = `http://localhost:8000/admin/predstave/izmeni-predstavu.html?id=${id}`;
         })
@@ -228,10 +209,9 @@ window.addEventListener("load", function () {
   document.getElementById("forma").addEventListener("submit", function (event) {
     var nazivElement = document.getElementById("naziv");
 
-    // Check if the input has the 'error' class
     if (nazivElement.classList.contains("error")) {
       alert("Molimo ispravite greške pre čuvanja.");
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault(); 
     }
 
     document.getElementById("izabranaSala").value =
@@ -263,7 +243,6 @@ window.addEventListener("load", function () {
       .then(async (response) => {
         console.log("Response status:", response.status);
         if (!response.ok) {
-          //Handle 400 Bad Request error
           if (response.status === 400) {
             return response.text().then((errorMessage) => {
               const errorDetails = JSON.parse(errorMessage);
@@ -306,7 +285,7 @@ window.addEventListener("load", function () {
               ) {
                 alert("Molimo unesite glumca.");
               } else {
-                alert(errorMessage); // Display the original error message
+                alert(errorMessage); 
               }
 
               throw new Error(errorMessage);
@@ -318,13 +297,10 @@ window.addEventListener("load", function () {
         return response.json();
       })
       .then((data) => {
-        // alert("Fetched Predstava Data:", data);
-        // alert("podaci su: " + novaSala.izabranoPozoriste);
-        // alert("izmeniPredstavu: " + izmeniPredstavu.izabraniGlumac);
+
         window.location.href = `/admin/predstave/predstave.html`;
       })
       .catch((err) => console.log(err));
-    // Continue with form submission if no errors
     return true;
   });
 
@@ -345,7 +321,6 @@ window.addEventListener("load", function () {
       })
         .then((resp) => resp.json())
         .then((data) => {
-          //response sadrzi samo id obrisanog
           alert("Obrisan je zapis čiji je id: " + data);
           window.location.href = `/admin/predstave/predstave.html`;
         })
@@ -357,23 +332,19 @@ window.addEventListener("load", function () {
 });
 
 function validateInput(inputElement) {
-  //   var validno = true;
   if (inputElement.value.length < 3) {
-    // validno = false;
     inputElement.classList.add("error");
     inputElement.classList.remove("success");
   } else {
     inputElement.classList.add("success");
     inputElement.classList.remove("error");
   }
-  //   return validno;
 }
 
 async function updateHallOptions(selectedHallId) {
-  // Get the selected theater
+ 
   const selectedTheaterId = document.getElementById("izabranoPozoriste").value;
 
-  // Get the hall select element
   const hallSelect = document.getElementById("sala");
 
   try {
@@ -383,13 +354,11 @@ async function updateHallOptions(selectedHallId) {
     const halls = await response.json();
     console.log("Halls data:", halls);
 
-    // Ensure that halls is not null before processing
     if (halls !== null) {
       const optionsHTML = halls
         .map((hall) => `<option value="${hall.id}">${hall.naziv}</option>`)
         .join("");
 
-      // Set the innerHTML of the select element
       hallSelect.innerHTML = optionsHTML;
 
       // Set the selected value if provided
@@ -397,11 +366,9 @@ async function updateHallOptions(selectedHallId) {
         hallSelect.value = selectedHallId;
       }
 
-      // Add event listener to update hidden input on change
       hallSelect.addEventListener("change", function () {
         console.log("Hall select changed");
         const selectedHallId = hallSelect.value;
-        // Update the hidden input field with the selected Hall ID
         document.getElementById("izabranaSala").value = selectedHallId;
       });
       // Trigger the change event manually after setting options
@@ -414,7 +381,6 @@ async function updateHallOptions(selectedHallId) {
   }
 }
 function dodajGlumca(id) {
-  // Check if the play already exists in the list
   var existingActors = document.querySelectorAll("#unetiGlumci > span.badge");
   for (var i = 0; i < existingActors.length; i++) {
     if (existingActors[i].dataset.id === id) {
@@ -422,7 +388,6 @@ function dodajGlumca(id) {
       return;
     }
   }
-  // Find the selected option in the dropdown
   var selectedOption = document.querySelector(
     "#selectGlumca option[value='" + id + "']"
   );

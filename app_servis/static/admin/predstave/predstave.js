@@ -10,9 +10,7 @@ window.addEventListener("load", function () {
     .then((response) => response.json())
     .then((predstave) => {
       console.log(predstave);
-      // Function to create a table based on theater data
       const createTable = (play) => {
-        // Parse datum into a Date object
         const playDate = new Date(play.datum);
 
         // Format date as DD.MM.YYYY
@@ -32,9 +30,6 @@ window.addEventListener("load", function () {
             ? play.zanr.map((zanr) => zanr.naziv).join(", ")
             : play.zanr.naziv
           : "N/A";
-        // const glumacNames = play.glumci
-        //   ? play.glumci.map((glumci) => glumci.naziv).join(", ")
-        //   : "N/A";
 
         const glumacNames = play.PredstavaGlumacs
           ? play.PredstavaGlumacs.map((pg) =>
@@ -42,8 +37,6 @@ window.addEventListener("load", function () {
             ).join(", ")
           : "N/A";
 
-        // // Parse glumciInput into an array
-        // const glumciArray = JSON.parse(play.glumciInput);
         return `
 
                 <tr>
@@ -79,30 +72,17 @@ window.addEventListener("load", function () {
                 </tr>
           `;
       };
-      // Insert tables into the main container
-      //   const mainContainer = document.querySelector(".container");
-      //   pozorista.forEach((theater) => {
-      //     const tableHTML = createTable(theater);
-      //     mainContainer.insertAdjacentHTML("beforeend", tableHTML);
 
       const tableBody = document.getElementById("predstave");
       predstave.forEach((play) => {
         const tableHTML = createTable(play);
-        // Append the new rows to the table body
         tableBody.insertAdjacentHTML("beforeend", tableHTML);
       });
 
-      // Dynamically add the link to main.css
       const styleLink = document.createElement("link");
       styleLink.rel = "stylesheet";
-      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      styleLink.href = "/main.css"; 
       document.head.appendChild(styleLink);
     })
-    // .catch(error => console.error("Error fetching data:", error));
-
-    //     })
-    //     .catch(error => {
-    //       console.error('Error:', error);
-    //     });
     .catch((error) => console.error("Error fetching data:", error));
 });

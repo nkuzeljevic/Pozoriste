@@ -1,17 +1,15 @@
 window.addEventListener("load", function () {
-  //sadrzaj funkcije koja ce se pozvati kada browser proglasi stranicu ucitanom
-  //tj DOM tree potpuno formiranim
+
   document.getElementById("forma").addEventListener("submit", function (event) {
     var emailElement = document.getElementById("email");
     var lozinkaElement = document.getElementById("password");
 
-    // Check if the input has the 'error' class
     if (
       emailElement.classList.contains("error") ||
       lozinkaElement.classList.contains("error")
     ) {
       alert("Molimo ispravite greške pre čuvanja.");
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault(); 
     }
 
     // Continue with form submission if no errors
@@ -54,14 +52,3 @@ function togglePasswordVisibility(passwordId, checkboxId) {
   }
 }
 
-// function checkPasswordsMatch() {
-//   var passwordInput = document.getElementById("password");
-//   var confirmInput = document.getElementById("ponovi");
-//   var messageDiv = document.getElementById("passwordMatchMessage");
-
-//   if (passwordInput.value !== confirmInput.value) {
-//     confirmInput.setCustomValidity("Passwords do not match.");
-//   } else {
-//     confirmInput.setCustomValidity("");
-//   }
-// }

@@ -7,33 +7,15 @@ window.addEventListener("load", function () {
       location.href = "/admin/glumci/novi-glumac.html";
     });
 
-  // fetch("/admin/glumci")
   fetch("http://localhost:9000/admin/glumac")
     .then((response) => response.json())
     .then((glumci) => {
       console.log(glumci);
-      // Function to create a table based on theater data
       const createTable = (actors) => {
-        // const predstaveArray = JSON.parse(actors.predstaveInput);
-        // const predstaveListItems = predstaveArray
-        //   .map(
-        //     (predstava) =>
-        //       `<li class="list-group-item podlista">${predstava}</li>`
-        //   )
-        //   .join("");
-        // Extract the predstave associated with the glumac
-        // const predstaveListItems = actors.PredstavaGlumacs.map((pg) => {
-        //   // For each PredstavaGlumac, you can access the associated Predstava
-        //   const predstava = pg.Predstava;
-        //   return `<li class="list-group-item podlista">${
-        //     predstava ? predstava.naziv : "N/A"
-        //   }</li>`;
-        // }).join("");
 
         const predstaveListItems =
           actors.PredstavaGlumacs && Array.isArray(actors.PredstavaGlumacs)
             ? actors.PredstavaGlumacs.map((pg) => {
-                // For each PredstavaGlumac, you can access the associated Predstava
                 const predstava = pg.Predstava;
                 return `<li class="list-group-item podlista">${
                   predstava ? predstava.naziv : "N/A"
@@ -55,7 +37,7 @@ window.addEventListener("load", function () {
     </div>
   `;
       };
-      // Insert tables into the main container
+
       const mainContainer = document.querySelector(".container");
       let row = document.createElement("div");
       row.classList.add("row");
@@ -67,7 +49,6 @@ window.addEventListener("load", function () {
         // If three actors are added or it's the last actor, append the row to the main container
         if ((index + 1) % 3 === 0 || index === glumci.length - 1) {
           mainContainer.appendChild(row);
-          // Create a new row for the next set of actors
           row = document.createElement("div");
           row.classList.add("row");
         }
@@ -75,14 +56,8 @@ window.addEventListener("load", function () {
       //Dynamically add the link to main.css
       const styleLink = document.createElement("link");
       styleLink.rel = "stylesheet";
-      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      styleLink.href = "/main.css"; 
       document.head.appendChild(styleLink);
     })
-    // .catch(error => console.error("Error fetching data:", error));
-
-    //     })
-    //     .catch(error => {
-    //       console.error('Error:', error);
-    //     });
     .catch((error) => console.error("Error fetching data:", error));
 });

@@ -3,7 +3,7 @@ window.addEventListener("load", function () {
     .then((response) => response.json())
     .then((rezervacije) => {
       console.log(rezervacije);
-      // Function to create a table based on theater data
+
       const createTable = (reservation) => {
         console.log("Reservation object:", reservation);
         const predstavaName = reservation.predstave
@@ -13,7 +13,7 @@ window.addEventListener("load", function () {
         const datum = reservation.predstave
           ? reservation.predstave.datum
           : "N/A";
-        // Parse datum into a Date object
+
         const playDate = new Date(datum);
 
         // // Format date as DD.MM.YYYY
@@ -32,7 +32,7 @@ window.addEventListener("load", function () {
 
         const posetilacName = reservation.posetilac
           ? reservation.posetilac.email
-          : "N/A"; // Corrected line
+          : "N/A"; 
 
         const cena = reservation.predstave ? reservation.predstave.cena : "N/A";
         return `
@@ -64,30 +64,17 @@ window.addEventListener("load", function () {
                 </tr>
           `;
       };
-      // Insert tables into the main container
-      //   const mainContainer = document.querySelector(".container");
-      //   pozorista.forEach((theater) => {
-      //     const tableHTML = createTable(theater);
-      //     mainContainer.insertAdjacentHTML("beforeend", tableHTML);
 
       const tableBody = document.getElementById("rezervacije");
       rezervacije.forEach((reservation) => {
         const tableHTML = createTable(reservation);
-        // Append the new rows to the table body
         tableBody.insertAdjacentHTML("beforeend", tableHTML);
       });
 
-      // Dynamically add the link to main.css
       const styleLink = document.createElement("link");
       styleLink.rel = "stylesheet";
-      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      styleLink.href = "/main.css"; 
       document.head.appendChild(styleLink);
     })
-    // .catch(error => console.error("Error fetching data:", error));
-
-    //     })
-    //     .catch(error => {
-    //       console.error('Error:', error);
-    //     });
     .catch((error) => console.error("Error fetching data:", error));
 });

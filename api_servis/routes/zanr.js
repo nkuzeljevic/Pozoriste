@@ -18,7 +18,7 @@ route.use(BP.urlencoded({ extended: false }));
 route.use(express.json());
 route.use(express.urlencoded({ extended: true }));
 
-//GET koji vraca sve zapise iz baze (posto smo u modulu, vec se nalazimo u /admin/pozoriste)
+//GET koji vraca sve zapise iz baze (
 route.get("/", async (req, res) => {
   try {
     const zanr = await Zanr.findAll();
@@ -51,7 +51,6 @@ route.post("/", async (req, res) => {
   if (error) {
     console.error("Validation Error:", error);
     return res.status(400).json({
-      // error: error.details.map((detail) => detail.message).join(", "),
       error: "Validation failed",
       details: error.details.map((detail) => ({
         field: detail.context.key,

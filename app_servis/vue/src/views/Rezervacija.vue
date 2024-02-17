@@ -120,8 +120,6 @@
 </template>
 
 <script>
-// import StudentiList from '@/components/StudentiList.vue'
-// import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'App',
@@ -221,11 +219,10 @@ export default {
         }
     },
     created() {
-  // Access the parameters from the route
+
     const { predstavaId, naziv, datum, vreme, cena, sala } = this.$route.query;
     console.log("podaci: ", predstavaId,naziv,datum,vreme, cena, sala  )
     this.forma.predstavaId = predstavaId;
-    // this.forma.brojMesta = '48';
     if (naziv !== undefined && this.forma.naziv === null) {
       this.forma.naziv = naziv;
     }
@@ -251,7 +248,7 @@ export default {
         const novaRezervacija = {
         brojMesta: this.forma.brojMesta,
         status: "Nova",
-        idPosetioca: "3",
+        idPosetioca: "1",
         idPredstave: this.forma.predstavaId,
       };
         if(this.validnoCena && this.validanNaziv && this.validanDatum && this.validnoEmail && this.validnoSala && this.validnoVreme){
@@ -285,7 +282,6 @@ export default {
     },
   },
   mounted(){
-    // this.fetchSviStudenti();
   }
 }
 </script>

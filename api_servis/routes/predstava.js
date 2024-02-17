@@ -93,7 +93,6 @@ route.post("/", async (req, res) => {
   if (error) {
     console.error("Validation Error:", error);
     return res.status(400).json({
-      // error: error.details.map((detail) => detail.message).join(", "),
       error: "Validation failed",
       details: error.details.map((detail) => ({
         field: detail.context.key,
@@ -112,19 +111,16 @@ route.post("/", async (req, res) => {
       novi.idZanra = req.body.izabraniZanr;
       novi.izabraniGlumci = req.body.glumciInput
         .split(",")
-        .map((id) => id.trim()); // Create a new Predstava or retrieve existing based on the name
-      // const insertovani = await Predstava.findOrCreate({
-      //   where: { naziv: novi.naziv },
-      //   defaults: novi,
-      // });
+        .map((id) => id.trim()); 
+
       logStream.write("from body: \n" + JSON.stringify(req.body));
-      // Validate if izabranaPredstava is provided
+
       if (!novi.izabraniGlumci || novi.izabraniGlumci.length === 0) {
         return res
           .status(400)
           .json({ error: "Izabrani glumci nisu pravilno poslati." });
       }
-      // Validate if izabranaSala is provided
+
       if (!novi.idSale) {
         return res.status(400).json({ error: "Sala nije pravilno poslata." });
       }
@@ -138,17 +134,6 @@ route.post("/", async (req, res) => {
         idZanra: novi.idZanra,
       });
 
-      //   await PredstavaGlumac.create({
-      //     idPredstave: novaPredstava.id,
-      //     idGlumca: glumciInput,
-      //   });
-      //   // const insertovani = await Predstava.create(novi);
-      //   return res.json(novaPredstava);
-      //   // return res.json({ id: insertovani.id });
-      // } catch (err) {
-      //   console.log(err);
-      //   res.status(500).json({ error: "Greska pri unosu", data: err });
-      // }
       try {
         for (const izabrani of novi.izabraniGlumci) {
           await PredstavaGlumac.create({
@@ -160,19 +145,11 @@ route.post("/", async (req, res) => {
             "Record created successfully." + JSON.stringify(req.body)
           );
         }
-        // await PredstavaGlumac.create({
-        //   idPredstave: novaPredstava.id,
-        //   idGlumca: glumciInput,
-        // });
-        // console.log("Record created successfully.");
-        // logStream.write(
-        //   "Record created successfully.\n" + JSON.stringify(req.body)
-        // );
+
       } catch (error) {
         console.error("Error creating record:", error);
         logStream.write(`Error creating record: ${error}\n`);
       }
-      // Create a new PredstavaGlumac association
 
       return res.json(novaPredstava);
     } catch (err) {
@@ -227,14 +204,12 @@ route.put("/:id", async (req, res) => {
         .json({ error: "Izabrani glumac nije pravilno poslat." });
     }
 
-    // Iterate through izabranaPredstava
     for (const idGlumca of izabraniGlumac) {
-      // Check if the relationship already exists in PredstavaGlumac
+
       const existingRelationship = await PredstavaGlumac.findOne({
         where: { idPredstave: predstava.id, idGlumca: idGlumca },
       });
 
-      // If the relationship doesn't exist, create it
       if (!existingRelationship) {
         await PredstavaGlumac.create({
           idPredstave: predstava.id,
@@ -257,34 +232,31 @@ route.delete("/:id", async (req, res) => {
   try {
     const predstava = await Predstava.findByPk(req.params.id);
 
-    // Check if the predstava exists
     if (!predstava) {
       return res
         .status(404)
         .json({ success: false, message: "Predstava not found." });
     }
 
-    // Find and delete all associations in PredstavaGlumac for the given Glumac id
     await PredstavaGlumac.destroy({
       where: { idPredstave: req.params.id },
     });
     await predstava.destroy();
-    return res.json(predstava.id); //vraca id obrisanog
+    return res.json(predstava.id); 
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri brisanju", data: err });
   }
 });
 
-// DELETE route to remove relationship between glumac and predstava
+// DELETE koji brise vezu izmedju glumca i predstave
 route.delete("/:predstavaId/glumac/:glumacId", async (req, res) => {
   try {
     const { glumacId, predstavaId } = req.params;
-    // Log the generated SQL query to the console
+
     const deleteQuery = `DELETE FROM PredstavaGlumacs WHERE idGlumca = ${glumacId} AND idPredstave = ${predstavaId}`;
     console.log("Generated SQL query:", deleteQuery);
 
-    // Check if the relationship exists
     const predstavaGlumac = await PredstavaGlumac.findOne({
       where: {
         idGlumca: glumacId,
@@ -296,7 +268,6 @@ route.delete("/:predstavaId/glumac/:glumacId", async (req, res) => {
       return res.status(404).json({ error: "Relacija nije pronađena." });
     }
 
-    // Delete the relationship
     await predstavaGlumac.destroy();
 
     return res.json({ success: true });

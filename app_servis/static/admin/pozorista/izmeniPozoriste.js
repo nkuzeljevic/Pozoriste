@@ -7,7 +7,7 @@ window.addEventListener("load", function () {
   fetch("http://localhost:9000/admin/pozoriste/" + id)
     .then((resp) => resp.json())
     .then((data) => {
-      console.log(data); //proverite sta ste dobili
+      console.log(data); 
       document.getElementById("naziv").value = data.naziv;
       document.getElementById("adresa").value = data.adresa;
       document.getElementById("telefon").value = data.telefon;
@@ -16,15 +16,13 @@ window.addEventListener("load", function () {
     })
     .catch((err) => console.log(err));
 
-  //sadrzaj funkcije koja ce se pozvati kada browser proglasi stranicu ucitanom
-  //tj DOM tree potpuno formiranim
+
   document.getElementById("forma").addEventListener("submit", function (event) {
     var nazivElement = document.getElementById("naziv");
     var adresaElement = document.getElementById("adresa");
     var phoneElement = document.getElementById("telefon");
     var emailElement = document.getElementById("email");
 
-    // Check if the input has the 'error' class
     if (
       nazivElement.classList.contains("error") ||
       adresaElement.classList.contains("error") ||
@@ -32,7 +30,7 @@ window.addEventListener("load", function () {
       emailElement.classList.contains("error")
     ) {
       alert("Molimo ispravite greške pre čuvanja.");
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault(); 
     }
     event.preventDefault();
     const izmeniPozoriste = {
@@ -50,7 +48,6 @@ window.addEventListener("load", function () {
       .then(async (response) => {
         console.log("Response status:", response.status);
         if (!response.ok) {
-          //Handle 400 Bad Request error
           if (response.status === 400) {
             return response.text().then((errorMessage) => {
               const errorDetails = JSON.parse(errorMessage);
@@ -76,7 +73,7 @@ window.addEventListener("load", function () {
               ) {
                 alert("Naziv mora da ima barem 5 karaktera.");
               } else {
-                alert(errorMessage); // Display the original error message
+                alert(errorMessage); 
               }
 
               throw new Error(errorMessage);
@@ -89,11 +86,10 @@ window.addEventListener("load", function () {
       })
       .then((data) => {
         console.log("Fetched Predstava Data:", data);
-        // alert("podaci su: " + novaSala.izabranoPozoriste);
         window.location.href = `/admin/pozorista/pozorista.html`;
       })
       .catch((err) => console.log(err));
-    // Continue with form submission if no errors
+
     return true;
   });
 
@@ -133,16 +129,13 @@ function validatePhoneNumber(inputElement) {
 }
 
 function validateInput(inputElement) {
-  //   var validno = true;
   if (inputElement.value.length < 3) {
-    // validno = false;
     inputElement.classList.add("error");
     inputElement.classList.remove("success");
   } else {
     inputElement.classList.add("success");
     inputElement.classList.remove("error");
   }
-  //   return validno;
 }
 
 function validateEmail(inputElement) {
@@ -157,10 +150,3 @@ function validateEmail(inputElement) {
   }
 }
 
-// document.addEventListener("DOMContentLoaded", function () {
-//   document
-//     .getElementById("btnNazadIzmeniPozoriste")
-//     .addEventListener("click", function () {
-//       location.href = "/pozorista/pozorista.html";
-//     });
-// });

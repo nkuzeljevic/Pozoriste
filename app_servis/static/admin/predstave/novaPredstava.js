@@ -1,24 +1,3 @@
-// // Function to get URL parameter by name
-// function getParameterByName(name, url) {
-//   if (!url) url = window.location.href;
-//   name = name.replace(/[\[\]]/g, "\\$&");
-//   var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-//     results = regex.exec(url);
-//   if (!results) return null;
-//   if (!results[2]) return "";
-//   return decodeURIComponent(results[2].replace(/\+/g, " "));
-// }
-
-// // Event listener for DOMContentLoaded
-// document.addEventListener("DOMContentLoaded", function () {
-//   // Get error parameter from the URL
-//   var error = getParameterByName("error");
-
-//   // Display error message as an alert if present
-//   if (error) {
-//     alert(error);
-//   }
-// });
 window.addEventListener("load", function () {
   fetch("http://localhost:9000/admin/glumac")
     .then((response) => response.json())
@@ -29,16 +8,14 @@ window.addEventListener("load", function () {
         return `<option value="${glumci.id}">${glumci.ime}</option>`;
       };
 
-      // Append options to the select element
       glumci.forEach((glumac) => {
         const optionHTML = createOption(glumac);
         selectElementGlumci.insertAdjacentHTML("beforeend", optionHTML);
       });
 
-      // Dynamically add the link to main.css
       const styleLink = document.createElement("link");
       styleLink.rel = "stylesheet";
-      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      styleLink.href = "/main.css"; 
       document.head.appendChild(styleLink);
     });
   const selectElementGlumci = document.getElementById("glumci");
@@ -46,12 +23,7 @@ window.addEventListener("load", function () {
 
   selectElementGlumci.addEventListener("change", function () {
     const selectedGlumacId = selectElementGlumci.value;
-    // // Update the hidden input field with the selected Predstava ID
     hiddenInputGlumci.value = selectedGlumacId;
-    // const selectedGlumacIds = Array.from(
-    //   selectElementGlumci.selectedOptions
-    // ).map((option) => option.value);
-    // hiddenInputGlumci.value = JSON.stringify(selectedGlumacIds);
   });
 
   fetch("http://localhost:9000/admin/zanr")
@@ -60,28 +32,23 @@ window.addEventListener("load", function () {
       console.log(zanrovi);
 
       const createOption = (zanrovi) => {
-        // return `<option value="${zanrovi.id}">${zanrovi.naziv}</option>`;
         return `<option value="${zanrovi.id}" data-name="${zanrovi.naziv}">${zanrovi.naziv}</option>`;
       };
 
-      // Append options to the select element
       zanrovi.forEach((zanr) => {
         const optionHTML = createOption(zanr);
         selectElementZanrovi.insertAdjacentHTML("beforeend", optionHTML);
       });
 
-      // Dynamically add the link to main.css
       const styleLink = document.createElement("link");
       styleLink.rel = "stylesheet";
-      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      styleLink.href = "/main.css"; 
       document.head.appendChild(styleLink);
     });
   const selectElementZanrovi = document.getElementById("zanr");
   const hiddenInputZanrovi = document.getElementById("izabraniZanr");
 
   selectElementZanrovi.addEventListener("change", function () {
-    // const selectedZanrId = selectElementZanrovi.value;
-    // hiddenInputZanrovi.value = selectedZanrId;
     const selectedOption =
       selectElementZanrovi.options[selectElementZanrovi.selectedIndex];
     const selectedZanrId = selectedOption.value;
@@ -100,41 +67,27 @@ window.addEventListener("load", function () {
         return `<option value="${pozoriste.id}">${pozoriste.naziv}</option>`;
       };
 
-      // Append options to the select element
       pozorista.forEach((pozoriste) => {
         const optionHTML = createOption(pozoriste);
         selectElementPozorista.insertAdjacentHTML("beforeend", optionHTML);
       });
 
-      // Dynamically add the link to main.css
       const styleLink = document.createElement("link");
       styleLink.rel = "stylesheet";
-      styleLink.href = "/main.css"; // Replace with the correct path to your main.css
+      styleLink.href = "/main.css"; 
       document.head.appendChild(styleLink);
     });
 
   const selectElementPozorista = document.getElementById("pozoriste");
   const hiddenInputPozorita = document.getElementById("izabranoPozoriste");
 
-  // Add event listener to update hidden input on change
+ 
   selectElementPozorista.addEventListener("change", function () {
     const selectedPozoristaId = selectElementPozorista.value;
-    // Update the hidden input field with the selected Predstava ID
     hiddenInputPozorita.value = selectedPozoristaId;
     updateHallOptions();
   });
-  // Initialize the hall options based on the default selected theater
-  // updateHallOptions();
-
-  // document.addEventListener("DOMContentLoaded", function () {
-
-  // document.getElementById("izabranaSala").value =
-  //   document.getElementById("sala").value;
-
-  // Ako se promeni izabrano pozoriste da se pokrene iz pocetka
-  // document
-  //   .getElementById("pozoriste")
-  //   .addEventListener("change", updateHallOptions);
+  
   document
     .getElementById("btnNazadPredstave")
     .addEventListener("click", function () {
@@ -169,31 +122,8 @@ window.addEventListener("load", function () {
       cenaElement.classList.contains("error")
     ) {
       alert("Molimo ispravite greške pre čuvanja.");
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault(); 
     } else {
-      //  Obrada da se salje naziv pozorista, a ne ID
-      // const selectElementPozoriste = document.getElementById("pozoriste");
-      // const izabranoPozoriste =
-      //   selectElementPozoriste.options[selectElementPozoriste.selectedIndex]
-      //     .text;
-
-      // // Update the hidden input field (optional, for server-side validation)
-      // document.getElementById("izabranoPozoriste").value = izabranoPozoriste;
-
-      //Obrada da se salje id pozorista
-      // const selectElementPozoriste = document.getElementById("pozoriste");
-      // const izabranoPozoristeId = selectElementPozoriste.value; // Get the selected theater ID
-
-      // document.getElementById("izabranoPozoriste").value = izabranoPozoristeId;
-
-      //Slanje izabranog zanra
-      // const selectElementZanr = document.getElementById("zanr");
-      // const selectElementZanr = document.getElementById("izabraniZanr");
-      // const izabraniZanr =
-      //   selectElementZanr.options[selectElementZanr.selectedIndex].text;
-
-      // // Update the hidden input field (optional, for server-side validation)
-      // document.getElementById("izabraniZanr").value = izabraniZanr;
       selectElementZanrovi.addEventListener("change", function () {
         const selectedOption =
           selectElementZanrovi.options[selectElementZanrovi.selectedIndex];
@@ -214,13 +144,11 @@ window.addEventListener("load", function () {
       for (let i = 0; i < spanovi.length; i++) {
         niz.push(spanovi[i].dataset.id);
       }
-      // var jsonString = JSON.stringify(niz);
 
       var glumciInput = "glumciInput";
       document.getElementById(glumciInput).value = niz;
       console.log("niz: " + niz);
 
-      // Set the initial value for izabranaSala after updating hall options
       document.getElementById("izabranaSala").value =
         document.getElementById("sala").value;
 
@@ -231,17 +159,14 @@ window.addEventListener("load", function () {
         vreme: document.getElementById("vreme").value,
         izabranoPozoriste: document.getElementById("izabranoPozoriste").value,
         izabraniZanr: document.getElementById("izabraniZanr").value,
-        // izabranaSala: document.getElementById("sala").value,
         izabranaSala: document.getElementById("izabranaSala").value,
         glumciInput: document.getElementById("glumciInput").value,
-        // izabraniGlumci: niz,
         cena: document.getElementById("cena").value,
       };
 
       console.log(JSON.stringify(niz));
       console.log(novaPredstava);
 
-      // alert("pozdrav;");
       fetch("http://localhost:9000/admin/predstava", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -250,7 +175,6 @@ window.addEventListener("load", function () {
         .then((response) => {
           console.log("Response status:", response.status);
           if (!response.ok) {
-            // Handle 400 Bad Request error
             if (response.status === 400) {
               return response.json().then((errorDetails) => {
                 console.log("Error details:", errorDetails);
@@ -262,7 +186,6 @@ window.addEventListener("load", function () {
                   errorDetails.details.forEach((detail) => {
                     alert("Naziv mora da ima barem 5 kraktera.");
                   });
-                  // Do not proceed with redirect if there are validation errors
                   return Promise.reject(new Error("Validation failed"));
                 } else {
                   throw new Error("Server error: " + response.status);
@@ -288,59 +211,17 @@ window.addEventListener("load", function () {
     }
   });
 
-  // document.getElementById("btnUnesi").addEventListener("click", function () {
-  //   console.log("Button clicked");
-  //   const selectElement = document.getElementById("pozoriste");
-  //   const selectedOption = selectElement.options[selectElement.selectedIndex];
-
-  //   console.log("Selected Option Value:", selectedOption.value);
-  //   console.log("Selected Option Text:", selectedOption.text);
-  //   const formData = {
-  //     naziv: document.getElementById("naziv").value,
-  //     datum: document.getElementById("datum").value,
-  //     vreme: document.getElementById("vreme").value,
-  //     pozoriste: selectedOption.value,
-  //     izabranoPozoriste: selectedOption.text,
-  //     sala: document.getElementById("sala").value,
-  //     zanr: document.getElementById("zanr").value,
-  //     glumciInput: document.getElementById("glumciInput").value,
-  //     cena: document.getElementById("cena").value,
-  //   };
-  //   console.log("Form Data:", formData);
-  //   if (validate(formData)) {
-  //     console.log("Form data submitted:", formData);
-  //     // Perform form submission or any other actions here
-  //   } else {
-  //     console.log("Form data validation failed.");
-  //     // Obrada da se salje naziv pozorista, a ne ID
-  //     // console.log(document.getElementById("pozoriste"));
-  //     // const selectElement = document.getElementById("pozoriste");
-  //     // const izabranoPozoriste =
-  //     //   selectElement.options[selectElement.selectedIndex].text;
-
-  //     // // Update the hidden input field (optional, for server-side validation)
-  //     // document.getElementById("izabranoPozoriste").value = izabranoPozoriste;
-  //   }
-  // });
-
   var addedGenres = [];
   //Novi zanr
   document
     .getElementById("dodajNovZanr")
     .addEventListener("click", function () {
-      // var id = document.getElementById("novZanr").value;
       var naziv = document.getElementById("novZanr").value;
       // if (!id) {
       if (!naziv) {
         alert("Unesi žanr");
         return;
       }
-      // // dodajZanr(id);
-      // dodajZanr(naziv);
-
-      // addedGenres.push(id); // Keep track of added genres
-      // document.getElementById("novZanr").value = "";
-      // document.getElementById("zanr").value = id;
       (async () => {
         try {
           const response = await fetch("http://localhost:9000/admin/zanr", {
@@ -355,8 +236,7 @@ window.addEventListener("load", function () {
 
           const novoDodatiZanr = await response.json();
           appendZanrToSelect(novoDodatiZanr);
-         
-          // location.reload();
+
         } catch (error) {
           console.error("Error adding genre:", error);
           if (error.response && error.response.status === 400) {
@@ -420,7 +300,6 @@ window.addEventListener("load", function () {
           removeOptionByValue(document.getElementById("zanr"), selectedGenre);
         } catch (error) {
           console.error("Error deleting genre:", error);
-          // Handle errors appropriately
         }
       }
     });
@@ -434,21 +313,6 @@ window.addEventListener("load", function () {
     }
     dodajGlumca(id);
     document.getElementById("glumci").value = "";
-
-    //prevodjenje glumaca u json
-    // updateGlumciInput();
-    // var spanovi = document.querySelectorAll("#unetiGlumci > span.badge");
-    // var niz = [];
-    // for (let i = 0; i < spanovi.length; i++) {
-    //   niz.push(spanovi[i].dataset.id);
-    // }
-    // var jsonString = JSON.stringify(niz);
-
-    // var glumciInput = "glumciInput";
-    // document.getElementById(glumciInput).value = jsonString;
-    // console.log(document.getElementById(glumciInput).value);
-    // // Continue with form submission if no errors
-    // return true;
   });
 
   function showAlert(message) {
@@ -472,22 +336,16 @@ window.addEventListener("load", function () {
     alert(error);
   }
 
-  // (async () => {
-  //   await updateHallOptions();
-  // })();
   document.getElementById("izmeniZanr").addEventListener("click", function () {
-    // Get the selected option from the zanr select element
+
     const selectedOption =
       selectElementZanrovi.options[selectElementZanrovi.selectedIndex];
 
-    // Check if selectedOption is defined before accessing its properties
     if (selectedOption) {
       const selectedZanrId = selectedOption.value;
       const selectedZanrName = selectedOption.dataset.name;
 
-      // Set the value and text of the izmeni input field
       document.getElementById("izmeni").value = selectedZanrName;
-      // Optionally, you can set the value of a hidden input field with the selected zanr ID
       document.getElementById("izmeniId").value = selectedZanrId;
     } else {
       console.error("No option selected.");
@@ -495,20 +353,17 @@ window.addEventListener("load", function () {
   });
 
   document.getElementById("sacuvajZanr").addEventListener("click", function () {
-    // Get the values from the izmeni input field
+
     const izmeniValue = document.getElementById("izmeni").value.trim();
 
-    // Ensure that the izmeni input field is not empty
     if (izmeniValue) {
-      // Get the selected option from the zanr select element
+
       const selectedOption =
         selectElementZanrovi.options[selectElementZanrovi.selectedIndex];
 
-      // Check if selectedOption is defined before accessing its properties
       if (selectedOption) {
         const selectedZanrId = selectedOption.value;
 
-        // Make a PUT request to update the genre in the database
         fetch("http://localhost:9000/admin/zanr/" + selectedZanrId, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -517,7 +372,6 @@ window.addEventListener("load", function () {
           .then(async (response) => {
             console.log("Response status:", response.status);
             if (!response.ok) {
-              //Handle 400 Bad Request error
               if (response.status === 400) {
                 return response.text().then((errorMessage) => {
                   const errorDetails = JSON.parse(errorMessage);
@@ -528,7 +382,7 @@ window.addEventListener("load", function () {
                   ) {
                     alert("Naziv mora da ima barem 5 karaktera.");
                   } else {
-                    alert(errorMessage); // Display the original error message
+                    alert(errorMessage); 
                   }
 
                   throw new Error(errorMessage);
@@ -540,11 +394,8 @@ window.addEventListener("load", function () {
             return response.json();
           })
           .then((data) => {
-            // alert("Fetched Predstava Data:", data);
-            // alert("podaci su: " + novaSala.izabranoPozoriste);
            selectedOption.text = izmeniValue;
             izmeni.value = "";
-            // window.location.href = `/admin/predstave/nova-predstava.html`;
           })
           .catch((err) => console.log(err));
       } else {
@@ -557,10 +408,10 @@ window.addEventListener("load", function () {
 });
 
 async function updateHallOptions() {
-  // Get the selected theater
+
   const selectedTheaterId = document.getElementById("izabranoPozoriste").value;
 
-  // Get the hall select element
+
   const hallSelect = document.getElementById("sala");
   const selectedHallId = hallSelect.value;
   document.getElementById("izabranaSala").value = selectedHallId;
@@ -569,9 +420,7 @@ async function updateHallOptions() {
 
   // Clear existing options
   hallSelect.innerHTML = "";
-  // hallSelect.options.length = 0;
 
-  // Fetch halls based on the selected theater
   try {
     const response = await fetch(
       `http://localhost:9000/admin/sala/pozoriste/${selectedTheaterId}`
@@ -579,29 +428,16 @@ async function updateHallOptions() {
     const halls = await response.json();
     console.log("Halls data:", halls);
 
-    // Ensure that halls is not null before processing
     if (halls !== null) {
-      // // Ensure that halls is an array before using forEach loop
-      // if (Array.isArray(halls)) {
-      //   halls.forEach((hall) => {
-      //     addHallOption(hall.naziv); // Assuming 'naziv' is the property you want to display
-      //   });
-      // } else {
-      //   console.error("Invalid halls data:", halls);
-      // }
-      // Create an HTML string for options
       const optionsHTML = halls
         .map((hall) => `<option value="${hall.id}">${hall.naziv}</option>`)
         .join("");
 
-      // Set the innerHTML of the select element
       hallSelect.innerHTML = optionsHTML;
 
-      // Add event listener to update hidden input on change
       hallSelect.addEventListener("change", function () {
         console.log("Hall select changed");
         const selectedHallId = hallSelect.value;
-        // Update the hidden input field with the selected Hall ID
         document.getElementById("izabranaSala").value = selectedHallId;
       });
       // Trigger the change event manually after setting options
@@ -613,61 +449,12 @@ async function updateHallOptions() {
     console.error("Error fetching halls:", error);
   }
 
-  // Add options based on the selected theater
-  // switch (selectedTheaterId) {
-  // case "atelje":
-  //   addHallOption("Scena Petar Kralj");
-  //   addHallOption("Scena Mire Trailović");
-  //   break;
-  // case "bdp":
-  //   addHallOption("Velika scena");
-  //   addHallOption("Mala sala");
-  //   break;
-  // case "jdp":
-  //   addHallOption("Velika scena Ljuba Tadić");
-  //   addHallOption("Scena Studio JDP");
-  //   break;
-  // case "pozoristeNaTerazijama":
-  //   addHallOption("Velika scena");
-  //   addHallOption("Mala sala");
-  //   break;
-  // case "zvezdaraTeatar":
-  //   addHallOption("Scena Bata Stojković");
-  //   addHallOption("Nova scena");
-  //   break;
-
-  // // Default case (if no theater is selected)
-  // default:
-  //   addHallOption("Izaberite pozorište");
-  //   case "Izaberite pozorište":
-  //     addHallOption("Izaberite pozorište");
-  //     break;
-  //   default:
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:9000/admin/sala/${selectedTheaterId}`
-  //       );
-  //       const halls = await response.json();
-  //       console.log("procitanje sale: " + halls);
-
-  //       halls.forEach((hall) => {
-  //         addHallOption(hall.naziv);
-  //       });
-  //     } catch (error) {
-  //       console.error("Error fetching halls:", error);
-  //     }
-  // }
 }
 
 function addHallOption(optionText) {
   const option = document.createElement("option");
   option.text = optionText;
   document.getElementById("sala").add(option);
-  // const hallSelect = document.getElementById("sala");
-  // const option = document.createElement("option");
-  // option.value = naziv;
-  // option.text = naziv;
-  // hallSelect.add(option);
 }
 
 function dodajGlumca(id) {
@@ -748,25 +535,8 @@ function validateAndToggleButton(inputElement, buttonId) {
     button.disabled = !isValid;
   }
 }
-// function dodajZanr(id) {
-async function dodajZanr(naziv) {
-  // // Check if the genre already exists in the list
-  // var existingGenres = document.querySelectorAll("#zanr option");
-  // for (var i = 0; i < existingGenres.length; i++) {
-  //   if (existingGenres[i].value === id) {
-  //     alert("Žanr već postoji u listi.");
-  //     return;
-  //   }
-  // }
-  // // Creating span element
-  // var option = document.createElement("option");
-  // // option.dataset.value = id;
-  // option.value = id;
-  // option.dataset.naziv = naziv;
-  // option.innerHTML = naziv;
 
-  // //Append span to the unetePredstave
-  // document.getElementById("zanr").appendChild(option);
+async function dodajZanr(naziv) {
   try {
     const response = await fetch("http://localhost:9000/admin/zanr", {
       method: "POST",
@@ -812,18 +582,8 @@ function removeOptionByValue(selectElement, value) {
   }
 }
 
-// document.addEventListener("DOMContentLoaded", function () {
-//   document
-//     .getElementById("btnNazadPredstave")
-//     .addEventListener("click", function () {
-//       location.href = "/predstave/predstave.html";
-//     });
-// });
-
 function validateInput(inputElement) {
-  //   var validno = true;
   if (inputElement.value.length < 3) {
-    // validno = false;
     inputElement.classList.add("error");
     inputElement.classList.remove("success");
   } else {
@@ -836,8 +596,7 @@ function validate() {
   var nazivElement = document.getElementById("naziv");
   if (nazivElement.classList.contains("error")) {
     alert("Molimo ispravite greške pre čuvanja.");
-    return false; // Prevent form submission
+    return false;
   }
-  // Continue with form submission if no errors
   return true;
 }

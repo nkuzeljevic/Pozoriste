@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <!-- Display details about the selected predstava -->
     <h1>{{ predstava ? predstava.naziv : 'Loading...' }}</h1>
     <br>
     <ul class="list-group">
@@ -34,7 +33,6 @@
       <router-link :to="rezervacijaLink">
         <button class="btn btn-success" type="button">Rezerviši</button>
       </router-link>
-      <!-- Back button to navigate back to the predstave list -->
       <router-link to="/predstave">Nazad na Predstave</router-link>
     </div>
   </div>
@@ -47,24 +45,22 @@ export default {
   props: ['id'],
   data() {
     return {
-      sala: null, // Initialize sala here
+      sala: null, 
     };
   },
    computed: {
     ...mapState(['glumci']),
     ...mapGetters(['getPredstavaById', 'getZanrById', 'getSalaById', 'getPozoristeById',  'getGlumciByPredstavaId']),
     predstava() {
-    //   const id = this.id;
-    //   console.log('Current id:', id);
+
       const predstava = this.getPredstavaById(this.id);
       if (predstava) {
         const zanr = this.getZanrById(predstava.idZanra);
         console.log('Zanr:', zanr);
         const sala = this.getSalaById(predstava.idSale);
         const pozoriste = this.getPozoristeById(predstava.idPozorista);
-        this.$store.dispatch('fetchGlumciByPredstavaId', predstava.id); // Fetch glumci associated with predstava
+        this.$store.dispatch('fetchGlumciByPredstavaId', predstava.id); 
 
-        // Add zanr and sala information to the predstava object
         return {
           ...predstava,
           zanr: zanr ? zanr.naziv : '',
@@ -72,38 +68,16 @@ export default {
           pozoriste: pozoriste ? pozoriste.naziv : '',
           
         };
-        // if (zanr && sala) {
-        //   // Add zanr and sala information to the predstava object
-        //   return {
-        //     ...predstava,
-        //     zanr: zanr.naziv,
-        //     sala: sala.naziv,
-        //   };
-        // }
+
       }
 
-      return null; // Return null if predstava is not found
+      return null; 
     },
-    // glumci() {
-    //   return this.getGlumciByPredstavaId(this.id);
-    // },
+
     glumciList() {
-        return this.glumciList; // Adjust this line accordingly
+        return this.glumciList; 
     },
-    // rezervacijaLink() {
-    //   return {
-    //     path: '/rezervacija',
-    //     query: {
-    //       predstavaId: this.id,
-    //       naziv: this.predstava ? this.predstava.naziv : '',
-    //       datum: this.predstava ? this.predstava.datum : '',
-    //       vreme: this.predstava ? this.predstava.vreme : '',
-    //       cena: this.predstava ? this.predstava.cena : '',
-    //       sala: this.sala ? this.sala : ''
-    //     },
-        
-    //   };
-    // }
+
     rezervacijaLink() {
   const { id, predstava } = this;
   const { naziv, datum, vreme, cena, sala } = predstava || {};
@@ -141,25 +115,19 @@ export default {
       return vreme.toLocaleString() + " h";
     },
   },
-  // Fetch predstave if not already fetched
+
    beforeRouteEnter(to, from, next) {
-    // Fetch the id from route params before entering the route
     next(vm => {
-      vm.$store.dispatch('fetchPredstave'); // Fetch predstave if not already fetched
+      vm.$store.dispatch('fetchPredstave'); 
       vm.id = to.params.id;
     });
   },
    created() {
-    // Fetch predstave when the component is created
     this.$store.dispatch('fetchPredstave');
   },
 
   mounted() {
-//      console.log('Glumci in component:', this.glumci);
-  //   this.$store.dispatch('fetchZanrovi');
-  // this.$store.dispatch('fetchSale');
-  // this.$store.dispatch('fetchPredstave');
-// this.fetchGlumciByPredstavaId(this.id);
+
      this.$store.dispatch('fetchGlumciByPredstavaId', this.id)
     .then(() => {
       console.log('Glumci in component:', this.$store.state.glumci);
@@ -167,7 +135,7 @@ export default {
     .catch(error => {
       console.error('Error fetching glumci:', error);
     });
-    // this.$store.dispatch('fetchPredstave');
+
   },
 };
 </script>
@@ -191,14 +159,14 @@ export default {
 }
 
 .predstava-item {
-  flex-basis: 48%; /* Adjust as needed to leave some space between items */
+  flex-basis: 48%; 
   margin-bottom: 20px;
   padding: 10px;
-  border: 1px solid #ddd; /* Optional: Add a border for separation */
+  border: 1px solid #ddd; 
 }
 .button-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px; /* Adjust the margin as needed */
+    margin-top: 20px; 
 }
 </style>
