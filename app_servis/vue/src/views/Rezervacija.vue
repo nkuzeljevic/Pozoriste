@@ -66,12 +66,22 @@
                     <label>Broj mesta:</label>
                 </b-col>
                 <b-col sm="9">
-                    <b-form-input 
+                    <b-form-select
+                        id="brojMesta"
                         :state="validnoMesta"
-                        readonly
+                        class="w-100"
                         v-model="forma.brojMesta"
                         >
-                    </b-form-input>
+                        <option value="48">48</option>
+                        <option value="50">50</option>
+                        <option value="52">52</option>
+                        <option value="148">148</option>
+                        <option value="74">74</option>
+                        <option value="162">162</option>
+                        <option value="22">22</option>
+                        <option value="12">12</option>
+                        <option value="135">135</option>
+                    </b-form-select>
                 </b-col>
             </b-row>
             <br>
@@ -215,7 +225,7 @@ export default {
     const { predstavaId, naziv, datum, vreme, cena, sala } = this.$route.query;
     console.log("podaci: ", predstavaId,naziv,datum,vreme, cena, sala  )
     this.forma.predstavaId = predstavaId;
-    this.forma.brojMesta = '48';
+    // this.forma.brojMesta = '48';
     if (naziv !== undefined && this.forma.naziv === null) {
       this.forma.naziv = naziv;
     }
