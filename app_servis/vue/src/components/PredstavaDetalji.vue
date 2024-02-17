@@ -31,11 +31,11 @@
         <p>No glumci available.</p>
     </div>
     <div class="button-container">
-        <router-link to="/rezervacija">
-          <button class="btn btn-success" type="button">Rezerviši</button>
-        </router-link> 
-        <!-- Back button to navigate back to the predstave list -->
-        <router-link to="/predstave">Nazad na Predstave</router-link>
+      <router-link :to="rezervacijaLink">
+        <button class="btn btn-success" type="button">Rezerviši</button>
+      </router-link>
+      <!-- Back button to navigate back to the predstave list -->
+      <router-link to="/predstave">Nazad na Predstave</router-link>
     </div>
   </div>
 </template>
@@ -45,6 +45,11 @@ import {mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
   props: ['id'],
+  data() {
+    return {
+      sala: null, // Initialize sala here
+    };
+  },
    computed: {
     ...mapState(['glumci']),
     ...mapGetters(['getPredstavaById', 'getZanrById', 'getSalaById', 'getPozoristeById',  'getGlumciByPredstavaId']),
@@ -52,7 +57,6 @@ export default {
     //   const id = this.id;
     //   console.log('Current id:', id);
       const predstava = this.getPredstavaById(this.id);
-
       if (predstava) {
         const zanr = this.getZanrById(predstava.idZanra);
         console.log('Zanr:', zanr);
@@ -86,6 +90,38 @@ export default {
     glumciList() {
         return this.glumciList; // Adjust this line accordingly
     },
+    // rezervacijaLink() {
+    //   return {
+    //     path: '/rezervacija',
+    //     query: {
+    //       predstavaId: this.id,
+    //       naziv: this.predstava ? this.predstava.naziv : '',
+    //       datum: this.predstava ? this.predstava.datum : '',
+    //       vreme: this.predstava ? this.predstava.vreme : '',
+    //       cena: this.predstava ? this.predstava.cena : '',
+    //       sala: this.sala ? this.sala : ''
+    //     },
+        
+    //   };
+    // }
+    rezervacijaLink() {
+  const { id, predstava } = this;
+  const { naziv, datum, vreme, cena, sala } = predstava || {};
+
+  console.log("Podaci za slanje:", id, naziv, datum, vreme, cena, sala);
+
+  return {
+    path: '/rezervacija',
+    query: {
+      predstavaId: id,
+      naziv: naziv || '',
+      datum: datum || '',
+      vreme: vreme || '',
+      cena: cena || '',
+      sala: sala || ''
+    }
+  };
+}
   },
 
   methods: {
@@ -120,9 +156,9 @@ export default {
 
   mounted() {
 //      console.log('Glumci in component:', this.glumci);
-// //     this.$store.dispatch('fetchZanrovi');
-// //   this.$store.dispatch('fetchSale');
-// //   this.$store.dispatch('fetchPredstave');
+  //   this.$store.dispatch('fetchZanrovi');
+  // this.$store.dispatch('fetchSale');
+  // this.$store.dispatch('fetchPredstave');
 // this.fetchGlumciByPredstavaId(this.id);
      this.$store.dispatch('fetchGlumciByPredstavaId', this.id)
     .then(() => {

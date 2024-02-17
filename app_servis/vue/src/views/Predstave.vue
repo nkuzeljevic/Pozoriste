@@ -73,7 +73,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['fetchPredstave']),
+    ...mapActions(['fetchPredstave', 'fetchZanrovi', 'fetchSale']),
     formatDatum(dateString) {
       const date = new Date(dateString);
       const day = date.getDate().toString().padStart(2, '0');
@@ -92,14 +92,18 @@ export default {
         this.$router.push({ name: 'PredstavaDetalji', params: { id: predstava.id } });
       }
     },
-    created() {
+  },
+  created() {
       // Fetch predstave when the component is created
-      this.fetchPredstave();
-    },
+    this.fetchPredstave();
+    this.fetchSale();
+    this.fetchZanrovi();
   },
   mounted() {
     // Fetch predstave
     this.fetchPredstave();
+    this.fetchSale();
+    this.fetchZanrovi();
   },
 };
 </script>

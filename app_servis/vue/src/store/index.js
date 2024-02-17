@@ -74,45 +74,105 @@ export default new Vuex.Store({
         .then( res=>res.json() )
           .then( data => commit('addPozorista', data) );
     },  
-  selectPozoriste({ commit }, pozoriste) {
+  // selectPozoriste({ commit }, pozoriste) {
+  //   commit('setSelectedPozoriste', pozoriste);
+  //   // Navigate to the PozoristeDetalji route
+  //   router.push({ name: 'PozoristeDetalji', params: { id: pozoriste.id } });
+  // },
+   selectPozoriste({ commit }, pozoriste) {
     commit('setSelectedPozoriste', pozoriste);
+    localStorage.setItem('selectedPozoriste', JSON.stringify(pozoriste));
     // Navigate to the PozoristeDetalji route
     router.push({ name: 'PozoristeDetalji', params: { id: pozoriste.id } });
   },
+  // async fetchPredstave({ commit }) {
+  //   // Fetch all predstave
+  //   fetch(`http://localhost:9000/admin/predstava`)
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       commit('addPredstave', data);
+
+  //       // Filter predstave based on selectedPozoriste.id
+  //       // const filteredPredstave = data.filter(predstava => predstava.idPozorista === state.selectedPozoriste.id);
+  //       // commit('setFilteredPredstave', filteredPredstave);
+  //     });
+  // },
   async fetchPredstave({ commit }) {
-    // Fetch all predstave
-    fetch(`http://localhost:9000/admin/predstava`)
-      .then(res => res.json())
-      .then(data => {
-        commit('addPredstave', data);
+  try {
+    const response = await fetch(`http://localhost:9000/admin/predstava`);
+    const data = await response.json();
+    commit('addPredstave', data);
+    return data;  // Add this line to return the fetched data
+  } catch (error) {
+    console.error('Error fetching predstave:', error);
+    throw error;  // Rethrow the error to handle it in the promise chain
+  }
+},
 
-        // Filter predstave based on selectedPozoriste.id
-        // const filteredPredstave = data.filter(predstava => predstava.idPozorista === state.selectedPozoriste.id);
-        // commit('setFilteredPredstave', filteredPredstave);
-      });
-  },
+  //  async filterPredstaveByPozoriste({ commit, state }) {
+  //   fetch(`http://localhost:9000/admin/predstava`)
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       commit('addPredstave', data);
+  //     });
+  //   if (state.selectedPozoriste) {
+  //     const filteredPredstave = state.predstave.filter(predstava => predstava.idPozorista === state.selectedPozoriste.id);
+  //     commit('setFilteredPredstave', filteredPredstave);
+  //   }
+  // },
+  async filterPredstaveByPozoriste({ commit, state }) {
+  try {
+    const response = await fetch(`http://localhost:9000/admin/predstava`);
+    const data = await response.json();
 
-   async filterPredstaveByPozoriste({ commit, state }) {
-    fetch(`http://localhost:9000/admin/predstava`)
-      .then(res => res.json())
-      .then(data => {
-        commit('addPredstave', data);
-      });
+    // Update the predstave in the store
+    commit('addPredstave', data);
+
+    // Check if there is a selectedPozoriste
     if (state.selectedPozoriste) {
+      // Filter predstave based on selectedPozoriste.id
       const filteredPredstave = state.predstave.filter(predstava => predstava.idPozorista === state.selectedPozoriste.id);
       commit('setFilteredPredstave', filteredPredstave);
     }
-  },
-  async fetchZanrovi({ commit }) {
+  } catch (error) {
+    console.error('Error fetching predstave:', error);
+    // Handle the error as needed
+  }
+},
+
+
+  // async fetchZanrovi({ commit }) {
+  //   const response = await fetch(`http://localhost:9000/admin/zanr`);
+  //   const data = await response.json();
+  //   commit('addZanrovi', data);
+  // },
+   async fetchZanrovi({ commit }) {
+    try {
     const response = await fetch(`http://localhost:9000/admin/zanr`);
     const data = await response.json();
     commit('addZanrovi', data);
+    return data;  // Add this line to return the fetched data
+  } catch (error) {
+    console.error('Error fetching predstave:', error);
+    throw error;  // Rethrow the error to handle it in the promise chain
+  }
   },
   async fetchSale({ commit }) {
+  try {
     const response = await fetch(`http://localhost:9000/admin/sala`);
     const data = await response.json();
     commit('addSale', data);
-  },
+    return data;  // Add this line to return the fetched data
+  } catch (error) {
+    console.error('Error fetching predstave:', error);
+    throw error;  // Rethrow the error to handle it in the promise chain
+  }
+},
+  // async fetchSale({ commit }) {
+  //   const response = await fetch(`http://localhost:9000/admin/sala`);
+  //   const data = await response.json();
+  //   commit('addSale', data);
+  // },
   async fetchGlumciByPredstavaId({ commit }, predstavaId) {
     try {
     // Replace with your API endpoint for fetching a specific predstava by ID

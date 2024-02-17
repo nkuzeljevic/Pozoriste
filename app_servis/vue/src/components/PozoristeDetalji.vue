@@ -60,9 +60,6 @@
 import { mapActions, mapState, mapGetters } from 'vuex';
 
 export default {
-//   props: ['pozoriste'],
-  // Fetch additional data or perform actions related to the details view
-  // Use the created or mounted lifecycle hooks as needed
   data(){
     return{
       perPage:4,
@@ -134,16 +131,43 @@ export default {
     //   return sala ? sala.naziv : '';
     // },
   },
-   mounted() {
-  console.log('Route params:', this.$route.params);
-  console.log('Selected Pozoriste:', this.selectedPozoriste);
+// async mounted() {
+//   console.log('Route params:', this.$route.params);
+//   console.log('Selected Pozoriste:', this.selectedPozoriste);
 
-  // Dispatch actions to fetch initial data
-  this.$store.dispatch('fetchZanrovi');
-  this.$store.dispatch('fetchSale');
-  this.$store.dispatch('filterPredstaveByPozoriste');
+//   try {
+//     // Dispatch actions to fetch initial data
+//     await this.$store.dispatch('fetchZanrovi');
+//     await this.$store.dispatch('fetchSale');
+//     await this.$store.dispatch('filterPredstaveByPozoriste');
+//     console.log('Filtered Predstave:', this.filteredPredstave);
+//   } catch (error) {
+//     console.error('Error fetching data:', error);
+//   }
+// },
+// };
+async mounted() {
+  console.log('Route params:', this.$route.params);
+
+  try {
+    // Try to load selectedPozoriste from localStorage
+    const savedPozoriste = localStorage.getItem('selectedPozoriste');
+
+    if (savedPozoriste) {
+      const parsedPozoriste = JSON.parse(savedPozoriste);
+      this.$store.commit('setSelectedPozoriste', parsedPozoriste);
+    }
+
+    // Dispatch actions to fetch initial data
+    await this.$store.dispatch('fetchZanrovi');
+    await this.$store.dispatch('fetchSale');
+    await this.$store.dispatch('filterPredstaveByPozoriste');
+    console.log('Filtered Predstave:', this.filteredPredstave);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
 },
-};
+}
 </script>
 
 <style>
