@@ -79,23 +79,23 @@ export default {
     },
 
     rezervacijaLink() {
-  const { id, predstava } = this;
-  const { naziv, datum, vreme, cena, sala } = predstava || {};
+      const { id, predstava } = this;
+      const { naziv, datum, vreme, cena, sala } = predstava || {};
 
-  console.log("Podaci za slanje:", id, naziv, datum, vreme, cena, sala);
+      console.log("Podaci za slanje:", id, naziv, datum, vreme, cena, sala);
 
-  return {
-    path: '/rezervacija',
-    query: {
-      predstavaId: id,
-      naziv: naziv || '',
-      datum: datum || '',
-      vreme: vreme || '',
-      cena: cena || '',
-      sala: sala || ''
+      return {
+        path: '/rezervacija',
+        query: {
+          predstavaId: id,
+          naziv: naziv || '',
+          datum: datum || '',
+          vreme: vreme || '',
+          cena: cena || '',
+          sala: sala || ''
+        }
+      };
     }
-  };
-}
   },
 
   methods: {

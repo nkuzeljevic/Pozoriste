@@ -14,7 +14,7 @@ window.addEventListener("load", function () {
       emailElement.classList.contains("error")
     ) {
       alert("Molimo ispravite greške pre čuvanja.");
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault();
     }
 
     event.preventDefault();
@@ -106,7 +106,6 @@ window.addEventListener("load", function () {
 
 
 function validatePhoneNumber(inputElement) {
-  // Define a regular expression pattern for a phone number
   // var phoneNumberPattern = /^\d{9,15}$/;
   var phoneNumberPattern = /^[0-9]{3}\/?[0-9]{6,7}$/;
   if (phoneNumberPattern.test(inputElement.value)) {

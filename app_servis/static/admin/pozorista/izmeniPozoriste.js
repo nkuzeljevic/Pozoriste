@@ -4,7 +4,7 @@ window.addEventListener("load", function () {
   var url = new URL(window.location.href);
   id = url.searchParams.get("id");
 
-  fetch("http://localhost:9000/admin/pozoriste/" + id)
+  fetch("http://localhost:9000/admin/pozoriste/" + id) 
     .then((resp) => resp.json())
     .then((data) => {
       console.log(data); 

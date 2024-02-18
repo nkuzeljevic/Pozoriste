@@ -6,6 +6,8 @@ import PozoristeDetalji from '@/components/PozoristeDetalji.vue'
 import PredstavaDetalji from '@/components/PredstavaDetalji.vue'
 import Glumci from '@/views/Glumci.vue'
 import Rezervacija from '@/views/Rezervacija.vue'
+import Login from '@/views/Login.vue'
+import Registracija from '@/views/Registracija.vue'
 
 
 Vue.use(VueRouter)
@@ -40,6 +42,16 @@ const routes = [
     path: '/rezervacija',
     name: 'Rezervacija',
     component: Rezervacija,
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+  },
+  {
+    path: '/registracija',
+    name: 'Registracija',
+    component: Registracija,
   },
 
 ]

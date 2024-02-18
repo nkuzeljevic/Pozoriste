@@ -1,2 +1,5 @@
 from body: 
-{"ime":"aavgb","opis":"aaa","izabranaPredstava":[]}
+{"ime":"aavgb","opis":"aaa","izabranaPredstava":[]}from body: 
+{"naziv":"abfbb","datum":"2024-02-24","vreme":"11:11","izabranoPozoriste":"3","izabraniZanr":"8","izabranaSala":"4","glumciInput":"4,2,3","cena":"123"}Record created successfully.{"naziv":"abfbb","datum":"2024-02-24","vreme":"11:11","izabranoPozoriste":"3","izabraniZanr":"8","izabranaSala":"4","glumciInput":"4,2,3","cena":"123"}Record created successfully.{"naziv":"abfbb","datum":"2024-02-24","vreme":"11:11","izabranoPozoriste":"3","izabraniZanr":"8","izabranaSala":"4","glumciInput":"4,2,3","cena":"123"}Record created successfully.{"naziv":"abfbb","datum":"2024-02-24","vreme":"11:11","izabranoPozoriste":"3","izabraniZanr":"8","izabranaSala":"4","glumciInput":"4,2,3","cena":"123"}from body: 
+{"ime":"aaaaa","opis":"aaa","izabranaPredstava":[]}from body: 
+{"ime":"aaaaa","opis":"aaa","izabranaPredstava":["9","12"]}Record created successfully.{"ime":"aaaaa","opis":"aaa","izabranaPredstava":["9","12"]}Record created successfully.{"ime":"aaaaa","opis":"aaa","izabranaPredstava":["9","12"]}

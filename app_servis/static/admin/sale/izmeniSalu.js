@@ -95,50 +95,32 @@ window.addEventListener("load", function () {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(novaSala),
     })
-      .then(async (response) => {
-        console.log("Response status:", response.status);
-        if (!response.ok) {
-          if (response.status === 400) {
-            // return response.text().then((errorMessage) => {
-            //   const errorDetails = JSON.parse(errorMessage);
-            //   if (
-            //     errorDetails.error &&
-            //     errorDetails.error.includes("brMesta")
-            //   ) {
-            //     alert("Broj mesta mora biti veći od 0.");
-            //   } else if (
-            //     errorDetails.error &&
-            //     errorDetails.error.includes("naziv")
-            //   ) {
-            //     alert("Naziv mora da ima barem 5 karaktera.");
-            //   } else {
-            //     alert(errorMessage); // Display the original error message
-            //   }
-
-            //   throw new Error(errorMessage);
-            // });
-            const errorDetails = await response.json();
-            console.log("Error details:", errorDetails);
-            if (
-              errorDetails.error === "Validation failed" &&
-              errorDetails.details
-            ) {
-              errorDetails.details.forEach((detail) => {
-                console.log("Validation error detail:", detail);
-              });
-
-              const errorMessage =
-                errorDetails.details[0]?.message || "Validation failed.";
-              alert(`Validation failed:\n ${errorMessage}`);
+    .then(async (response) => {
+          console.log("Response status:", response.status);
+          if (!response.ok) {
+            if (response.status === 400) {
+              const errorDetails = await response.json();
+              console.log("Error details:", errorDetails);
+              if (
+                errorDetails.error === "Validation failed" &&
+                errorDetails.details
+              ) {
+                // Handle validation errors
+                const errorMessage = errorDetails.details
+                  .map((detail) => detail.message)
+                  .join("\n");
+                alert(
+                  `Naziv mora da ima barem 5 karaktera.`
+                );
+              } else {
+                throw new Error("Server error: " + response.status);
+              }
             } else {
               throw new Error("Server error: " + response.status);
             }
-          } else {
-            throw new Error("Server error: " + response.status);
           }
-        }
-        return response.json();
-      })
+          return response.json();
+        })
       .then((data) => {
         console.log("Fetched Predstava Data:", data);
         window.location.href = `/admin/sale/sale.html`;

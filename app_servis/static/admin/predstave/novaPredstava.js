@@ -236,6 +236,7 @@ window.addEventListener("load", function () {
 
           const novoDodatiZanr = await response.json();
           appendZanrToSelect(novoDodatiZanr);
+          location.reload()
 
         } catch (error) {
           console.error("Error adding genre:", error);
@@ -394,6 +395,7 @@ window.addEventListener("load", function () {
             return response.json();
           })
           .then((data) => {
+            location.reload()
            selectedOption.text = izmeniValue;
             izmeni.value = "";
           })

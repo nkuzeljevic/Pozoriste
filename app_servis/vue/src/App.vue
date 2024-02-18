@@ -4,7 +4,8 @@
     <nav>
       <router-link to="/">Pozorišta</router-link> |
       <router-link to="/predstave">Predstave</router-link> |
-      <router-link to="/glumci">Glumci</router-link> 
+      <router-link to="/glumci">Glumci</router-link> |
+      <router-link to="/login">Login</router-link> 
     </nav>
     <router-view />
    

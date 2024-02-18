@@ -32,28 +32,11 @@ export default {
   },
   computed:{
     ...mapState([
-      'sviStudentiIDs',
       'pozorista'
     ])
   },
   methods:{
-    ...mapActions(['selectPozoriste']),
-    ...mapActions([
-      'fetchSviStudenti'
-    ]),
-    ...mapActions([
-        'fetchPozorista'
-      ]),
-    next(){
-      if( this.current * 4 < this.sviStudentiIDs.length ){
-        this.current++;
-      }
-    },
-    prev(){
-      if( this.current > 0){
-        this.current--;
-      }
-    }
+    ...mapActions(['selectPozoriste', 'fetchPozorista']),
   },
   mounted(){
    this.fetchPozorista();

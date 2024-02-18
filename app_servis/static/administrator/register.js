@@ -28,7 +28,7 @@ window.addEventListener("load", function () {
   document
     .getElementById("btnNazadRegistracija")
     .addEventListener("click", function () {
-      location.href = "login/login.html";
+      location.href = "../../administrator/login.html";
     });
 });
 

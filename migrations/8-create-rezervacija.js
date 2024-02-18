@@ -25,6 +25,14 @@ module.exports = {
         // },
         type: Sequelize.INTEGER,
       },
+      // idUser: {
+      //   allowNull: false,
+      //   // references: {
+      //   //   model: "Posetilac",
+      //   //   key: "id",
+      //   // },
+      //   type: Sequelize.INTEGER,
+      // },
       brojMesta: {
         type: Sequelize.INTEGER,
       },

@@ -45,7 +45,7 @@ window.addEventListener("load", function () {
       brMestElement.classList.contains("error")
     ) {
       alert("Molimo ispravite greške pre čuvanja.");
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault(); 
     } else {
 
       event.preventDefault();
@@ -75,7 +75,7 @@ window.addEventListener("load", function () {
                   .map((detail) => detail.message)
                   .join("\n");
                 alert(
-                  `Validation failed:\n Naziv mora da ima barem 5 karaktera.`
+                  `Naziv mora da ima barem 5 karaktera.`
                 );
               } else {
                 throw new Error("Server error: " + response.status);
