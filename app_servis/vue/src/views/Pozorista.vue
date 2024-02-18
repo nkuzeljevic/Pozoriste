@@ -27,7 +27,6 @@ export default {
   data(){
     return{
       headerTitle: "Pozorišta",
-      fields: ["naziv","opis"]
     }
   },
   computed:{

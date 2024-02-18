@@ -126,19 +126,16 @@ window.addEventListener("load", function () {
       }
      
       hiddenInputZanra.value = data.idZanra;
-
+      //Lista izabranih glumaca od ranije
       if (data.PredstavaGlumacs && Array.isArray(data.PredstavaGlumacs)) {
         console.log("PredstavaGlumacs:", data.PredstavaGlumacs);
-        // Extract the Predstava records from the PredstavaGlumac associations
+
         const glumci = data.PredstavaGlumacs.map((pg) => pg.Glumac);
 
-        // Get the ul element by its id
         const glumciUl = document.getElementById("glumciList");
 
-        // Clear existing content of the ul
         glumciUl.innerHTML = "";
 
-        // Append list items for each Predstava to the ul
         glumci.forEach((glumac) => {
           const listItem = document.createElement("li");
           listItem.classList.add("list-group-item", "podlista");
@@ -361,7 +358,7 @@ async function updateHallOptions(selectedHallId) {
 
       hallSelect.innerHTML = optionsHTML;
 
-      // Set the selected value if provided
+      // Postavlja selektovanu vrednost ako je ima
       if (selectedHallId) {
         hallSelect.value = selectedHallId;
       }
@@ -371,7 +368,7 @@ async function updateHallOptions(selectedHallId) {
         const selectedHallId = hallSelect.value;
         document.getElementById("izabranaSala").value = selectedHallId;
       });
-      // Trigger the change event manually after setting options
+      // Izaziva promenu u select nakon postavljanja options 
       hallSelect.dispatchEvent(new Event("change"));
     } else {
       console.log("No halls data available.");
@@ -419,4 +416,25 @@ function dodajGlumca(id) {
   document
     .getElementById("unetiGlumci")
     .appendChild(document.createTextNode(" "));
+
+    //Brisanje dodatog elementa
+  button.addEventListener("click", function () {
+    var id = this.parentNode.dataset.id;
+    if (confirm("Da li si siguran da želiš da obrišeš?")) {
+      this.parentNode.parentNode.removeChild(this.parentNode);
+      updateGlumciInput();
+    }
+  });
+   updateGlumciInput();
+}
+function updateGlumciInput() {
+  var spanovi = document.querySelectorAll("#unetiGlumci > span.badge");
+  var niz = [];
+  for (let i = 0; i < spanovi.length; i++) {
+    niz.push(spanovi[i].dataset.id);
+  }
+  var jsonString = JSON.stringify(niz);
+  var glumciInput = "glumciInput";
+  document.getElementById(glumciInput).value = jsonString;
+  console.log(document.getElementById(glumciInput).value);
 }

@@ -5,7 +5,7 @@
     <br>
     <b-form @submit="onSubmit">
       <b-form-group label="User Name:" label-for="name">
-        <b-form-input id="name" v-model="form.name" class="inputSize" placeholder="Enter name" required></b-form-input>
+        <b-form-input id="name" v-model="form.name" placeholder="Enter name" required></b-form-input>
       </b-form-group>
       <br>
       <b-form-group label="Password:" label-for="password">

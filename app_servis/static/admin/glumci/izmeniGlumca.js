@@ -43,12 +43,11 @@ window.addEventListener("load", function () {
 
         const predstave = data.PredstavaGlumacs.map((pg) => pg.Predstava);
 
-        // Get the ul element by its id
         const predstaveUl = document.getElementById("predstaveList");
 
         predstaveUl.innerHTML = "";
 
-        // Append list items for each Predstava to the ul
+        //Lista vec izabranih predstava
         predstave.forEach((predstava) => {
           const listItem = document.createElement("li");
           listItem.classList.add("list-group-item", "podlista");
@@ -104,7 +103,7 @@ window.addEventListener("load", function () {
         deleteRequests.push(deleteRequest);
       });
 
-      // Execute all delete requests concurrently
+      // Izvrsi sva brisanja
       Promise.all(deleteRequests)
         .then(() => {
           alert("Predstave su uspešno obrisane.");
@@ -264,4 +263,12 @@ function dodajPredstavu(id) {
   document
     .getElementById("unetePredstave")
     .appendChild(document.createTextNode(" "));
+
+    
+  button.addEventListener("click", function () {
+    var id = this.parentNode.dataset.id;
+    if (confirm("Da li si siguran da želiš da obrišeš?")) {
+      this.parentNode.parentNode.removeChild(this.parentNode);
+    }
+  });
 }

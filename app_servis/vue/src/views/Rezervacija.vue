@@ -122,7 +122,7 @@
 <script>
 
 export default {
-  name: 'App',
+  name: 'Rezervacija',
   components: {
   },
   data(){
@@ -218,7 +218,7 @@ export default {
             }
         }
     },
-    created() {
+created() {
 
     const { predstavaId, naziv, datum, vreme, cena, sala } = this.$route.query;
     console.log("podaci: ", predstavaId,naziv,datum,vreme, cena, sala  )
@@ -245,7 +245,7 @@ export default {
     },
   methods:{
     posalji(){
-        const novaRezervacija = {
+    const novaRezervacija = {
         brojMesta: this.forma.brojMesta,
         status: "Nova",
         idPosetioca: "1",

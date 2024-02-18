@@ -74,9 +74,9 @@ export default {
       return null; 
     },
 
-    glumciList() {
-        return this.glumciList; 
-    },
+    // glumciList() {
+    //     return this.glumciList; 
+    // },
 
     rezervacijaLink() {
       const { id, predstava } = this;
@@ -122,7 +122,7 @@ export default {
       vm.id = to.params.id;
     });
   },
-   created() {
+  created() {
     this.$store.dispatch('fetchPredstave');
   },
 

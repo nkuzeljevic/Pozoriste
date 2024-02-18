@@ -17,7 +17,7 @@ window.addEventListener("load", function () {
           break;
         }
       }
-      // Set the selected option in the pozoriste select element
+     
       selectElementUloge.value = data.uloga;
       document.getElementById("ime").value = data.imePrezime;
       document.getElementById("email").value = data.email;

@@ -84,7 +84,7 @@ route.post("/", async (req, res) => {
       if (!izabranaPredstava || izabranaPredstava.length === 0) {
         return res
           .status(400)
-          .json({ error: "Izabrana predstava nije pravilno poslata." });
+          .json({ error: "Izaberite predstavu" });
       }
 
       // Create a new Glumac
@@ -148,7 +148,7 @@ route.put("/:id", async (req, res) => {
     if (!izabranaPredstava || izabranaPredstava.length === 0) {
       return res
         .status(400)
-        .json({ error: "Izabrana predstava nije pravilno poslata." });
+        .json({ error: "Izaberite predstavu" });
     }
 
     for (const idPredstave of izabranaPredstava) {

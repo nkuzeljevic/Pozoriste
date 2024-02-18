@@ -72,7 +72,13 @@ window.addEventListener("load", function () {
                 errorDetails.error.includes("naziv")
               ) {
                 alert("Naziv mora da ima barem 5 karaktera.");
-              } else {
+              } else if (
+                errorDetails.error &&
+                errorDetails.error.includes("opis")
+              ) {
+                alert("Opis ne moze da bude prazan");
+              }  
+              else {
                 alert(errorMessage); 
               }
 

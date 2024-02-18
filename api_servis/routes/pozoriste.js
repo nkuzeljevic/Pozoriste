@@ -119,7 +119,7 @@ route.delete("/:id", async (req, res) => {
   try {
     const pozoriste = await Pozoriste.findByPk(req.params.id);
     pozoriste.destroy();
-    return res.json(pozoriste.id); //vraca id obrisanog
+    return res.json(pozoriste.id); 
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Greska pri brisanju", data: err });

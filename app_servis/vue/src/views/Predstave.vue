@@ -50,8 +50,8 @@ export default {
         { key: 'datum', sortable: true, label: 'Datum' },
         { key: 'vreme', sortable: true, label: 'Vreme' },
         { key: 'cena', sortable: true, label: 'Cena' },
-        { key: 'zanrNaziv', label: 'Zanr', sortable: false },
-        { key: 'salaNaziv', label: 'Sala', sortable: false },
+        { key: 'zanrNaziv', sortable: false ,label: 'Zanr'},
+        { key: 'salaNaziv',sortable: false, label: 'Sala'},
       ],
     };
   },

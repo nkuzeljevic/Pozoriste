@@ -61,7 +61,6 @@ window.addEventListener("load", function () {
           if (response.status === 400) {
             return response.text().then((errorMessage) => {
               const errorDetails = JSON.parse(errorMessage);
-
               if (errorDetails.error && errorDetails.error.includes("ime")) {
                 alert("Ime mora da ima barem 5 karaktera.");
               }else if (errorDetails.error && errorDetails.error.includes("izabranaPredstava")){
@@ -104,22 +103,22 @@ window.addEventListener("load", function () {
       document.getElementById("predstave").value = "";
     });
 
-  function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-      results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return "";
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-  }
-  // Get error parameter from the URL
-  var error = getParameterByName("error");
+  // function getParameterByName(name, url) {
+  //   if (!url) url = window.location.href;
+  //   name = name.replace(/[\[\]]/g, "\\$&");
+  //   var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+  //     results = regex.exec(url);
+  //   if (!results) return null;
+  //   if (!results[2]) return "";
+  //   return decodeURIComponent(results[2].replace(/\+/g, " "));
+  // }
+  // // Get error parameter from the URL
+  // var error = getParameterByName("error");
 
-  // Display error message as an alert if present
-  if (error) {
-    alert(error);
-  }
+  // // Display error message as an alert if present
+  // if (error) {
+  //   alert(error);
+  // }
 });
 
 function validateInput(inputElement) {

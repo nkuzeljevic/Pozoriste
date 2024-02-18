@@ -66,7 +66,7 @@ export default new Vuex.Store({
         .then( res=>res.json() )
           .then( data => commit('addPozorista', data) );
     },  
-    selectPozoriste({ commit }, pozoriste) {
+  selectPozoriste({ commit }, pozoriste) {
     commit('setSelectedPozoriste', pozoriste);
     localStorage.setItem('selectedPozoriste', JSON.stringify(pozoriste));
     router.push({ name: 'PozoristeDetalji', params: { id: pozoriste.id } });
